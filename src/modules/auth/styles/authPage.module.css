@@ -14,6 +14,14 @@
   width: 566px;
 }
 
+@media (max-width: 743px) {
+  .wrapper {
+    border: none;
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
 .header {
   display: flex;
   justify-content: center;
