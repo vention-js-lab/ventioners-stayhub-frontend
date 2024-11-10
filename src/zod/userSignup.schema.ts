@@ -1,5 +1,5 @@
 import { z, ZodType } from 'zod';
-import { SignupFormData } from './formData';
+import { SignupFormData } from '#/modules/auth/types';
 
 export const UserSignupSchema: ZodType<SignupFormData> = z
   .object({
