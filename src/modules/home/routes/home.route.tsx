@@ -1,12 +1,20 @@
 import Box from '@mui/material/Box';
 import { HeaderComponent } from '../components/header';
 import { PropertyList } from '../components/property';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import { CategoryList } from '../components/category/category-list';
+import { homeRouteStyles } from './home.route.styles';
 
 export function HomeRoute() {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+    <Box sx={homeRouteStyles.container}>
       <HeaderComponent />
-      <PropertyList />
+      <Container maxWidth="xl">
+        <Divider sx={homeRouteStyles.divider} />
+        <CategoryList />
+        <PropertyList />
+      </Container>
     </Box>
   );
 }
