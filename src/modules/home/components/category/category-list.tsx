@@ -4,23 +4,7 @@ import { CategoryScrollArrow } from './category-scroll-arrow';
 import { categories } from '../../data/category-data';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCallback, useEffect, useRef, useState } from 'react';
-
-const containerStyles = {
-  display: 'flex',
-  alignItems: 'center',
-  position: 'relative',
-};
-
-const scrollContainerStyles = {
-  display: 'flex',
-  overflowX: 'auto',
-  scrollBehavior: 'smooth',
-  scrollbarWidth: 'none',
-  alignItems: 'center',
-  '&::-webkit-scrollbar': {
-    display: 'none',
-  },
-};
+import { categoryListStyles } from './category-list.styles';
 
 export function CategoryList() {
   const location = useLocation();
@@ -74,9 +58,9 @@ export function CategoryList() {
   }, []);
 
   return (
-    <Box sx={containerStyles}>
+    <Box sx={categoryListStyles.container}>
       {showLeftArrow ? <CategoryScrollArrow direction="left" onClick={() => handleScroll('left')} /> : null}
-      <Box ref={scrollContainerRef} sx={scrollContainerStyles}>
+      <Box ref={scrollContainerRef} sx={categoryListStyles.scrollContainer}>
         {categories.map((category) => (
           <CategoryItem
             key={category.id}
