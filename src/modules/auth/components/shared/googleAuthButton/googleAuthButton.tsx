@@ -4,7 +4,7 @@ import styles from './googleAuthButton.module.css';
 
 export function GoogleAuthButton() {
   return (
-    <form action="http://localhost:3000/api/auth/google/login">
+    <form action={`${import.meta.env.VITE_API_URL}/auth/google/login`}>
       <Box className={styles.wrapper}>
         <button type="submit" className={styles.container}>
           <Box className={styles.logo}>
