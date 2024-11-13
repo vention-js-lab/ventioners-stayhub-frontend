@@ -2,24 +2,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-<<<<<<< HEAD:src/modules/auth/components/signup/signup-form/signup-form.tsx
 import { axiosInstance } from '#/configs';
-=======
 import { AxiosError } from 'axios';
->>>>>>> 57eebd0 (feat: integrate signup with the backend):src/modules/auth/components/signup/signupForm/signupForm.tsx
 import { Box } from '@mui/material';
 import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswordInput } from '../components';
 import { UserSignupSchema } from '#/zod';
 import { SignupFormData, SignupFormDataKeys } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { getFirstErrorMessage } from '#/utils';
-<<<<<<< HEAD:src/modules/auth/components/signup/signup-form/signup-form.tsx
 import { ENDPOINTS } from '#/modules/auth/constants';
 import styles from './signup-form.module.css';
-=======
-import styles from './signupform.module.css';
-import { axiosInstance } from '#/configs';
->>>>>>> 57eebd0 (feat: integrate signup with the backend):src/modules/auth/components/signup/signupForm/signupForm.tsx
 
 const maps = [
   { Component: FirstNameInput },
@@ -50,7 +42,6 @@ export function SignupForm() {
 
   function onSubmit(data: SignupFormData) {
     axiosInstance
-<<<<<<< HEAD:src/modules/auth/components/signup/signup-form/signup-form.tsx
       .post(ENDPOINTS.signup, data)
       .then(() => navigate(ENDPOINTS.root))
       .catch((err) => {
@@ -59,12 +50,6 @@ export function SignupForm() {
         } else {
           setError('email', { message: 'Something went wrong' });
         }
-=======
-      .post('/auth/register', data)
-      .then(() => navigate('/'))
-      .catch((err) => {
-        setError('email', { message: err.response.data.message });
->>>>>>> 57eebd0 (feat: integrate signup with the backend):src/modules/auth/components/signup/signupForm/signupForm.tsx
       });
   }
 
