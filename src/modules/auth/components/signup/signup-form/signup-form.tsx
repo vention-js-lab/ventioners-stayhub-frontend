@@ -9,7 +9,7 @@ import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswo
 import { UserSignupSchema } from '#/zod';
 import { SignupFormData, SignupFormDataKeys } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
-import { getFirstErrorMessage } from '#/utils';
+import { AccessTokenStore, getFirstErrorMessage } from '#/utils';
 import { ENDPOINTS } from '#/modules/auth/constants';
 import styles from './signup-form.module.css';
 
