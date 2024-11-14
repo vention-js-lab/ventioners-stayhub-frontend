@@ -42,13 +42,16 @@ export function SignupForm() {
   function onSubmit(data: SignupFormData) {
     axiosInstance
       .post(ENDPOINTS.signup, data)
-      .then((res) => res.data)
       .then((res) => {
         AccessTokenStore.setToken(res.data.accessToken);
         navigate(ENDPOINTS.root);
       })
       .catch((err) => {
-        setError('email', { message: err.response.data.message });
+        if (err.name == 'AxiosError') {
+          setError('email', { message: err.response?.data.message });
+        } else {
+          setError('email', { message: 'Something went wrong' });
+        }
       });
   }
 
