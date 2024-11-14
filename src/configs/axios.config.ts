@@ -1,3 +1,4 @@
+import { ENDPOINTS } from '#/modules/auth/constants';
 import { AccessTokenStore } from '#/utils';
 import axios from 'axios';
 
@@ -15,12 +16,12 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response && error.response.status === 401) {
+    if (error.response && error.response?.status === 401 && error.message !== 'Invalid refresh token') {
       try {
-        await axiosInstance.get('/auth/refresh-token');
-        return axiosInstance(originalRequest);
+        const response = await axiosInstance.get(ENDPOINTS.refresh);
+        AccessTokenStore.setToken(response.data.acessToken);
+
+        return axiosInstance(error.config);
       } catch (refreshError) {
         window.location.href = '/login';
         return Promise.reject(refreshError);
