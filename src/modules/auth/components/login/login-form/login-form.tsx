@@ -9,7 +9,7 @@ import { UserLoginSchema } from '#/zod';
 import { LoginFormData } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { AccessTokenStore, getFirstErrorMessage } from '#/utils';
-import styles from './loginForm.module.css';
+import styles from './login-form.module.css';
 
 const maps = [{ Component: EmailInput }, { Component: PasswordInput }];
 

@@ -1,2 +1,2 @@
-export * from './getFirstErrorMessage.util';
-export * from './AccessTokenStore.util';
+export * from './get-first-error-message.util';
+export * from './access-token-store.util';

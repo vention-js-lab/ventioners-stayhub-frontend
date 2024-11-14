@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { axiosInstance } from '#/configs';
 import { Box } from '@mui/material';
 import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswordInput } from '../components';
 import { UserSignupSchema } from '#/zod';
 import { SignupFormData, SignupFormDataKeys } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { AccessTokenStore, getFirstErrorMessage } from '#/utils';
-import styles from './signupform.module.css';
-import { axiosInstance } from '#/configs';
+import styles from './signup-form.module.css';
 
 const maps = [
   { Component: FirstNameInput },

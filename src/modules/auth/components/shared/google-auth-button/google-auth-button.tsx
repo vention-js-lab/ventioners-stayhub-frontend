@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import googleIcon from '#/modules/auth/assets/icons/google.svg';
-import styles from './googleAuthButton.module.css';
+import styles from './google-auth-button.module.css';
 
 export function GoogleAuthButton() {
   return (
