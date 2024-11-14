@@ -7,7 +7,7 @@ import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswo
 import { UserSignupSchema } from '#/zod';
 import { SignupFormData, SignupFormDataKeys } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
-import { getFirstErrorMessage } from '#/utils';
+import { AccessTokenStore, getFirstErrorMessage } from '#/utils';
 import styles from './signupform.module.css';
 import { axiosInstance } from '#/configs';
 
@@ -41,7 +41,11 @@ export function SignupForm() {
   function onSubmit(data: SignupFormData) {
     axiosInstance
       .post('/auth/register', data)
-      .then(() => navigate('/'))
+      .then((res) => res.data)
+      .then((res) => {
+        AccessTokenStore.setToken(res.data.accessToken);
+        navigate('/');
+      })
       .catch((err) => {
         setError('email', { message: err.response.data.message });
       });
