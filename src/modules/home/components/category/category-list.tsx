@@ -2,25 +2,22 @@ import Box from '@mui/material/Box';
 import { CategoryItem } from './category-item';
 import { CategoryScrollArrow } from './category-scroll-arrow';
 import { categories } from '../../data/category-data';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { categoryListStyles } from './category-list.styles';
 
-export function CategoryList() {
-  const location = useLocation();
-  const queryParam = new URLSearchParams(location.search);
-  const navigate = useNavigate();
-  const selectedCategory = queryParam.get('category') || '';
+type CategoryListProps = {
+  selectedCategory: string;
+  setSelectedCategory: (newState: string) => void;
+};
+
+export function CategoryList({ selectedCategory, setSelectedCategory }: CategoryListProps) {
   const scrollContainerRef = useRef<HTMLElement | null>(null);
   const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
   const [showRightArrow, setShowRightArrow] = useState<boolean>(false);
 
-  const handleCategoryClick = useCallback(
-    (categoryName: string) => {
-      navigate(`/?category=${encodeURIComponent(categoryName.toLowerCase())}`);
-    },
-    [navigate]
-  );
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category === selectedCategory ? '' : category);
+  };
 
   const handleScroll = useCallback((direction: 'left' | 'right') => {
     const container = scrollContainerRef.current;
@@ -66,8 +63,8 @@ export function CategoryList() {
             key={category.id}
             icon={category.icon}
             name={category.name}
-            onClick={() => handleCategoryClick(category.name)}
-            isActive={category.name.toLowerCase() === selectedCategory}
+            onClick={() => handleCategoryClick(category.id)}
+            isActive={category.id === selectedCategory}
           />
         ))}
       </Box>
