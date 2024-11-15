@@ -16,11 +16,7 @@ export function CategoryList({ selectedCategory, setSelectedCategory }: Category
   const [showRightArrow, setShowRightArrow] = useState<boolean>(false);
 
   const handleCategoryClick = (category: string) => {
-    if (category === selectedCategory) {
-      setSelectedCategory('');
-    } else {
-      setSelectedCategory(category);
-    }
+    setSelectedCategory(category === selectedCategory ? '' : category);
   };
 
   const handleScroll = useCallback((direction: 'left' | 'right') => {

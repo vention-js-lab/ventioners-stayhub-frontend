@@ -4,9 +4,9 @@ import { useProperties } from '../../api/get-properties';
 import Typography from '@mui/material/Typography';
 
 export function PropertyList({ selectedCategory }: { selectedCategory: string }) {
-  const propertiesQuery = useProperties({ page: 1, categoryId: selectedCategory });
+  const { isLoading, data } = useProperties({ page: 1, categoryId: selectedCategory });
 
-  if (propertiesQuery.isLoading) {
+  if (isLoading) {
     return (
       <Box>
         <Typography>Loading...</Typography>
@@ -14,7 +14,7 @@ export function PropertyList({ selectedCategory }: { selectedCategory: string })
     );
   }
 
-  const propertiesData = propertiesQuery.data?.data ?? [];
+  const propertiesData = data?.data ?? [];
 
   if (propertiesData.length === 0) {
     return (
@@ -39,9 +39,9 @@ export function PropertyList({ selectedCategory }: { selectedCategory: string })
         py: { xs: 2, sm: 3, md: 4 },
       }}
     >
-      {propertiesData.map((item) => {
-        return <ApartmentCard key={item.id} {...item} />;
-      })}
+      {propertiesData.map((item) => (
+        <ApartmentCard key={item.id} {...item} />
+      ))}
     </Box>
   );
 }
