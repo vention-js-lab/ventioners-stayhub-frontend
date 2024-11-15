@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { LoginForm } from '../components';
-import styles from '../styles/authPage.module.css';
+import styles from '../styles/auth-page.module.css';
 
 export function LoginRoute() {
   return (

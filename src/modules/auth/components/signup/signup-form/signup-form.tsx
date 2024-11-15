@@ -1,13 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { axiosInstance } from '#/configs';
 import { Box } from '@mui/material';
 import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswordInput } from '../components';
 import { UserSignupSchema } from '#/zod';
 import { SignupFormData, SignupFormDataKeys } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { getFirstErrorMessage } from '#/utils';
-import styles from './signupform.module.css';
+import { ENDPOINTS } from '#/modules/auth/constants';
+import styles from './signup-form.module.css';
 
 const maps = [
   { Component: FirstNameInput },
@@ -22,8 +25,11 @@ export function SignupForm() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<SignupFormData>({ resolver: zodResolver(UserSignupSchema) });
+
   const [focusedField, setFocusedField] = useState<SignupFormDataKeys | 'cpassword' | null>(null);
+  const navigate = useNavigate();
 
   function handleFocus(field: SignupFormDataKeys | 'cpassword') {
     setFocusedField(field);
@@ -34,7 +40,16 @@ export function SignupForm() {
   }
 
   function onSubmit(data: SignupFormData) {
-    console.log(data);
+    axiosInstance
+      .post(ENDPOINTS.signup, data)
+      .then(() => navigate(ENDPOINTS.root))
+      .catch((err) => {
+        if (err.name == 'AxiosError') {
+          setError('email', { message: err.response?.data.message });
+        } else {
+          setError('email', { message: 'Something went wrong' });
+        }
+      });
   }
 
   return (

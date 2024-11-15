@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { Box } from '@mui/material';
-import { LoginInputProps } from '#/modules/auth/types';
-import styles from './emailInput.module.css';
+import { SignupInputProps } from '#/modules/auth/types';
+import styles from './email-input.module.css';
 
-export function EmailInput({ focusedField, handleBlur, handleFocus, register }: LoginInputProps) {
+export function EmailInput({ focusedField, handleBlur, handleFocus, register }: SignupInputProps) {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const { ref, ...rest } = register('email');
 

@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Box } from '@mui/material';
 import { SignupInputProps } from '#/modules/auth/types';
-import styles from './lastNameInput.module.css';
+import styles from './last-name-input.module.css';
 
 export function LastNameInput({ focusedField, handleBlur, handleFocus, register }: SignupInputProps) {
   const lastNameRef = useRef<HTMLInputElement | null>(null);

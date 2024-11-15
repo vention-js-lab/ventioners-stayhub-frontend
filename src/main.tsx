@@ -6,7 +6,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { appTheme } from '#/styles/theme';
 import '#/styles/root.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { QueryClientConfig } from '#/configs/query-client.config';
+import { QueryClientConfig } from './configs';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '#/routes';

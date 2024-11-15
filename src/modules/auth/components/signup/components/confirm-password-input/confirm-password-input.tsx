@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Box } from '@mui/material';
 import { SignupInputProps } from '#/modules/auth/types';
-import styles from './confirmPasswordInput.module.css';
+import styles from './confirm-password-input.module.css';
 
 export function ConfirmPasswordInput({ focusedField, handleBlur, handleFocus, register }: SignupInputProps) {
   const cpasswordRef = useRef<HTMLInputElement | null>(null);
