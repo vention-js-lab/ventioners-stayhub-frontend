@@ -3,6 +3,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { type Accommodation } from '../../types/accommodation.type';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { styles } from './property.styles';
 
@@ -14,23 +15,10 @@ import './swiper.css';
 
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 
-type Accommodation = {
-  id: number;
-  name: string;
-  description: string;
-  images: string[];
-  location: string;
-  price_per_night: number;
-  type: string;
-  amenities: string[];
-  status: string;
-};
-
 export function ApartmentCard(apartment: Accommodation) {
   const handleFavoriteClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
-    console.log('Favorite icon clicked');
   };
 
   return (
@@ -60,7 +48,7 @@ export function ApartmentCard(apartment: Accommodation) {
           <Typography variant="h6">{apartment.name}</Typography>
           <Typography sx={{ opacity: '.7' }}>{apartment.location}</Typography>
           <Typography>
-            <strong>${apartment.price_per_night}</strong> night
+            <strong>${apartment.pricePerNight}</strong> night
           </Typography>
         </CardContent>
       </Card>

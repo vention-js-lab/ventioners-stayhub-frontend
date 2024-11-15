@@ -1,8 +1,29 @@
 import Box from '@mui/material/Box';
-import { ApartmentCard } from '#/modules/home/components/property/propertyCard';
-import data from './dummy.json';
+import { ApartmentCard } from '#/modules/home/components/property/property-card';
+import { useProperties } from '../../api/get-properties';
+import Typography from '@mui/material/Typography';
 
-export function PropertyList() {
+export function PropertyList({ selectedCategory }: { selectedCategory: string }) {
+  const propertiesQuery = useProperties({ page: 1, categoryId: selectedCategory });
+
+  if (propertiesQuery.isLoading) {
+    return (
+      <Box>
+        <Typography>Loading...</Typography>
+      </Box>
+    );
+  }
+
+  const propertiesData = propertiesQuery.data?.data ?? [];
+
+  if (propertiesData.length === 0) {
+    return (
+      <Box>
+        <Typography>No properties found</Typography>
+      </Box>
+    );
+  }
+
   return (
     <Box
       sx={{
@@ -18,9 +39,9 @@ export function PropertyList() {
         py: { xs: 2, sm: 3, md: 4 },
       }}
     >
-      {data.map((item) => (
-        <ApartmentCard key={item.id} {...item} />
-      ))}
+      {propertiesData.map((item) => {
+        return <ApartmentCard key={item.id} {...item} />;
+      })}
     </Box>
   );
 }
