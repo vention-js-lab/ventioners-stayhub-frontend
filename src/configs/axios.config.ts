@@ -1,5 +1,4 @@
 import { ENDPOINTS } from '#/modules/auth/constants';
-import { AccessTokenStore } from '#/utils';
 import axios from 'axios';
 
 const URL = import.meta.env.VITE_API_URL;
@@ -9,7 +8,6 @@ export const axiosInstance = axios.create({
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${AccessTokenStore.getToken()}`,
   },
 });
 
@@ -18,9 +16,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     if (error.response && error.response?.status === 401 && error.message !== 'Invalid refresh token') {
       try {
-        const response = await axiosInstance.get(ENDPOINTS.refresh);
-        AccessTokenStore.setToken(response.data.acessToken);
-
+        await axiosInstance.get(ENDPOINTS.refresh);
         return axiosInstance(error.config);
       } catch (refreshError) {
         window.location.href = '/login';

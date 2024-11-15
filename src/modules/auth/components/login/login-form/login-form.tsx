@@ -8,7 +8,7 @@ import { EmailInput, PasswordInput } from '../components';
 import { UserLoginSchema } from '#/zod';
 import { LoginFormData } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
-import { AccessTokenStore, getFirstErrorMessage } from '#/utils';
+import { getFirstErrorMessage } from '#/utils';
 import { ENDPOINTS } from '#/modules/auth/constants';
 import styles from './login-form.module.css';
 
@@ -35,10 +35,7 @@ export function LoginForm() {
   function onSubmit(data: LoginFormData) {
     axiosInstance
       .post(ENDPOINTS.login, data)
-      .then((res) => {
-        AccessTokenStore.setToken(res.data.accessToken);
-        navigate(ENDPOINTS.root);
-      })
+      .then(() => navigate(ENDPOINTS.root))
       .catch((err) => {
         if (err.name == 'AxiosError') {
           setError('email', { message: err.response?.data.message });
