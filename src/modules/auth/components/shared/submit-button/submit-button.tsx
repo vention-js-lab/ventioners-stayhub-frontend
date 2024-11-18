@@ -24,14 +24,15 @@ export function SubmitButton() {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      buttonRef.current.style.setProperty('--x', x + 'px');
-      buttonRef.current.style.setProperty('--y', y + 'px');
+      buttonRef.current.style.setProperty('--x', `${x}px`);
+      buttonRef.current.style.setProperty('--y', `${y}px`);
     }
   }
 
   return (
     <button
       ref={buttonRef}
+      type="submit"
       className={`${styles.button} ${isPressed ? styles.pressed : ''}`}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}

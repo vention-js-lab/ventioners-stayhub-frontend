@@ -9,7 +9,6 @@ import { EmailInput, PasswordInput } from '../components';
 import { UserLoginSchema } from '#/zod';
 import type { AxiosErrorResponse, LoginFormData } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
-import { randomUUID } from 'crypto';
 import { getFirstErrorMessage } from '#/utils';
 import { ENDPOINTS } from '#/modules/auth/constants';
 import { loginFormStyles as styles } from './login-form.sx';
@@ -58,9 +57,9 @@ export function LoginForm() {
         }}
       >
         <Box sx={styles.wrapper}>
-          {maps.map(({ Component }) => (
+          {maps.map(({ Component }, idx) => (
             <Component
-              key={randomUUID()}
+              key={idx}
               register={register}
               focusedField={focusedField}
               handleFocus={handleFocus}

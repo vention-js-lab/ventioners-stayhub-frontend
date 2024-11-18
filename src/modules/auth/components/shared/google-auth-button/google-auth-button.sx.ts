@@ -1,4 +1,4 @@
-const googleAuthButtonStyles = {
+export const googleAuthButtonStyles = {
   wrapper: {
     marginBottom: '16px',
     width: '100%',
@@ -36,5 +36,3 @@ const googleAuthButtonStyles = {
     fontWeight: 600,
   },
 } as const;
-
-export default googleAuthButtonStyles;

@@ -1,4 +1,4 @@
-import { UseFormRegister } from 'react-hook-form';
+import type { UseFormRegister } from 'react-hook-form';
 
 export type SignupFormData = {
   firstName: string;
@@ -27,4 +27,8 @@ export type LoginInputProps = {
   handleBlur: () => void;
   handleFocus: (field: 'email' | 'password') => void;
   register: UseFormRegister<LoginFormData>;
+};
+
+export type AxiosErrorResponse = {
+  message: string;
 };

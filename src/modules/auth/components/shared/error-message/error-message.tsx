@@ -1,6 +1,6 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import styles from './error-message.sx';
+import { errorMessageStyles as styles } from './error-message.sx';
 
 type Props = {
   message?: string;
@@ -17,7 +17,7 @@ export function ErrorMessage({ message }: Props) {
         </Box>
       </Box>
       <Box sx={styles.msgContainer}>
-        <Box sx={styles.title}>Let's try that again</Box>
+        <Box sx={styles.title}>Let&apos;s try that again</Box>
         <Box sx={styles.message}>{message}</Box>
       </Box>
     </Box>

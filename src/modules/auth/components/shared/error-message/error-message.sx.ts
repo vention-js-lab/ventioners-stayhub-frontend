@@ -1,4 +1,4 @@
-const errorMessageStyles = {
+export const errorMessageStyles = {
   wrapper: {
     display: 'flex',
     height: '92px',
@@ -45,5 +45,3 @@ const errorMessageStyles = {
     borderRadius: '50%',
   },
 } as const;
-
-export default errorMessageStyles;

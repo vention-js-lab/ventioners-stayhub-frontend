@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { axiosInstance } from '#/configs';
 import { AxiosError } from 'axios';
-import { randomUUID } from 'crypto';
 import Box from '@mui/material/Box';
 import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswordInput } from '../components';
 import { UserSignupSchema } from '#/zod';
@@ -65,9 +64,9 @@ export function SignupForm() {
         }}
       >
         <Box sx={styles.wrapper}>
-          {maps.slice(0, 2).map(({ Component }) => (
+          {maps.slice(0, 2).map(({ Component }, idx) => (
             <Component
-              key={randomUUID()}
+              key={idx}
               register={register}
               focusedField={focusedField}
               handleFocus={handleFocus}
@@ -77,9 +76,9 @@ export function SignupForm() {
         </Box>
 
         <Box sx={styles.wrapper}>
-          {maps.slice(2).map(({ Component }) => (
+          {maps.slice(2).map(({ Component }, idx) => (
             <Component
-              key={randomUUID()}
+              key={idx}
               register={register}
               focusedField={focusedField}
               handleFocus={handleFocus}

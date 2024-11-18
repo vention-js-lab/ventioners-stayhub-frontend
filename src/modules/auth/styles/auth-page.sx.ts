@@ -1,4 +1,4 @@
-const authPageStyles = {
+export const authPageStyles = {
   container: {
     display: 'flex',
     justifyContent: 'center',
@@ -42,5 +42,3 @@ const authPageStyles = {
     fontWeight: 'bold',
   },
 } as const;
-
-export default authPageStyles;
