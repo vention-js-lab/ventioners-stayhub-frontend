@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
 import { axiosInstance } from '#/configs';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import { EmailInput, PasswordInput } from '../components';
 import { UserLoginSchema } from '#/zod';
-import { LoginFormData } from '#/modules/auth/types';
+import type { AxiosErrorResponse, LoginFormData } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
+import { randomUUID } from 'crypto';
 import { getFirstErrorMessage } from '#/utils';
 import { ENDPOINTS } from '#/modules/auth/constants';
-import styles from './login-form.module.css';
+import { loginFormStyles as styles } from './login-form.sx';
 
 const maps = [{ Component: EmailInput }, { Component: PasswordInput }];
 
@@ -37,8 +39,9 @@ export function LoginForm() {
       .post(ENDPOINTS.login, data)
       .then(() => navigate(ENDPOINTS.root))
       .catch((err) => {
-        if (err.name == 'AxiosError') {
-          setError('email', { message: err.response?.data.message });
+        if (err instanceof AxiosError) {
+          const errorData = err.response?.data as AxiosErrorResponse;
+          setError('email', { message: errorData.message });
         } else {
           setError('email', { message: 'Something went wrong' });
         }
@@ -47,13 +50,17 @@ export function LoginForm() {
 
   return (
     <>
-      {errors && <ErrorMessage message={getFirstErrorMessage<LoginFormData>(errors)} />}
+      <ErrorMessage message={getFirstErrorMessage<LoginFormData>(errors)} />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Box className={styles.wrapper}>
-          {maps.map(({ Component }, idx) => (
+      <form
+        onSubmit={(e) => {
+          handleSubmit(onSubmit)(e);
+        }}
+      >
+        <Box sx={styles.wrapper}>
+          {maps.map(({ Component }) => (
             <Component
-              key={idx}
+              key={randomUUID()}
               register={register}
               focusedField={focusedField}
               handleFocus={handleFocus}
@@ -65,8 +72,8 @@ export function LoginForm() {
         <SubmitButton />
       </form>
 
-      <Box className={styles.dividerContainer}>
-        <Box className={styles.divider}>or</Box>
+      <Box sx={styles.dividerContainer}>
+        <Box sx={styles.divider}>or</Box>
       </Box>
 
       <GoogleAuthButton />
