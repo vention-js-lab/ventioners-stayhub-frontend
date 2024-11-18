@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "lint": "npx eslint",
     "lint:fix": "npx eslint --fix",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
