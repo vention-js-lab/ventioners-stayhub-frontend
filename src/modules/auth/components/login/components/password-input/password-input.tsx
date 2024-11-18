@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { useRef } from 'react';
 import { LoginInputProps } from '#/modules/auth/types';
-import styles from './passwordInput.module.css';
+import styles from './password-input.module.css';
 
 export function PasswordInput({ focusedField, handleBlur, handleFocus, register }: LoginInputProps) {
   const passwordRef = useRef<HTMLInputElement | null>(null);

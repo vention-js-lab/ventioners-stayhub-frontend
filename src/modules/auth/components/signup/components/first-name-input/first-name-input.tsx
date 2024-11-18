@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Box } from '@mui/material';
 import { SignupInputProps } from '#/modules/auth/types';
-import styles from './firstNameInput.module.css';
+import styles from './first-name-input.module.css';
 
 export function FirstNameInput({ focusedField, handleBlur, handleFocus, register }: SignupInputProps) {
   const firstNameRef = useRef<HTMLInputElement | null>(null);

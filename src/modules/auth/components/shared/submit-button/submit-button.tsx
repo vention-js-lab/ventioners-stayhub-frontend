@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import styles from './submitButton.module.css';
+import styles from './submit-button.module.css';
 
 export function SubmitButton() {
   const [isPressed, setIsPressed] = useState(false);

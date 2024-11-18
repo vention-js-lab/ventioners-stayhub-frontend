@@ -1,3 +1,3 @@
-export * from './submitButton/submitButton';
-export * from './errorMessage/errorMessage';
-export * from './googleAuthButton/googleAuthButton';
+export * from './submit-button/submit-button';
+export * from './error-message/error-message';
+export * from './google-auth-button/google-auth-button';
