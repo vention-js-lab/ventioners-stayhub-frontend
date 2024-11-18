@@ -34,7 +34,7 @@ export const categories: CategoryWithIcon<React.ElementType>[] = [
     icon: AcUnitOutlined,
   },
   {
-    id: '3',
+    id: '96780871-c5b8-48ac-8581-1da3ca8fc5c3',
     name: 'Cabins',
     icon: CabinOutlined,
   },

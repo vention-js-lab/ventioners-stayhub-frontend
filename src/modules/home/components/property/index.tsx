@@ -3,8 +3,8 @@ import { ApartmentCard } from '#/modules/home/components/property/property-card'
 import { useProperties } from '../../api/get-properties';
 import Typography from '@mui/material/Typography';
 
-export function PropertyList({ selectedCategory }: { selectedCategory: string }) {
-  const { isLoading, data } = useProperties({ page: 1, categoryId: selectedCategory });
+export function PropertyList({ selectedCategory, selectedLocation }: { selectedCategory: string; selectedLocation: string }) {
+  const { isLoading, data } = useProperties({ page: 1, categoryId: selectedCategory, search: selectedLocation });
 
   if (isLoading) {
     return (
