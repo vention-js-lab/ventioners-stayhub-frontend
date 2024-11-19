@@ -1,3 +1,5 @@
+import { Styles } from '../constants';
+
 export const authPageStyles = {
   container: {
     display: 'flex',
@@ -6,7 +8,7 @@ export const authPageStyles = {
     textAlign: 'center',
   },
   wrapper: {
-    border: '1px solid rgb(176, 176, 176)',
+    border: Styles.primaryBorderColor,
     borderRadius: '12px',
     marginTop: '32px',
     marginBottom: '32px',
@@ -25,7 +27,7 @@ export const authPageStyles = {
     paddingLeft: '24px',
     paddingRight: '24px',
     minHeight: '64px',
-    borderBottom: '1px solid rgb(235, 235, 235)',
+    borderBottom: Styles.secondaryBorderColor,
   },
   title: {
     fontWeight: 'bold',

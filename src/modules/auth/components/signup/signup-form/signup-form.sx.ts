@@ -1,6 +1,8 @@
+import { Styles } from '#/modules/auth/constants';
+
 export const signupFormStyles = {
   wrapper: {
-    border: '1px solid rgb(176, 176, 176)',
+    border: Styles.primaryBorderColor,
     borderRadius: '8px',
     '&:nth-of-type(1)': {
       marginBottom: '26px',
@@ -10,7 +12,7 @@ export const signupFormStyles = {
   dividerContainer: {
     width: '100%',
     marginBottom: '16px',
-    fontWeight: 500,
+    fontWeight: Styles.boldFont,
     fontSize: '0.8rem',
   },
 

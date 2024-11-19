@@ -1,8 +1,10 @@
+import { Styles } from '../constants';
+
 export const inputStyles = (focused: boolean, hasContent: boolean, noBorder: boolean = true) => ({
   container: {
     position: 'relative',
     height: '57px',
-    borderBottom: '1px solid rgb(176, 176, 176)',
+    borderBottom: Styles.primaryBorderColor,
     ...(focused && {
       transform: 'scaleX(1.005) scaleY(1.01)',
       border: '2px solid rgb(34, 34, 34)',
