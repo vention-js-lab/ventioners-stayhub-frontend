@@ -12,7 +12,7 @@ type GetPropertiesParams = {
   page: number;
   categoryId?: string;
   search?: string;
-}
+};
 export async function getProperties({ page, categoryId, search }: GetPropertiesParams): Promise<GetPropertiesResponse> {
   const params: GetPropertiesParams = {
     page,

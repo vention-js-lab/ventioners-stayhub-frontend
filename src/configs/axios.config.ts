@@ -1,3 +1,4 @@
+import { ENDPOINTS } from '#/modules/auth/constants';
 import axios from 'axios';
 
 const URL = import.meta.env.VITE_API_URL;

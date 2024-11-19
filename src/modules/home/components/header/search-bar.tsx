@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { useState } from 'react';
 import { Box, Stack, Typography, Popover, TextField, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { SearchbarContainer, SearchButton, SearchSection, StyledDivider } from '../../styles';
