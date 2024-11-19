@@ -6,7 +6,11 @@ import logo from '#/assets/logo.svg';
 import { UserNavigationMenu } from './user-navigation.menu';
 import { SearchBar } from './search-bar';
 
-export function HeaderComponent() {
+interface HeaderComponentProps {
+  setSelectedLocation: (newState: string) => void;
+}
+
+export function HeaderComponent({ setSelectedLocation }: HeaderComponentProps) {
   const theme = useTheme();
   const isMediumDown = useMediaQuery(theme.breakpoints.down('md'));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -32,7 +36,7 @@ export function HeaderComponent() {
               '&:hover': { backgroundColor: 'white' },
               minWidth: isMediumDown ? 60 : 'auto', // Adjust button width for small logo
             }}
-            disableRipple
+            disableRipple={true}
             href="/"
           >
             <img
@@ -59,7 +63,7 @@ export function HeaderComponent() {
           <UserNavigationMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose} handleMenuOpen={handleMenuOpen} />
 
           {/* Bottom Search Bar */}
-          <SearchBar activeNav={activeNav} />
+          <SearchBar setSelectedLocation={setSelectedLocation} activeNav={activeNav} />
         </Toolbar>
       </Container>
     </AppBar>
