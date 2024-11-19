@@ -1,6 +1,11 @@
-import React from 'react';
-import { Dialog, DialogContent, Typography, Box, Stack, Button } from '@mui/material';
-import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { CounterButton, CounterText } from '#/modules/home/styles';
 
 export interface GuestCounts {
@@ -17,7 +22,7 @@ interface GuestsModalProps {
   onGuestCountsChange: (counts: GuestCounts) => void;
 }
 
-export const GuestsModal: React.FC<GuestsModalProps> = ({ open, onClose, guestCounts, onGuestCountsChange }) => {
+export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }: GuestsModalProps) {
   const guestTypes = [
     {
       type: 'adults',
@@ -50,7 +55,8 @@ export const GuestsModal: React.FC<GuestsModalProps> = ({ open, onClose, guestCo
   ] as const;
 
   const handleCountChange = (type: keyof GuestCounts, increment: boolean) => {
-    const guestType = guestTypes.find((g) => g.type === type)!;
+    const guestType = guestTypes.find((g) => g.type === type);
+    if (!guestType) return;
     const currentCount = guestCounts[type];
     const newCount = increment ? currentCount + 1 : currentCount - 1;
 
@@ -148,4 +154,4 @@ export const GuestsModal: React.FC<GuestsModalProps> = ({ open, onClose, guestCo
       </DialogContent>
     </Dialog>
   );
-};
+}

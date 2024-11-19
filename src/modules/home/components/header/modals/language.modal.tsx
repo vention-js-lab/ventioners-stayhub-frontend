@@ -1,16 +1,14 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Typography,
-  Radio,
-  IconButton,
-} from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import Radio from '@mui/material/Radio';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface LanguageModalProps {
   open: boolean;
@@ -64,7 +62,7 @@ export function LanguageModal({ open, onClose, selectedLanguage, onLanguageSelec
       <DialogContent sx={{ p: 0 }}>
         <List sx={{ pt: 0 }}>
           {languages.map((lang) => (
-            <ListItem key={lang.code} disablePadding>
+            <ListItem key={lang.code} disablePadding={true}>
               <ListItemButton
                 onClick={() => {
                   onLanguageSelect(lang.code);

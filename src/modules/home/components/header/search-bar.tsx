@@ -1,9 +1,18 @@
 import { useState } from 'react';
-import { Box, Stack, Typography, Popover, TextField, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Popover from '@mui/material/Popover';
+import TextField from '@mui/material/TextField';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import { SearchbarContainer, SearchButton, SearchSection, StyledDivider } from '../../styles';
-import { Search as SearchIcon, LocationOn as LocationIcon } from '@mui/icons-material';
+import SearchIcon from '@mui/icons-material/Search';
+import LocationIcon from '@mui/icons-material/LocationOn';
 import { CalendarModal } from './modals/calendar.modal';
-import { GuestCounts, GuestsModal } from './modals/guests.modal';
+import { type GuestCounts, GuestsModal } from './modals/guests.modal';
 
 const destinations = [
   { id: 1, name: 'New York', country: 'United States' },
@@ -41,7 +50,6 @@ interface SearchBarProps {
 export function SearchBar({ activeNav }: SearchBarProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const [searchValue, setSearchValue] = useState('');
-  const [isSearchActive, setIsSearchActive] = useState(false);
   const [selectedDestination, setSelectedDestination] = useState<{ name: string; country: string } | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -55,14 +63,12 @@ export function SearchBar({ activeNav }: SearchBarProps) {
     setIsCalendarOpen(false);
   };
 
-  const handleSearchClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleSearchClick: React.MouseEventHandler<HTMLButtonElement & HTMLDivElement> = (event) => {
     setAnchorEl(event.currentTarget);
-    setIsSearchActive(true);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
-    setIsSearchActive(false);
   };
 
   const handleDestinationSelect = (destination: { name: string; country: string }) => {
@@ -109,7 +115,7 @@ export function SearchBar({ activeNav }: SearchBarProps) {
       <Stack
         direction="row"
         spacing={{ xs: 1, sm: 2 }}
-        divider={<StyledDivider orientation="vertical" flexItem variant="middle" />}
+        divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
         sx={{
           width: '100%',
           height: '100%',
@@ -125,7 +131,7 @@ export function SearchBar({ activeNav }: SearchBarProps) {
               backgroundColor: 'rgba(0, 0, 0, 0.04)',
             },
           }}
-          onClick={handleSearchClick as any}
+          onClick={handleSearchClick}
         >
           <Stack alignItems="flex-start" sx={{ width: '100%' }}>
             <Typography sx={commonTypographyStyles.title}>Where</Typography>
@@ -155,8 +161,8 @@ export function SearchBar({ activeNav }: SearchBarProps) {
           >
             <Box sx={{ p: 2 }}>
               <TextField
-                autoFocus
-                fullWidth
+                autoFocus={true}
+                fullWidth={true}
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 placeholder="Search destinations"
@@ -225,7 +231,7 @@ export function SearchBar({ activeNav }: SearchBarProps) {
             <Stack
               direction="row"
               spacing={{ xs: 1, sm: 2 }}
-              divider={<StyledDivider orientation="vertical" flexItem variant="middle" />}
+              divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
               sx={{
                 width: '100%',
                 height: '100%',

@@ -1,4 +1,11 @@
-import { AppBar, Box, Button, Container, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import useTheme from '@mui/material/styles/useTheme';
 import { useState } from 'react';
 import { NavButton } from '../../styles';
 import fullLogo from '#/assets/logo-full.svg';
@@ -24,15 +31,14 @@ export function HeaderComponent() {
     <AppBar position="static" color="default" elevation={0} sx={{ backgroundColor: 'white' }}>
       <Container maxWidth="xl">
         <Toolbar sx={{ justifyContent: 'space-between', height: 80, position: 'relative' }}>
-          {/* Logo */}
           <Button
             sx={{
               right: 100,
               position: 'relative',
               '&:hover': { backgroundColor: 'white' },
-              minWidth: isMediumDown ? 60 : 'auto', // Adjust button width for small logo
+              minWidth: isMediumDown ? 60 : 'auto',
             }}
-            disableRipple
+            disableRipple={true}
             href="/"
           >
             <img
@@ -45,7 +51,6 @@ export function HeaderComponent() {
             />
           </Button>
 
-          {/* Center Navigation */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <NavButton active={activeNav === 'stays'} onClick={() => setActiveNav('stays')}>
               <Typography sx={{ fontWeight: activeNav === 'stays' ? 600 : 500 }}>Stays</Typography>
@@ -55,10 +60,8 @@ export function HeaderComponent() {
             </NavButton>
           </Box>
 
-          {/* Right Navigation */}
           <UserNavigationMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose} handleMenuOpen={handleMenuOpen} />
 
-          {/* Bottom Search Bar */}
           <SearchBar activeNav={activeNav} />
         </Toolbar>
       </Container>

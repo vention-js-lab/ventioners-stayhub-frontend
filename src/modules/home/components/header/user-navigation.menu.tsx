@@ -1,6 +1,12 @@
 import { useState } from 'react';
-import { Box, Button, IconButton, Menu, MenuItem } from '@mui/material';
-import { Language as LanguageIcon, Menu as MenuIcon, AccountCircle } from '@mui/icons-material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import LanguageIcon from '@mui/icons-material/Language';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import { UserMenu } from '../../styles';
 import { LanguageModal } from './modals';
 
@@ -12,7 +18,7 @@ interface MenuProps {
 
 export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuClose, handleMenuOpen }: T) {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('uz'); // Default to Uzbek
+  const [selectedLanguage, setSelectedLanguage] = useState('uz');
 
   const handleLanguageIconClick = () => {
     setIsLanguageModalOpen(true);
