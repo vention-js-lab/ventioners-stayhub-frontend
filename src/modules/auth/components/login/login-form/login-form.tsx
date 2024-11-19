@@ -7,7 +7,7 @@ import { axiosInstance } from '#/configs';
 import Box from '@mui/material/Box';
 import { EmailInput, PasswordInput } from '../components';
 import { UserLoginSchema } from '#/zod';
-import type { AxiosErrorResponse, LoginFormData } from '#/modules/auth/types';
+import type { AuthFormData, AxiosErrorResponse, FormDataKeys } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { getFirstErrorMessage } from '#/utils';
 import { ENDPOINTS } from '#/modules/auth/constants';
@@ -21,11 +21,11 @@ export function LoginForm() {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<LoginFormData>({ resolver: zodResolver(UserLoginSchema) });
-  const [focusedField, setFocusedField] = useState<'email' | 'password' | null>(null);
+  } = useForm<AuthFormData>({ resolver: zodResolver(UserLoginSchema) });
+  const [focusedField, setFocusedField] = useState<FormDataKeys | null>(null);
   const navigate = useNavigate();
 
-  function handleFocus(field: 'email' | 'password') {
+  function handleFocus(field: FormDataKeys) {
     setFocusedField(field);
   }
 
@@ -33,7 +33,7 @@ export function LoginForm() {
     setFocusedField(null);
   }
 
-  function onSubmit(data: LoginFormData) {
+  function onSubmit(data: AuthFormData) {
     axiosInstance
       .post(ENDPOINTS.login, data)
       .then(() => navigate(ENDPOINTS.root))
@@ -49,7 +49,7 @@ export function LoginForm() {
 
   return (
     <>
-      <ErrorMessage message={getFirstErrorMessage<LoginFormData>(errors)} />
+      <ErrorMessage message={getFirstErrorMessage<AuthFormData>(errors)} />
 
       <form
         onSubmit={(e) => {
