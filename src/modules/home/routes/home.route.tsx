@@ -9,11 +9,11 @@ import { useSearchParamsState } from '../hooks/use-search-params-state';
 
 export function HomeRoute() {
   const [selectedCategory, setSelectedCategory] = useSearchParamsState('category', '');
-  const [searchQuery, setsearchQuery] = useSearchParamsState('search', '');
+  const [searchQuery, setSearchQuery] = useSearchParamsState('search', '');
 
   return (
     <Box sx={homeRouteStyles.container}>
-      <HeaderComponent setSelectedLocation={setsearchQuery} />
+      <HeaderComponent setSelectedLocation={setSearchQuery} />
       <Container maxWidth="xl">
         <Divider sx={homeRouteStyles.divider} />
         <CategoryList selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />

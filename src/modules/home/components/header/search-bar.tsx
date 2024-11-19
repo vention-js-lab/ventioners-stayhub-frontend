@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { useState } from 'react';
 import { Box, Stack, Typography, Popover, TextField, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { SearchbarContainer, SearchButton, SearchSection, StyledDivider } from '../../styles';
@@ -5,7 +6,12 @@ import { Search as SearchIcon, LocationOn as LocationIcon } from '@mui/icons-mat
 import { CalendarModal } from './modals/calendar.modal';
 import { type GuestCounts, GuestsModal } from './modals/guests.modal';
 
-const destinations = [
+interface DestinationInterface {
+  id: number;
+  name: string;
+  country: string;
+}
+const destinations: DestinationInterface[] = [
   { id: 6, name: 'Cozy', country: 'Uz' },
   { id: 1, name: 'New York', country: 'United States' },
   { id: 2, name: 'London', country: 'United Kingdom' },
@@ -58,26 +64,27 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
 
   const handleSearchClick = () => {
     const search = searchValue.trim() || selectedDestination?.name || '';
-    if (!searchValue.trim()) {
+    if (!search) {
       setSearchValue('');
       setSelectedDestination(null);
     }
+    setSearchValue(search);
     setSelectedLocation(search);
   };
 
   const handleClose = () => {
     if (!searchValue.trim()) {
       setSelectedDestination(null);
+      setSearchValue('');
     }
     setAnchorEl(null);
   };
 
-  const handleDestinationSelect = (destination: { name: string }) => {
-    setSearchValue(destination.name);
-    if (!destination.name) {
-      setSearchValue('');
-    }
+  const handleDestinationSelect = (destination: DestinationInterface) => {
+    if (!!destination.name) setSearchValue(destination.name);
     setSelectedDestination(destination);
+    setSearchValue(destination.name);
+    setSelectedLocation(destination.name);
     handleClose();
   };
 
@@ -97,7 +104,7 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
   };
 
   const filteredDestinations = destinations.filter(
-    (dest) =>
+    (dest: DestinationInterface) =>
       dest.name.toLowerCase().includes(searchValue.toLowerCase()) ||
       dest.country.toLowerCase().includes(searchValue.toLowerCase())
   );
@@ -140,7 +147,7 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
           <Stack alignItems="flex-start" sx={{ width: '100%' }}>
             <Typography sx={commonTypographyStyles.title}>Search here</Typography>
             <Typography sx={commonTypographyStyles.subtitle}>
-              {searchValue || (selectedDestination ? selectedDestination.name : 'Search destinations')}
+              {searchValue || (selectedDestination?.name ?? 'Search destinations')}
             </Typography>
           </Stack>
           <Popover
@@ -165,8 +172,8 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
           >
             <Box sx={{ p: 2 }}>
               <TextField
-                autoFocus={true}
-                fullWidth={true}
+                autoFocus
+                fullWidth
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 placeholder="Search destinations"
