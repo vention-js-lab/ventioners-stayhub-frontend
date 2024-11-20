@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { CounterButton, CounterText } from '#/modules/home/styles';
 import { guestTypes } from '../constants';
+import { guestModalStyles } from '../styles';
 
 export interface GuestCounts {
   adults: number;
@@ -47,74 +48,47 @@ export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }:
       open={open}
       onClose={onClose}
       PaperProps={{
-        sx: {
-          borderRadius: 2,
-          width: '100%',
-          maxWidth: '400px',
-          p: 1,
-        },
+        sx: guestModalStyles.paper,
       }}
     >
       <DialogContent>
         <Stack spacing={3}>
           {guestTypes.map(({ type, title, description, max, min }) => (
-            <Box
-              key={type}
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                py: 1,
-              }}
-            >
+            <Box key={type} sx={guestModalStyles.dialogContainer}>
               <Box>
-                <Typography fontWeight={500}>{title}</Typography>
+                <Typography fontWeight={guestModalStyles.dialogTitle.fontWeight}>{title}</Typography>
                 <Typography variant="body2" color="text.secondary">
                   {description}
                 </Typography>
               </Box>
 
-              <Stack direction="row" spacing={1} alignItems="center">
+              <Stack
+                direction={guestModalStyles.addRemoveButtonContainer.direction}
+                spacing={guestModalStyles.addRemoveButtonContainer.spacing}
+                alignItems={guestModalStyles.addRemoveButtonContainer.alignItems}
+              >
                 <CounterButton disabled={guestCounts[type] <= min} onClick={() => handleCountChange(type, false)}>
-                  <RemoveIcon sx={{ fontSize: 16 }} />
+                  <RemoveIcon sx={guestModalStyles.icon} />
                 </CounterButton>
 
                 <CounterText>{guestCounts[type]}</CounterText>
 
                 <CounterButton disabled={guestCounts[type] >= max} onClick={() => handleCountChange(type, true)}>
-                  <AddIcon sx={{ fontSize: 16 }} />
+                  <AddIcon sx={guestModalStyles.icon} />
                 </CounterButton>
               </Stack>
             </Box>
           ))}
 
-          <Box
-            sx={{
-              borderTop: '1px solid #EBEBEB',
-              pt: 2,
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
+          <Box sx={guestModalStyles.functionButtonContainer}>
             <Button
               onClick={() => onGuestCountsChange({ adults: 0, children: 0, infants: 0, pets: 0 })}
-              sx={{ textTransform: 'none' }}
+              sx={guestModalStyles.clearButton}
             >
               Clear all
             </Button>
 
-            <Button
-              variant="contained"
-              onClick={onClose}
-              sx={{
-                bgcolor: 'black',
-                '&:hover': {
-                  bgcolor: '#333',
-                },
-                textTransform: 'none',
-              }}
-            >
+            <Button variant="contained" onClick={onClose} sx={guestModalStyles.submitButton}>
               {getTotalGuests()} guests
               {guestCounts.infants > 0 ? `, ${guestCounts.infants} infants` : ''}
               {guestCounts.pets > 0 ? `, ${guestCounts.pets} pets` : ''}
