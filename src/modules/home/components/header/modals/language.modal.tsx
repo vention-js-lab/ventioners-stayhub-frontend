@@ -11,12 +11,13 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { languages } from '../constants';
 import { languageModalStyles } from '../styles';
+import { Language } from '#/modules/home/types/enums';
 
 interface LanguageModalProps {
   open: boolean;
   onClose: () => void;
-  selectedLanguage: string;
-  onLanguageSelect: (language: string) => void;
+  selectedLanguage: Language;
+  onLanguageSelect: (language: Language) => void;
 }
 
 export function LanguageModal({ open, onClose, selectedLanguage, onLanguageSelect }: LanguageModalProps) {
@@ -43,7 +44,7 @@ export function LanguageModal({ open, onClose, selectedLanguage, onLanguageSelec
             <ListItem key={lang.code} disablePadding={true}>
               <ListItemButton
                 onClick={() => {
-                  onLanguageSelect(lang.code);
+                  onLanguageSelect(lang.code as Language);
                   onClose();
                 }}
                 sx={languageModalStyles.listItemButton}
