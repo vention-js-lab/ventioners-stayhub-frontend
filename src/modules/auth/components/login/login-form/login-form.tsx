@@ -11,7 +11,7 @@ import type { AuthFormData, AxiosErrorResponse, FormDataKeys } from '#/modules/a
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { getFirstErrorMessage } from '#/utils';
 import { ENDPOINTS } from '#/modules/auth/constants';
-import { loginFormStyles as styles } from './login-form.sx';
+import { loginFormStyles as styles } from './login-form.styles';
 
 const maps = [{ Component: EmailInput }, { Component: PasswordInput }];
 

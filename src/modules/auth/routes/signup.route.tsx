@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { SignupForm } from '../components';
-import { authPageStyles as styles } from '../styles/auth-page.sx';
+import { authPageStyles as styles } from '../styles/auth-page.styles';
 
 export function SignupRoute() {
   return (

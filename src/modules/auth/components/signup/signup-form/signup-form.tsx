@@ -11,7 +11,7 @@ import type { AuthFormData, AxiosErrorResponse } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { getFirstErrorMessage } from '#/utils';
 import { ENDPOINTS } from '#/modules/auth/constants';
-import { signupFormStyles as styles } from './signup-form.sx';
+import { signupFormStyles as styles } from './signup-form.styles';
 
 const maps = [
   { Component: FirstNameInput },

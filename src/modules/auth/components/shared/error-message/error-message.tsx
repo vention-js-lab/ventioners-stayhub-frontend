@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
-import { errorMessageStyles as styles } from './error-message.sx';
+import { errorMessageStyles as styles } from './error-message.styles';
 
 type Props = {
   message?: string;
