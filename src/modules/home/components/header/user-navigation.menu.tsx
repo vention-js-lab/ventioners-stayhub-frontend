@@ -9,6 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { UserMenu } from '../../styles';
 import { LanguageModal } from './modals';
+import { Language } from '../../types/enums';
+import { userNavigationStyles } from './styles';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -18,7 +20,7 @@ interface MenuProps {
 
 export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuClose, handleMenuOpen }: T) {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('uz');
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.UZ);
 
   const handleLanguageIconClick = () => {
     setIsLanguageModalOpen(true);
@@ -28,35 +30,18 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
     setIsLanguageModalOpen(false);
   };
 
-  const handleLanguageSelect = (language: string) => {
+  const handleLanguageSelect = (language: Language) => {
     setSelectedLanguage(language);
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: 2 }}>
-      <Button
-        color="inherit"
-        sx={{
-          borderRadius: 20,
-          '&:hover': { backgroundColor: '#F7F7F7' },
-          fontFamily: 'sans-serif',
-          textTransform: 'none',
-          fontSize: '',
-        }}
-        href="/host/homes"
-      >
+    <Box sx={userNavigationStyles.container}>
+      <Button color="inherit" sx={userNavigationStyles.airBnbYourHomeButton} href="/host/homes">
         Airbnb your home
       </Button>
 
-      <IconButton
-        color="inherit"
-        onClick={handleLanguageIconClick}
-        sx={{
-          '&:hover': { backgroundColor: '#F7F7F7' },
-          transition: 'all 0.2s',
-        }}
-      >
-        <LanguageIcon sx={{ width: 20, height: 20 }} />
+      <IconButton color="inherit" onClick={handleLanguageIconClick} sx={userNavigationStyles.languageIconButton}>
+        <LanguageIcon sx={userNavigationStyles.languageIcon} />
       </IconButton>
 
       <LanguageModal
@@ -69,23 +54,17 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
       <UserMenu
         variant="outlined"
         onClick={handleMenuOpen}
-        startIcon={<MenuIcon sx={{ width: 24, height: 24, color: '#717171' }} />}
-        endIcon={<AccountCircle sx={{ width: 32, height: 32, color: '#717171' }} />}
+        startIcon={<MenuIcon sx={userNavigationStyles.menuIcon} />}
+        endIcon={<AccountCircle sx={userNavigationStyles.accountCircleIcon} />}
       />
 
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        elevation={1}
+        anchorOrigin={userNavigationStyles.menuContainer.anchorOrigin}
+        transformOrigin={userNavigationStyles.menuContainer.transformOrigin}
+        elevation={userNavigationStyles.menuContainer.elevation}
       >
         <MenuItem onClick={handleMenuClose} href="/signup_login">
           Sign up
