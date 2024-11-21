@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box';
 import { CategoryItem } from './category-item';
 import { CategoryScrollArrow } from './category-scroll-arrow';
-import { categories } from '../../data/category-data';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { categoryListStyles } from './category-list.styles';
+import { useCategories } from '../../api/get-categories';
+import { categoryToIconMap } from '../../constants/category-icon-map.constant';
 
 type CategoryListProps = {
   selectedCategory: string;
@@ -11,6 +12,7 @@ type CategoryListProps = {
 };
 
 export function CategoryList({ selectedCategory, setSelectedCategory }: CategoryListProps) {
+  const { data, isLoading } = useCategories();
   const scrollContainerRef = useRef<HTMLElement | null>(null);
   const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
   const [showRightArrow, setShowRightArrow] = useState<boolean>(false);
@@ -19,7 +21,7 @@ export function CategoryList({ selectedCategory, setSelectedCategory }: Category
     setSelectedCategory(category === selectedCategory ? '' : category);
   };
 
-  const handleScroll = useCallback((direction: 'left' | 'right') => {
+  const handleScroll = (direction: 'left' | 'right') => {
     const container = scrollContainerRef.current;
 
     if (!container) return;
@@ -31,9 +33,9 @@ export function CategoryList({ selectedCategory, setSelectedCategory }: Category
       left: newScrollPosition,
       behavior: 'smooth',
     });
-  }, []);
+  };
 
-  const handleScrollPosition = useCallback(() => {
+  const handleScrollPosition = () => {
     const container = scrollContainerRef.current;
 
     if (!container) return;
@@ -43,7 +45,7 @@ export function CategoryList({ selectedCategory, setSelectedCategory }: Category
 
     setShowLeftArrow(!isAtStart);
     setShowRightArrow(!isAtEnd);
-  }, []);
+  };
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -52,7 +54,17 @@ export function CategoryList({ selectedCategory, setSelectedCategory }: Category
     handleScrollPosition();
 
     return () => container?.removeEventListener('scroll', handleScrollPosition);
-  }, []);
+  }, [data]);
+
+  if (isLoading) {
+    return <Box>Loading Categories...</Box>;
+  }
+
+  const categories = data?.data ?? [];
+
+  if (!categories.length) {
+    return null;
+  }
 
   return (
     <Box sx={categoryListStyles.container}>
@@ -61,7 +73,7 @@ export function CategoryList({ selectedCategory, setSelectedCategory }: Category
         {categories.map((category) => (
           <CategoryItem
             key={category.id}
-            icon={category.icon}
+            icon={categoryToIconMap[category.name]}
             name={category.name}
             onClick={() => handleCategoryClick(category.id)}
             isActive={category.id === selectedCategory}

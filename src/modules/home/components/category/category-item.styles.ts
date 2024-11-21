@@ -5,11 +5,12 @@ export const categoryStyles = {
   categoryItemContainer: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'start',
     alignItems: 'center',
-    paddingX: 4,
+    paddingX: 3,
     color: 'gray',
     paddingY: 2,
+    textAlign: 'center',
     '&:hover': {
       backgroundColor: GRAY_OVERLAY_COLOR,
       color: 'black',
