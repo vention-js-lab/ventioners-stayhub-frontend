@@ -70,7 +70,7 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
     setEndDate(end);
     setIsCalendarOpen(false);
   };
-    
+
   const handleSearchClick = () => {
     const search = searchValue.trim() || selectedDestination?.name || '';
     if (!search) {
@@ -79,7 +79,6 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
     }
     setSearchValue(search);
     setSelectedLocation(search);
-
   };
 
   const handleClose = () => {
@@ -153,8 +152,6 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
               backgroundColor: 'rgba(0, 0, 0, 0.04)',
             },
           }}
-
-          onClick={handleSearchClick}
         >
           <Stack alignItems="flex-start" sx={{ width: '100%' }}>
             <Typography sx={commonTypographyStyles.title}>Search here</Typography>
