@@ -6,7 +6,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { type Accommodation } from '../../types/accommodation.type';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { styles } from './property.styles';
-
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';

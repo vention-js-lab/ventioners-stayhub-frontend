@@ -14,7 +14,13 @@ import LocationIcon from '@mui/icons-material/LocationOn';
 import { CalendarModal } from './modals/calendar.modal';
 import { type GuestCounts, GuestsModal } from './modals/guests.modal';
 
-const destinations = [
+interface DestinationInterface {
+  id: number;
+  name: string;
+  country: string;
+}
+const destinations: DestinationInterface[] = [
+  { id: 6, name: 'Cozy', country: 'Uz' },
   { id: 1, name: 'New York', country: 'United States' },
   { id: 2, name: 'London', country: 'United Kingdom' },
   { id: 3, name: 'Paris', country: 'France' },
@@ -45,12 +51,14 @@ const commonTypographyStyles = {
 
 interface SearchBarProps {
   activeNav: 'stays' | 'experiences';
+  setSelectedLocation: (newState: string) => void;
 }
 
-export function SearchBar({ activeNav }: SearchBarProps) {
-  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [searchValue, setSearchValue] = useState('');
-  const [selectedDestination, setSelectedDestination] = useState<{ name: string; country: string } | null>(null);
+  const [selectedDestination, setSelectedDestination] = useState<{ name: string } | null>(null);
+
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -62,26 +70,33 @@ export function SearchBar({ activeNav }: SearchBarProps) {
     setEndDate(end);
     setIsCalendarOpen(false);
   };
+    
+  const handleSearchClick = () => {
+    const search = searchValue.trim() || selectedDestination?.name || '';
+    if (!search) {
+      setSearchValue('');
+      setSelectedDestination(null);
+    }
+    setSearchValue(search);
+    setSelectedLocation(search);
 
-  const handleSearchClick: React.MouseEventHandler<HTMLButtonElement & HTMLDivElement> = (event) => {
-    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
+    if (!searchValue.trim()) {
+      setSelectedDestination(null);
+      setSearchValue('');
+    }
     setAnchorEl(null);
   };
 
-  const handleDestinationSelect = (destination: { name: string; country: string }) => {
+  const handleDestinationSelect = (destination: DestinationInterface) => {
+    if (!!destination.name) setSearchValue(destination.name);
     setSelectedDestination(destination);
     setSearchValue(destination.name);
+    setSelectedLocation(destination.name);
     handleClose();
   };
-
-  const filteredDestinations = destinations.filter(
-    (dest) =>
-      dest.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-      dest.country.toLowerCase().includes(searchValue.toLowerCase())
-  );
 
   const open = Boolean(anchorEl);
 
@@ -97,6 +112,12 @@ export function SearchBar({ activeNav }: SearchBarProps) {
     }
     return text;
   };
+
+  const filteredDestinations = destinations.filter(
+    (dest: DestinationInterface) =>
+      dest.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+      dest.country.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
   const handleGuestCountsChange = (counts: GuestCounts) => {
     setGuestCounts(counts);
@@ -124,6 +145,7 @@ export function SearchBar({ activeNav }: SearchBarProps) {
         }}
       >
         <SearchSection
+          onClick={(e) => setAnchorEl(e.currentTarget)}
           sx={{
             flex: 1,
             cursor: 'pointer',
@@ -131,12 +153,13 @@ export function SearchBar({ activeNav }: SearchBarProps) {
               backgroundColor: 'rgba(0, 0, 0, 0.04)',
             },
           }}
+
           onClick={handleSearchClick}
         >
           <Stack alignItems="flex-start" sx={{ width: '100%' }}>
-            <Typography sx={commonTypographyStyles.title}>Where</Typography>
+            <Typography sx={commonTypographyStyles.title}>Search here</Typography>
             <Typography sx={commonTypographyStyles.subtitle}>
-              {selectedDestination ? selectedDestination.name : 'Search destinations'}
+              {searchValue || (selectedDestination?.name ?? 'Search destinations')}
             </Typography>
           </Stack>
           <Popover
@@ -275,6 +298,7 @@ export function SearchBar({ activeNav }: SearchBarProps) {
         </SearchSection>
 
         <SearchButton
+          onClick={handleSearchClick}
           sx={{
             width: { xs: '2.5rem', sm: '3rem' },
             height: { xs: '2.5rem', sm: '3rem' },
