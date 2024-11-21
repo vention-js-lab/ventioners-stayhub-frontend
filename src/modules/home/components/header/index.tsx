@@ -14,10 +14,12 @@ import { UserNavigationMenu } from './user-navigation.menu';
 import { SearchBar } from './search-bar';
 
 interface HeaderComponentProps {
-  setSelectedLocation: (newState: string) => void;
+  setSelectedLocation?: (newState: string) => void;
+  showStaysAndExperiences?: boolean;
+  showSearchBar?: boolean;
 }
 
-export function HeaderComponent({ setSelectedLocation }: HeaderComponentProps) {
+export function HeaderComponent({ setSelectedLocation, showStaysAndExperiences, showSearchBar }: HeaderComponentProps) {
   const theme = useTheme();
   const isMediumDown = useMediaQuery(theme.breakpoints.down('md'));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -55,18 +57,22 @@ export function HeaderComponent({ setSelectedLocation }: HeaderComponentProps) {
             />
           </Button>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <NavButton active={activeNav === 'stays'} onClick={() => setActiveNav('stays')}>
-              <Typography sx={{ fontWeight: activeNav === 'stays' ? 600 : 500 }}>Stays</Typography>
-            </NavButton>
-            <NavButton active={activeNav === 'experiences'} onClick={() => setActiveNav('experiences')}>
-              <Typography sx={{ fontWeight: activeNav === 'experiences' ? 600 : 500 }}>Experiences</Typography>
-            </NavButton>
-          </Box>
+          {showStaysAndExperiences ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <NavButton active={activeNav === 'stays'} onClick={() => setActiveNav('stays')}>
+                <Typography sx={{ fontWeight: activeNav === 'stays' ? 600 : 500 }}>Stays</Typography>
+              </NavButton>
+              <NavButton active={activeNav === 'experiences'} onClick={() => setActiveNav('experiences')}>
+                <Typography sx={{ fontWeight: activeNav === 'experiences' ? 600 : 500 }}>Experiences</Typography>
+              </NavButton>
+            </Box>
+          ) : null}
 
           <UserNavigationMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose} handleMenuOpen={handleMenuOpen} />
 
-          <SearchBar setSelectedLocation={setSelectedLocation} activeNav={activeNav} />
+          {showSearchBar && setSelectedLocation ? (
+            <SearchBar setSelectedLocation={setSelectedLocation} activeNav={activeNav} />
+          ) : null}
         </Toolbar>
       </Container>
     </AppBar>
