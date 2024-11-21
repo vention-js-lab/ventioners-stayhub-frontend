@@ -16,7 +16,7 @@ export const searchbarStyles = {
       height: '100%',
       alignItems: 'center',
       padding: { xs: '0 4px', sm: '0 8px' },
-    }
+    },
   },
 
   searchSection: {
@@ -65,10 +65,9 @@ export const searchbarStyles = {
         },
         secondary: {
           fontSize: '0.8rem',
-        }
-      }
+        },
+      },
     },
-
   },
 
   datesSection: {
@@ -87,18 +86,17 @@ export const searchbarStyles = {
         height: '100%',
         alignItems: 'center',
       },
-
     },
     commonDisplay: {
       flex: 1,
     },
     commonWidth: {
       width: '100%',
-    }
+    },
   },
 
   searchButtonContainer: {
-    width: '100%'
+    width: '100%',
   },
   searchButton: {
     width: { xs: '2.5rem', sm: '3rem' },
