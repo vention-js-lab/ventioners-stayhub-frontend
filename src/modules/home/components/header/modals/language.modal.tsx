@@ -1,29 +1,24 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Typography,
-  Radio,
-  IconButton,
-} from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import Radio from '@mui/material/Radio';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { languages } from '../constants';
+import { languageModalStyles } from '../styles';
+import { Language } from '#/modules/home/types/enums';
 
 interface LanguageModalProps {
   open: boolean;
   onClose: () => void;
-  selectedLanguage: string;
-  onLanguageSelect: (language: string) => void;
+  selectedLanguage: Language;
+  onLanguageSelect: (language: Language) => void;
 }
-
-const languages = [
-  { code: 'uz', name: "O'zbek", region: "O'zbekiston" },
-  { code: 'en', name: 'English', region: 'United States' },
-  { code: 'ru', name: 'Русский', region: 'Россия' },
-];
 
 export function LanguageModal({ open, onClose, selectedLanguage, onLanguageSelect }: LanguageModalProps) {
   return (
@@ -32,56 +27,37 @@ export function LanguageModal({ open, onClose, selectedLanguage, onLanguageSelec
       onClose={onClose}
       maxWidth="xs"
       PaperProps={{
-        sx: {
-          borderRadius: 4,
-          width: '100%',
-          maxWidth: 400,
-        },
+        sx: languageModalStyles.paper,
       }}
     >
-      <DialogTitle
-        sx={{
-          p: 3,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid #DDDDDD',
-        }}
-      >
-        <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
+      <DialogTitle sx={languageModalStyles.dialogTitle}>
+        <Typography variant="h6" component="div" sx={languageModalStyles.dialogText}>
           Choose a language
         </Typography>
-        <IconButton
-          onClick={onClose}
-          size="small"
-          sx={{
-            '&:hover': { backgroundColor: '#F7F7F7' },
-          }}
-        >
+        <IconButton onClick={onClose} size="small" sx={languageModalStyles.closeButton}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent sx={{ p: 0 }}>
-        <List sx={{ pt: 0 }}>
+      <DialogContent sx={languageModalStyles.dialogContent}>
+        <List sx={languageModalStyles.dialogContentList}>
           {languages.map((lang) => (
-            <ListItem key={lang.code} disablePadding>
+            <ListItem key={lang.code} disablePadding={true}>
               <ListItemButton
                 onClick={() => {
-                  onLanguageSelect(lang.code);
+                  onLanguageSelect(lang.code as Language);
                   onClose();
                 }}
-                sx={{
-                  px: 3,
-                  py: 2,
-                  '&:hover': { backgroundColor: '#F7F7F7' },
-                }}
+                sx={languageModalStyles.listItemButton}
               >
-                <Radio checked={selectedLanguage === lang.code} sx={{ mr: 2 }} />
+                <Radio checked={selectedLanguage === lang.code} sx={languageModalStyles.checkbox} />
                 <ListItemText
                   primary={lang.name}
                   secondary={lang.region}
                   primaryTypographyProps={{
-                    fontWeight: selectedLanguage === lang.code ? 600 : 400,
+                    fontWeight:
+                      selectedLanguage === lang.code
+                        ? languageModalStyles.listItemText.chosen
+                        : languageModalStyles.listItemText.default,
                   }}
                 />
               </ListItemButton>

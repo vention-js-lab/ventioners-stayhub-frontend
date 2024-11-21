@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
-import { Dialog, DialogContent, IconButton, Typography, Grid, Box, Stack } from '@mui/material';
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { useState } from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import ChevronLeft from '@mui/icons-material/ChevronLeft';
+import ChevronRight from '@mui/icons-material/ChevronRight';
 import { DayButton, WeekDayLabel } from '#/modules/home/styles';
 
 interface CalendarModalProps {
@@ -11,13 +18,13 @@ interface CalendarModalProps {
   onDateSelect?: (startDate: Date | null, endDate: Date | null) => void;
 }
 
-export const CalendarModal: React.FC<CalendarModalProps> = ({
+export function CalendarModal({
   open,
   onClose,
   startDate: propStartDate,
   endDate: propEndDate,
   onDateSelect,
-}) => {
+}: CalendarModalProps) {
   const [leftMonth, setLeftMonth] = useState(propStartDate || new Date());
   const [startDate, setStartDate] = useState<Date | null>(propStartDate || null);
   const [endDate, setEndDate] = useState<Date | null>(propEndDate || null);
@@ -84,7 +91,7 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
   };
 
   const handleDateClick = (date: Date) => {
-    if (!startDate || (startDate && endDate) || date < startDate) {
+    if (startDate === null || endDate !== null || date < startDate) {
       setStartDate(date);
       setEndDate(null);
     } else {
@@ -108,14 +115,14 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
     );
   };
 
-  const isSelected = (date: Date) => {
-    return (startDate && isSameDay(date, startDate)) || (endDate && isSameDay(date, endDate));
-  };
-
   const isSameDay = (date1: Date, date2: Date) => {
     return (
       date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear()
     );
+  };
+
+  const isSelected = (date: Date) => {
+    return (startDate && isSameDay(date, startDate)) || (endDate && isSameDay(date, endDate));
   };
 
   const isInRange = (date: Date) => {
@@ -132,17 +139,17 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
           {months[monthDate.getMonth()]} {monthDate.getFullYear()}
         </Typography>
 
-        <Grid container spacing={0} mb={1}>
+        <Grid container={true} spacing={0} mb={1}>
           {weekDays.map((day) => (
-            <Grid item key={day}>
+            <Grid item={true} key={day}>
               <WeekDayLabel>{day}</WeekDayLabel>
             </Grid>
           ))}
         </Grid>
 
-        <Grid container spacing={0}>
-          {calendar.map(({ date, isCurrentMonth }, index) => (
-            <Grid item key={index}>
+        <Grid container={true} spacing={0}>
+          {calendar.map(({ date, isCurrentMonth }) => (
+            <Grid item={true} key={date.toISOString()}>
               <DayButton
                 onClick={() => handleDateClick(date)}
                 isSelected={isSelected(date) as boolean}
@@ -194,4 +201,4 @@ export const CalendarModal: React.FC<CalendarModalProps> = ({
       </DialogContent>
     </Dialog>
   );
-};
+}

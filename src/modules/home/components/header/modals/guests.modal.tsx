@@ -1,7 +1,14 @@
-import React from 'react';
-import { Dialog, DialogContent, Typography, Box, Stack, Button } from '@mui/material';
-import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { CounterButton, CounterText } from '#/modules/home/styles';
+import { guestTypes } from '../constants';
+import { guestModalStyles } from '../styles';
 
 export interface GuestCounts {
   adults: number;
@@ -17,40 +24,10 @@ interface GuestsModalProps {
   onGuestCountsChange: (counts: GuestCounts) => void;
 }
 
-export const GuestsModal: React.FC<GuestsModalProps> = ({ open, onClose, guestCounts, onGuestCountsChange }) => {
-  const guestTypes = [
-    {
-      type: 'adults',
-      title: 'Adults',
-      description: 'Ages 13 or above',
-      max: 16,
-      min: 0,
-    },
-    {
-      type: 'children',
-      title: 'Children',
-      description: 'Ages 2-12',
-      max: 8,
-      min: 0,
-    },
-    {
-      type: 'infants',
-      title: 'Infants',
-      description: 'Under 2',
-      max: 5,
-      min: 0,
-    },
-    {
-      type: 'pets',
-      title: 'Pets',
-      description: 'Service animals welcome',
-      max: 5,
-      min: 0,
-    },
-  ] as const;
-
+export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }: GuestsModalProps) {
   const handleCountChange = (type: keyof GuestCounts, increment: boolean) => {
-    const guestType = guestTypes.find((g) => g.type === type)!;
+    const guestType = guestTypes.find((g) => g.type === type);
+    if (!guestType) return;
     const currentCount = guestCounts[type];
     const newCount = increment ? currentCount + 1 : currentCount - 1;
 
@@ -71,74 +48,47 @@ export const GuestsModal: React.FC<GuestsModalProps> = ({ open, onClose, guestCo
       open={open}
       onClose={onClose}
       PaperProps={{
-        sx: {
-          borderRadius: 2,
-          width: '100%',
-          maxWidth: '400px',
-          p: 1,
-        },
+        sx: guestModalStyles.paper,
       }}
     >
       <DialogContent>
         <Stack spacing={3}>
           {guestTypes.map(({ type, title, description, max, min }) => (
-            <Box
-              key={type}
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                py: 1,
-              }}
-            >
+            <Box key={type} sx={guestModalStyles.dialogContainer}>
               <Box>
-                <Typography fontWeight={500}>{title}</Typography>
+                <Typography fontWeight={guestModalStyles.dialogTitle.fontWeight}>{title}</Typography>
                 <Typography variant="body2" color="text.secondary">
                   {description}
                 </Typography>
               </Box>
 
-              <Stack direction="row" spacing={1} alignItems="center">
+              <Stack
+                direction={guestModalStyles.addRemoveButtonContainer.direction}
+                spacing={guestModalStyles.addRemoveButtonContainer.spacing}
+                alignItems={guestModalStyles.addRemoveButtonContainer.alignItems}
+              >
                 <CounterButton disabled={guestCounts[type] <= min} onClick={() => handleCountChange(type, false)}>
-                  <RemoveIcon sx={{ fontSize: 16 }} />
+                  <RemoveIcon sx={guestModalStyles.icon} />
                 </CounterButton>
 
                 <CounterText>{guestCounts[type]}</CounterText>
 
                 <CounterButton disabled={guestCounts[type] >= max} onClick={() => handleCountChange(type, true)}>
-                  <AddIcon sx={{ fontSize: 16 }} />
+                  <AddIcon sx={guestModalStyles.icon} />
                 </CounterButton>
               </Stack>
             </Box>
           ))}
 
-          <Box
-            sx={{
-              borderTop: '1px solid #EBEBEB',
-              pt: 2,
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
+          <Box sx={guestModalStyles.functionButtonContainer}>
             <Button
               onClick={() => onGuestCountsChange({ adults: 0, children: 0, infants: 0, pets: 0 })}
-              sx={{ textTransform: 'none' }}
+              sx={guestModalStyles.clearButton}
             >
               Clear all
             </Button>
 
-            <Button
-              variant="contained"
-              onClick={onClose}
-              sx={{
-                bgcolor: 'black',
-                '&:hover': {
-                  bgcolor: '#333',
-                },
-                textTransform: 'none',
-              }}
-            >
+            <Button variant="contained" onClick={onClose} sx={guestModalStyles.submitButton}>
               {getTotalGuests()} guests
               {guestCounts.infants > 0 ? `, ${guestCounts.infants} infants` : ''}
               {guestCounts.pets > 0 ? `, ${guestCounts.pets} pets` : ''}
@@ -148,4 +98,4 @@ export const GuestsModal: React.FC<GuestsModalProps> = ({ open, onClose, guestCo
       </DialogContent>
     </Dialog>
   );
-};
+}
