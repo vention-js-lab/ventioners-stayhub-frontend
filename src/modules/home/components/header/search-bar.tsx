@@ -13,6 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import LocationIcon from '@mui/icons-material/LocationOn';
 import { CalendarModal } from './modals/calendar.modal';
 import { type GuestCounts, GuestsModal } from './modals/guests.modal';
+import { searchbarStyles } from './styles';
 
 interface DestinationInterface {
   id: number;
@@ -29,25 +30,6 @@ const destinations: DestinationInterface[] = [
 ];
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-const commonTypographyStyles = {
-  title: {
-    fontSize: { xs: 11, sm: 12 },
-    fontWeight: 600,
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    width: '100%',
-  },
-  subtitle: {
-    color: '#717171',
-    fontSize: { xs: 13, sm: 14 },
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    width: '100%',
-  },
-} as const;
 
 interface SearchBarProps {
   activeNav: 'stays' | 'experiences';
@@ -90,7 +72,7 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
   };
 
   const handleDestinationSelect = (destination: DestinationInterface) => {
-    if (!!destination.name) setSearchValue(destination.name);
+    if (destination.name) setSearchValue(destination.name);
     setSelectedDestination(destination);
     setSearchValue(destination.name);
     setSelectedLocation(destination.name);
@@ -123,39 +105,17 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
   };
 
   return (
-    <SearchbarContainer
-      elevation={2}
-      sx={{
-        width: { xs: '90%', sm: '80%', md: '80%', lg: '70%' },
-        height: '4rem',
-        maxWidth: '850px',
-        transition: 'all 0.3s ease',
-      }}
-    >
+    <SearchbarContainer elevation={searchbarStyles.searchbarContainer.elevation} sx={searchbarStyles.searchbarContainer.styles}>
       <Stack
-        direction="row"
-        spacing={{ xs: 1, sm: 2 }}
+        direction={searchbarStyles.stack.direction}
+        spacing={searchbarStyles.stack.spacing}
         divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
-        sx={{
-          width: '100%',
-          height: '100%',
-          alignItems: 'center',
-          padding: { xs: '0 4px', sm: '0 8px' },
-        }}
+        sx={searchbarStyles.stack.styles}
       >
-        <SearchSection
-          onClick={(e) => setAnchorEl(e.currentTarget)}
-          sx={{
-            flex: 1,
-            cursor: 'pointer',
-            '&:hover': {
-              backgroundColor: 'rgba(0, 0, 0, 0.04)',
-            },
-          }}
-        >
-          <Stack alignItems="flex-start" sx={{ width: '100%' }}>
-            <Typography sx={commonTypographyStyles.title}>Search here</Typography>
-            <Typography sx={commonTypographyStyles.subtitle}>
+        <SearchSection onClick={(e) => setAnchorEl(e.currentTarget)} sx={searchbarStyles.searchSection.container}>
+          <Stack alignItems="flex-start" sx={searchbarStyles.searchButtonContainer}>
+            <Typography sx={searchbarStyles.commonTypography.title}>Search here</Typography>
+            <Typography sx={searchbarStyles.commonTypography.subtitle}>
               {searchValue || (selectedDestination?.name ?? 'Search destinations')}
             </Typography>
           </Stack>
@@ -163,20 +123,10 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
             open={open}
             anchorEl={anchorEl}
             onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
+            anchorOrigin={searchbarStyles.searchSection.popover.anchorOrigin}
+            transformOrigin={searchbarStyles.searchSection.popover.transformOrigin}
             PaperProps={{
-              sx: {
-                width: '300px',
-                mt: 1,
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-              },
+              sx: searchbarStyles.searchSection.popover.paperProps,
             }}
           >
             <Box sx={{ p: 2 }}>
@@ -188,19 +138,10 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
                 placeholder="Search destinations"
                 variant="outlined"
                 size="small"
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                      borderColor: 'rgba(0, 0, 0, 0.1)',
-                    },
-                    '&:hover fieldset': {
-                      borderColor: 'rgba(0, 0, 0, 0.2)',
-                    },
-                  },
-                }}
+                sx={searchbarStyles.searchSection.popover.searchDestionationsTextField}
               />
             </Box>
-            <List sx={{ maxHeight: '300px', overflow: 'auto' }}>
+            <List sx={searchbarStyles.searchSection.popover.list}>
               {filteredDestinations.length === 0 ? (
                 <ListItem>
                   <ListItemText primary="No destinations found" />
@@ -210,12 +151,7 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
                   <ListItem
                     key={destination.id}
                     onClick={() => handleDestinationSelect(destination)}
-                    sx={{
-                      cursor: 'pointer',
-                      '&:hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                      },
-                    }}
+                    sx={searchbarStyles.searchSection.popover.listItem}
                   >
                     <ListItemIcon>
                       <LocationIcon color="action" />
@@ -223,13 +159,8 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
                     <ListItemText
                       primary={destination.name}
                       secondary={destination.country}
-                      primaryTypographyProps={{
-                        fontSize: '0.9rem',
-                        fontWeight: 500,
-                      }}
-                      secondaryTypographyProps={{
-                        fontSize: '0.8rem',
-                      }}
+                      primaryTypographyProps={searchbarStyles.searchSection.popover.listItemText.primary}
+                      secondaryTypographyProps={searchbarStyles.searchSection.popover.listItemText.secondary}
                     />
                   </ListItem>
                 ))
@@ -238,48 +169,48 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
           </Popover>
         </SearchSection>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flex: { xs: 1, sm: 2 },
-            gap: { xs: 1, sm: 2 },
-            height: '100%',
-            alignItems: 'center',
-          }}
-        >
+        <Box sx={searchbarStyles.datesSection.container}>
           {activeNav === 'stays' ? (
             <Stack
               direction="row"
-              spacing={{ xs: 1, sm: 2 }}
+              spacing={searchbarStyles.datesSection.checkInOutStack.spacing}
               divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
-              sx={{
-                width: '100%',
-                height: '100%',
-                alignItems: 'center',
-              }}
+              sx={searchbarStyles.datesSection.checkInOutStack.styles}
             >
-              <SearchSection sx={{ flex: 1 }}>
-                <Stack alignItems="flex-start" sx={{ width: '100%' }} onClick={() => setIsCalendarOpen(true)}>
-                  <Typography sx={commonTypographyStyles.title}>Check in</Typography>
-                  <Typography sx={commonTypographyStyles.subtitle}>
+              <SearchSection sx={searchbarStyles.datesSection.commonDisplay}>
+                <Stack
+                  alignItems="flex-start"
+                  sx={searchbarStyles.datesSection.commonWidth}
+                  onClick={() => setIsCalendarOpen(true)}
+                >
+                  <Typography sx={searchbarStyles.commonTypography.title}>Check in</Typography>
+                  <Typography sx={searchbarStyles.commonTypography.subtitle}>
                     {startDate ? `${months[startDate.getMonth()]} ${startDate.getDate()}` : 'Add dates'}{' '}
                   </Typography>
                 </Stack>
               </SearchSection>
-              <SearchSection sx={{ flex: 1 }}>
-                <Stack alignItems="flex-start" sx={{ width: '100%' }} onClick={() => setIsCalendarOpen(true)}>
-                  <Typography sx={commonTypographyStyles.title}>Check out</Typography>
-                  <Typography sx={commonTypographyStyles.subtitle}>
+              <SearchSection sx={searchbarStyles.datesSection.commonDisplay}>
+                <Stack
+                  alignItems="flex-start"
+                  sx={searchbarStyles.datesSection.commonWidth}
+                  onClick={() => setIsCalendarOpen(true)}
+                >
+                  <Typography sx={searchbarStyles.commonTypography.title}>Check out</Typography>
+                  <Typography sx={searchbarStyles.commonTypography.subtitle}>
                     {endDate ? `${months[endDate.getMonth()]} ${endDate.getDate()}` : 'Add dates'}
                   </Typography>
                 </Stack>
               </SearchSection>
             </Stack>
           ) : (
-            <SearchSection sx={{ flex: 1 }}>
-              <Stack alignItems="flex-start" sx={{ width: '100%' }} onClick={() => setIsCalendarOpen(true)}>
-                <Typography sx={commonTypographyStyles.title}>Date</Typography>
-                <Typography sx={commonTypographyStyles.subtitle}>
+            <SearchSection sx={searchbarStyles.datesSection.commonDisplay}>
+              <Stack
+                alignItems="flex-start"
+                sx={searchbarStyles.datesSection.commonWidth}
+                onClick={() => setIsCalendarOpen(true)}
+              >
+                <Typography sx={searchbarStyles.commonTypography.title}>Date</Typography>
+                <Typography sx={searchbarStyles.commonTypography.subtitle}>
                   {startDate ? `${months[startDate.getMonth()]} ${startDate.getDate()}` : 'Select Date'}
                 </Typography>
               </Stack>
@@ -287,35 +218,15 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
           )}
         </Box>
 
-        <SearchSection sx={{ flex: 1 }}>
-          <Stack alignItems="flex-start" sx={{ width: '100%' }} onClick={() => setIsGuestsModalOpen(true)}>
-            <Typography sx={commonTypographyStyles.title}>Who</Typography>
-            <Typography sx={commonTypographyStyles.subtitle}>{formatGuestCount() || 'Add guests'}</Typography>
+        <SearchSection sx={searchbarStyles.datesSection.commonDisplay}>
+          <Stack alignItems="flex-start" sx={searchbarStyles.datesSection.commonWidth} onClick={() => setIsGuestsModalOpen(true)}>
+            <Typography sx={searchbarStyles.commonTypography.title}>Who</Typography>
+            <Typography sx={searchbarStyles.commonTypography.subtitle}>{formatGuestCount() || 'Add guests'}</Typography>
           </Stack>
         </SearchSection>
 
-        <SearchButton
-          onClick={handleSearchClick}
-          sx={{
-            width: { xs: '2.5rem', sm: '3rem' },
-            height: { xs: '2.5rem', sm: '3rem' },
-            minWidth: { xs: '2.5rem', sm: '3rem' },
-            margin: 'auto 0',
-            transition: 'transform 0.2s ease',
-            '&:hover': {
-              transform: 'scale(1.05)',
-            },
-          }}
-        >
-          <SearchIcon
-            sx={{
-              fontSize: { xs: 18, sm: 22 },
-              transition: 'transform 0.2s ease',
-              '&:hover': {
-                transform: 'rotate(90deg)',
-              },
-            }}
-          />
+        <SearchButton onClick={handleSearchClick} sx={searchbarStyles.searchButton}>
+          <SearchIcon sx={searchbarStyles.searchIcon} />
         </SearchButton>
       </Stack>
       <CalendarModal
