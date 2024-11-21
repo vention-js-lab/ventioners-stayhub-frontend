@@ -3,14 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { axiosInstance } from '#/configs';
-import { Box } from '@mui/material';
+import { AxiosError } from 'axios';
+import Box from '@mui/material/Box';
 import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswordInput } from '../components';
 import { UserSignupSchema } from '#/zod';
-import { SignupFormData, SignupFormDataKeys } from '#/modules/auth/types';
+import type { AuthFormData, AxiosErrorResponse } from '#/modules/auth/types';
 import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { getFirstErrorMessage } from '#/utils';
 import { ENDPOINTS } from '#/modules/auth/constants';
-import styles from './signup-form.module.css';
+import { signupFormStyles as styles } from './signup-form.styles';
 
 const maps = [
   { Component: FirstNameInput },
@@ -26,12 +27,12 @@ export function SignupForm() {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<SignupFormData>({ resolver: zodResolver(UserSignupSchema) });
+  } = useForm<AuthFormData>({ resolver: zodResolver(UserSignupSchema) });
 
-  const [focusedField, setFocusedField] = useState<SignupFormDataKeys | 'cpassword' | null>(null);
+  const [focusedField, setFocusedField] = useState<AuthFormData | null>(null);
   const navigate = useNavigate();
 
-  function handleFocus(field: SignupFormDataKeys | 'cpassword') {
+  function handleFocus(field: AuthFormData) {
     setFocusedField(field);
   }
 
@@ -39,13 +40,14 @@ export function SignupForm() {
     setFocusedField(null);
   }
 
-  function onSubmit(data: SignupFormData) {
+  function onSubmit(data: AuthFormData) {
     axiosInstance
       .post(ENDPOINTS.signup, data)
       .then(() => navigate(ENDPOINTS.root))
       .catch((err) => {
-        if (err.name == 'AxiosError') {
-          setError('email', { message: err.response?.data.message });
+        if (err instanceof AxiosError) {
+          const errorData = err.response?.data as AxiosErrorResponse;
+          setError('email', { message: errorData.message });
         } else {
           setError('email', { message: 'Something went wrong' });
         }
@@ -54,10 +56,14 @@ export function SignupForm() {
 
   return (
     <>
-      {errors && <ErrorMessage message={getFirstErrorMessage<SignupFormData>(errors)} />}
+      <ErrorMessage message={getFirstErrorMessage<AuthFormData>(errors)} />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Box className={styles.wrapper}>
+      <form
+        onSubmit={(e) => {
+          handleSubmit(onSubmit)(e);
+        }}
+      >
+        <Box sx={styles.wrapper}>
           {maps.slice(0, 2).map(({ Component }, idx) => (
             <Component
               key={idx}
@@ -69,7 +75,7 @@ export function SignupForm() {
           ))}
         </Box>
 
-        <Box className={styles.wrapper}>
+        <Box sx={styles.wrapper}>
           {maps.slice(2).map(({ Component }, idx) => (
             <Component
               key={idx}
@@ -84,8 +90,8 @@ export function SignupForm() {
         <SubmitButton />
       </form>
 
-      <Box className={styles.dividerContainer}>
-        <Box className={styles.divider}>or</Box>
+      <Box sx={styles.dividerContainer}>
+        <Box sx={styles.divider}>or</Box>
       </Box>
 
       <GoogleAuthButton />

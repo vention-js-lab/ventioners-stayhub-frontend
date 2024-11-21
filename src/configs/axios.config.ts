@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ENDPOINTS } from '#/modules/auth/constants';
 import axios from 'axios';
 
@@ -11,6 +12,7 @@ export const axiosInstance = axios.create({
   },
 });
 
+// TODO: further work on interceptor required
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {

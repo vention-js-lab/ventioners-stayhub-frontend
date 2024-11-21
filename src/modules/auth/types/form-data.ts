@@ -1,6 +1,6 @@
-import { UseFormRegister } from 'react-hook-form';
+import type { UseFormRegister } from 'react-hook-form';
 
-export type SignupFormData = {
+export type AuthFormData = {
   firstName: string;
   lastName: string;
   email: string;
@@ -8,23 +8,15 @@ export type SignupFormData = {
   confirmPassword: string;
 };
 
-export type LoginFormData = {
-  email: string;
-  password: string;
+export type FormDataKeys = keyof AuthFormData;
+
+export type FormInputProps = {
+  focusedField: FormDataKeys | null;
+  handleBlur: () => void;
+  handleFocus: (field: FormDataKeys) => void;
+  register: UseFormRegister<AuthFormData>;
 };
 
-export type SignupFormDataKeys = keyof Omit<SignupFormData, 'confirmPassword'>;
-
-export type SignupInputProps = {
-  focusedField: SignupFormDataKeys | 'cpassword' | null;
-  handleBlur: () => void;
-  handleFocus: (field: SignupFormDataKeys | 'cpassword') => void;
-  register: UseFormRegister<SignupFormData>;
-};
-
-export type LoginInputProps = {
-  focusedField: 'email' | 'password' | null;
-  handleBlur: () => void;
-  handleFocus: (field: 'email' | 'password') => void;
-  register: UseFormRegister<LoginFormData>;
+export type AxiosErrorResponse = {
+  message: string;
 };

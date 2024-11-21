@@ -1,5 +1,5 @@
-import { z, ZodType } from 'zod';
-import { LoginFormData } from '#/modules/auth/types';
+import { z, type ZodType } from 'zod';
+import { type LoginFormData } from '#/modules/auth/types';
 
 export const UserLoginSchema: ZodType<LoginFormData> = z.object({
   email: z.string().email({ message: 'Please enter a valid email (e.g. john@stayhub.com)' }),
