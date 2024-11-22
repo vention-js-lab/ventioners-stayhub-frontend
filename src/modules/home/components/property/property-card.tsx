@@ -16,13 +16,13 @@ import './swiper.css';
 
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 
-export function ApartmentCard(apartment: Accommodation) {
+export function ApartmentCard({ id, name, location, pricePerNight, images }: Accommodation) {
   const [isLiked, setIsLiked] = useState(false);
   const navidate = useNavigate();
   useEffect(() => {
-    const likedStatus = localStorage.getItem(`liked-${apartment.id}`);
+    const likedStatus = localStorage.getItem(`liked-${id}`);
     setIsLiked(likedStatus === 'true');
-  }, [apartment.id]);
+  }, [id]);
 
   const handleFavoriteClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -36,11 +36,11 @@ export function ApartmentCard(apartment: Accommodation) {
 
     const newLikedStatus = !isLiked;
     setIsLiked(newLikedStatus);
-    localStorage.setItem(`liked-${apartment.id}`, String(newLikedStatus));
+    localStorage.setItem(`liked-${id}`, String(newLikedStatus));
   };
 
   return (
-    <Link to={`/apartment/${apartment.id}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/apartment/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
         {isLiked ? (
           <FavoriteIcon onClick={handleFavoriteClick} sx={styles.favoriteIconStyle} style={{ color: 'red' }} />
@@ -59,18 +59,18 @@ export function ApartmentCard(apartment: Accommodation) {
           modules={[EffectFade, Navigation, Pagination]}
           className="mySwiper"
         >
-          {apartment.images.map((image, index) => (
-            <SwiperSlide key={index}>
+          {images.map((image) => (
+            <SwiperSlide key={id}>
               <img src={image} alt="Image of Apartment" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </SwiperSlide>
           ))}
         </Swiper>
 
         <CardContent sx={{ padding: '16px 0px' }}>
-          <Typography variant="h6">{apartment.name}</Typography>
-          <Typography sx={{ opacity: '.7' }}>{apartment.location}</Typography>
+          <Typography variant="h6">{name}</Typography>
+          <Typography sx={{ opacity: '.7' }}>{location}</Typography>
           <Typography>
-            <strong>${apartment.pricePerNight}</strong> night
+            <strong>${pricePerNight}</strong> night
           </Typography>
         </CardContent>
       </Card>
