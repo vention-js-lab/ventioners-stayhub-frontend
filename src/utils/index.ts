@@ -1,1 +1,1 @@
-export * from './getFirstErrorMessage.util';
+export * from './get-first-error-message.util';

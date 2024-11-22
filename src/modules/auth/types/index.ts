@@ -1,1 +1,1 @@
-export * from './formData';
+export type * from './form-data';

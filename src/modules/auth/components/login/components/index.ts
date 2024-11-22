@@ -1,2 +1,2 @@
-export { EmailInput } from './emailInput/emailInput';
-export { PasswordInput } from './passwordInput/passwordInput';
+export { EmailInput } from './email-input';
+export { PasswordInput } from './password-input';

@@ -1,27 +1,28 @@
-import { Button, styled } from "@mui/material";
+import Button from '@mui/material/Button';
+import styled from '@mui/material/styles/styled';
 
 export const SearchSection = styled(Button)(({ theme }) => ({
-    textTransform: 'none',
-    borderRadius: 50,
-    padding: '8px 24px',
-    height: '100%', // Fill the container height
-    color: '#222222',
-    backgroundColor: 'transparent',
-    flex: 1,
-    minWidth: 0,
-    minHeight: 0, // Remove default button minimum height
-    '&:hover': {
-        backgroundColor: '#F7F7F7',
-    },
-    '& .MuiStack-root': {
-        width: '100%', // Ensure stack takes full width
-        height: '100%', // Fill the button height
-        justifyContent: 'center', // Center content vertically
-    },
-    [theme.breakpoints.down('md')]: {
-        padding: '8px 16px',
-    },
-    [theme.breakpoints.down('sm')]: {
-        padding: '8px 12px',
-    },
+  textTransform: 'none',
+  borderRadius: 50,
+  padding: '8px 24px',
+  height: '100%',
+  color: '#222222',
+  backgroundColor: 'transparent',
+  flex: 1,
+  minWidth: 0,
+  minHeight: 0,
+  '&:hover': {
+    backgroundColor: '#F7F7F7',
+  },
+  '& .MuiStack-root': {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+  },
+  [theme.breakpoints.down('md')]: {
+    padding: '8px 16px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    padding: '8px 12px',
+  },
 }));

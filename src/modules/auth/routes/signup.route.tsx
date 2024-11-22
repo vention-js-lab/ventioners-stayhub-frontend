@@ -1,16 +1,16 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import { SignupForm } from '../components';
-import styles from '../styles/authPage.module.css';
+import { authPageStyles as styles } from '../styles/auth-page.styles';
 
 export function SignupRoute() {
   return (
-    <Box className={styles.container}>
-      <Box className={styles.wrapper}>
-        <Box className={styles.header}>
-          <Box className={styles.title}>Sign up</Box>
+    <Box sx={styles.container}>
+      <Box sx={styles.wrapper}>
+        <Box sx={styles.header}>
+          <Box sx={styles.title}>Sign up</Box>
         </Box>
-        <Box className={styles.main}>
-          <Box className={styles.heading}>Welcome to StayHub</Box>
+        <Box sx={styles.main}>
+          <Box sx={styles.heading}>Welcome to StayHub</Box>
 
           <SignupForm />
         </Box>

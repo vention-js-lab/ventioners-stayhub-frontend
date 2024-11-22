@@ -8,14 +8,22 @@ type GetPropertiesResponse = {
   totalCount: number;
   totalPages: number;
 };
-
-export async function getProperties(page: number = 1, categoryId?: string): Promise<GetPropertiesResponse> {
-  const params: { page: number; categoryId?: string } = {
+type GetPropertiesParams = {
+  page: number;
+  categoryId?: string;
+  search?: string;
+};
+export async function getProperties({ page, categoryId, search }: GetPropertiesParams): Promise<GetPropertiesResponse> {
+  const params: GetPropertiesParams = {
     page,
   };
 
   if (categoryId) {
     params.categoryId = categoryId;
+  }
+
+  if (search) {
+    params.search = search;
   }
 
   const response = await axiosInstance.get<GetPropertiesResponse>(ENDPOINTS.accommodations, {
@@ -25,9 +33,9 @@ export async function getProperties(page: number = 1, categoryId?: string): Prom
   return response.data;
 }
 
-export function useProperties({ page = 1, categoryId }: { page?: number; categoryId?: string }) {
+export function useProperties(params: GetPropertiesParams) {
   return useQuery({
-    queryKey: ['properties', { page, categoryId }],
-    queryFn: () => getProperties(page, categoryId),
+    queryKey: ['properties', params],
+    queryFn: () => getProperties(params),
   });
 }
