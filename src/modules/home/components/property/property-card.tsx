@@ -3,7 +3,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { type Accommodation } from '../../types/accommodation.type';
+import { type Accommodation } from '../../../../types/accommodation.type';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { styles } from './property.styles';
 import 'swiper/css';

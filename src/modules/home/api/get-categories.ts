@@ -1,7 +1,7 @@
 import { axiosInstance } from '#/configs/axios.config';
 import { useQuery } from '@tanstack/react-query';
 import { ENDPOINTS } from '../constants/endpoints.constant';
-import { type Category } from '../types/category.type';
+import { type Category } from '../../../types/category.type';
 
 type GetCategoriesResponse = {
   data: Category[];

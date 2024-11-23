@@ -1,6 +1,6 @@
 import { axiosInstance } from '#/configs/axios.config';
 import { useQuery } from '@tanstack/react-query';
-import { type Accommodation } from '../types/accommodation.type';
+import { type Accommodation } from '../../../types/accommodation.type';
 import { ENDPOINTS } from '../constants/endpoints.constant';
 
 type GetPropertiesResponse = {
