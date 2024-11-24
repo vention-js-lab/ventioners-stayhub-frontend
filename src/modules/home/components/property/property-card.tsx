@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { type Accommodation } from '../../types/accommodation.type';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { styles } from './property.styles';
+import { properyCardStyles } from './property-card.styles';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
@@ -23,7 +23,7 @@ export function ApartmentCard(apartment: Accommodation) {
   return (
     <Link to={`/apartment/${apartment.id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
-        <FavoriteBorderIcon onClick={handleFavoriteClick} sx={styles.favoriteIconStyle} />
+        <FavoriteBorderIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} />
         <Swiper
           style={{ height: '240px', aspectRatio: '1/1', width: '100%', borderRadius: '12px' }}
           spaceBetween={30}

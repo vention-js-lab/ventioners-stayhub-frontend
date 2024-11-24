@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import LanguageIcon from '@mui/icons-material/Language';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -11,6 +10,7 @@ import { UserMenu } from '../../styles';
 import { LanguageModal } from './modals';
 import { Language } from '../../types/enums';
 import { userNavigationStyles } from './styles';
+import { MenuItemLink } from './menu-item-link';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -66,24 +66,27 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         transformOrigin={userNavigationStyles.menuContainer.transformOrigin}
         elevation={userNavigationStyles.menuContainer.elevation}
       >
-        <MenuItem onClick={handleMenuClose} href="/signup_login">
+        <MenuItemLink onClick={handleMenuClose} to="/signup">
           Sign up
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose} href="/login" sx={{ borderBottom: '1px solid #DDDDDD' }}>
+        </MenuItemLink>
+        <MenuItemLink onClick={handleMenuClose} to="/login" sx={{ borderBottom: '1px solid #DDDDDD' }}>
           Log in
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose} href="/giftcards">
+        </MenuItemLink>
+        <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
+          Wishlist
+        </MenuItemLink>
+        <MenuItemLink onClick={handleMenuClose} to="/giftcards">
           Gift cards
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose} href="/host/homes">
+        </MenuItemLink>
+        <MenuItemLink onClick={handleMenuClose} to="/host/homes">
           Airbnb your home
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose} href="/host/experiences">
+        </MenuItemLink>
+        <MenuItemLink onClick={handleMenuClose} to="/host/experiences">
           Host experience
-        </MenuItem>
-        <MenuItem onClick={handleMenuClose} href="/help">
+        </MenuItemLink>
+        <MenuItemLink onClick={handleMenuClose} to="/help">
           Help center
-        </MenuItem>
+        </MenuItemLink>
       </Menu>
     </Box>
   );
