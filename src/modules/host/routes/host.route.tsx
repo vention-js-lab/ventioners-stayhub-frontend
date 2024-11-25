@@ -1,10 +1,15 @@
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { AccommodationProvider } from '#/modules/host/context';
+import { AccommodationCreation, Header } from '#/modules/host/components';
+import { hostRouteStyles } from '#/modules/host/routes/host-route.styles.ts';
 
 export function HostRoute() {
   return (
-    <Box>
-      <Typography>Host</Typography>
+    <Box sx={hostRouteStyles.container}>
+      <Header />
+      <AccommodationProvider>
+        <AccommodationCreation />
+      </AccommodationProvider>
     </Box>
   );
 }
