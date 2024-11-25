@@ -21,6 +21,8 @@ export function AccommodationProvider({ children }: { children: ReactNode }) {
     description: '',
     images: [],
     location: '',
+    latitude: 0,
+    longitude: 0,
     pricePerNight: 0,
     categoryId: '',
   });
