@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { languages } from '../constants';
 import { languageModalStyles } from '../styles';
-import { Language } from '#/modules/home/types/enums';
+import { type Language } from '#/modules/home/types/enums';
 
 interface LanguageModalProps {
   open: boolean;
@@ -49,13 +49,13 @@ export function LanguageModal({ open, onClose, selectedLanguage, onLanguageSelec
                 }}
                 sx={languageModalStyles.listItemButton}
               >
-                <Radio checked={selectedLanguage === lang.code} sx={languageModalStyles.checkbox} />
+                <Radio checked={selectedLanguage === (lang.code as Language)} sx={languageModalStyles.checkbox} />
                 <ListItemText
                   primary={lang.name}
                   secondary={lang.region}
                   primaryTypographyProps={{
                     fontWeight:
-                      selectedLanguage === lang.code
+                      selectedLanguage === (lang.code as Language)
                         ? languageModalStyles.listItemText.chosen
                         : languageModalStyles.listItemText.default,
                   }}

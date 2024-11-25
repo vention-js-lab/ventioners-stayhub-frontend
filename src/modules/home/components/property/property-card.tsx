@@ -7,7 +7,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { type Accommodation } from '../../types/accommodation.type';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { styles } from './property.styles';
+import { properyCardStyles } from './property-card.styles';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
@@ -15,16 +15,22 @@ import 'swiper/css/pagination';
 import './swiper.css';
 
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
+import { axiosInstance } from '#/configs';
+import { useWishlistedProperties } from '../../api/get-wishlisted-properties';
 
 export function ApartmentCard({ id, name, location, pricePerNight, images }: Accommodation) {
-  const [isLiked, setIsLiked] = useState(false);
+  const { data } = useWishlistedProperties();
   const navidate = useNavigate();
-  useEffect(() => {
-    const likedStatus = localStorage.getItem(`liked-${id}`);
-    setIsLiked(likedStatus === 'true');
-  }, [id]);
+  const [isLiked, setIsLiked] = useState(false);
 
-  const handleFavoriteClick = (event: React.MouseEvent) => {
+  useEffect(() => {
+    if (data?.data) {
+      const likedFromData = data.data.find((item) => item.id === id);
+      setIsLiked(!!likedFromData);
+    }
+  }, [data, id]);
+
+  const handleFavoriteClick = async (event: React.MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
     const isUserExist = localStorage.getItem(`isUserLoggedIn`);
@@ -34,18 +40,22 @@ export function ApartmentCard({ id, name, location, pricePerNight, images }: Acc
       return;
     }
 
-    const newLikedStatus = !isLiked;
-    setIsLiked(newLikedStatus);
-    localStorage.setItem(`liked-${id}`, String(newLikedStatus));
+    try {
+      setIsLiked((prev) => !prev);
+      await axiosInstance.post(`/accommodations/${id}/like`);
+    } catch (error) {
+      console.error('Failed to like/unlike accommodation:', error);
+      setIsLiked((prev) => !prev);
+    }
   };
 
   return (
     <Link to={`/apartment/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
         {isLiked ? (
-          <FavoriteIcon onClick={handleFavoriteClick} sx={styles.favoriteIconStyle} style={{ color: 'red' }} />
+          <FavoriteIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} style={{ color: 'red' }} />
         ) : (
-          <FavoriteBorderIcon onClick={handleFavoriteClick} sx={styles.favoriteIconStyle} />
+          <FavoriteBorderIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} />
         )}
         <Swiper
           style={{ height: '240px', aspectRatio: '1/1', width: '100%', borderRadius: '12px' }}

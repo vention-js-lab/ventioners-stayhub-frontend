@@ -1,6 +1,6 @@
-import type { SxProps, Theme } from '@mui/material/styles';
+import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 
-export const styles: Record<string, SxProps<Theme>> = {
+export const properyCardStyles = {
   favoriteIconStyle: {
     position: 'absolute',
     top: 8,
@@ -12,4 +12,4 @@ export const styles: Record<string, SxProps<Theme>> = {
     padding: '4px',
     fontSize: '32px',
   },
-};
+} satisfies MuiStylesObject;
