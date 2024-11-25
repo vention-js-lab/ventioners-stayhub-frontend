@@ -10,6 +10,7 @@ import { QueryClientConfig } from './configs';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '#/routes';
+import 'react-toastify/dist/ReactToastify.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
