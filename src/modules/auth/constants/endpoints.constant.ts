@@ -6,3 +6,8 @@ export const ENDPOINTS = {
   refresh: '/auth/refresh',
   user: '/auth/me',
 } as const;
+
+export const ROUTES = {
+  login: '/login',
+  signup: '/signup',
+} as const;

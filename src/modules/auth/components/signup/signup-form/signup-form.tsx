@@ -7,10 +7,10 @@ import { AxiosError } from 'axios';
 import Box from '@mui/material/Box';
 import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswordInput } from '../components';
 import { UserSignupSchema } from '#/zod';
-import type { AuthFormData, AxiosErrorResponse } from '#/modules/auth/types';
-import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
+import type { AuthFormData, AxiosErrorResponse, FormDataKeys } from '#/modules/auth/types';
+import { AuthRedirectButton, ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { getFirstErrorMessage } from '#/utils';
-import { ENDPOINTS } from '#/modules/auth/constants';
+import { ENDPOINTS, ROUTES } from '#/modules/auth/constants';
 import { signupFormStyles as styles } from './signup-form.styles';
 
 const maps = [
@@ -29,10 +29,10 @@ export function SignupForm() {
     setError,
   } = useForm<AuthFormData>({ resolver: zodResolver(UserSignupSchema) });
 
-  const [focusedField, setFocusedField] = useState<AuthFormData | null>(null);
+  const [focusedField, setFocusedField] = useState<FormDataKeys | null>(null);
   const navigate = useNavigate();
 
-  function handleFocus(field: AuthFormData) {
+  function handleFocus(field: FormDataKeys) {
     setFocusedField(field);
   }
 
@@ -95,6 +95,8 @@ export function SignupForm() {
       </Box>
 
       <GoogleAuthButton />
+
+      <AuthRedirectButton link={ROUTES.login} message="Log in to your account" />
     </>
   );
 }

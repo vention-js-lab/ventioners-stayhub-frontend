@@ -8,9 +8,9 @@ import Box from '@mui/material/Box';
 import { EmailInput, PasswordInput } from '../components';
 import { UserLoginSchema } from '#/zod';
 import type { AuthFormData, AxiosErrorResponse, FormDataKeys } from '#/modules/auth/types';
-import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
+import { AuthRedirectButton, ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { getFirstErrorMessage } from '#/utils';
-import { ENDPOINTS } from '#/modules/auth/constants';
+import { ENDPOINTS, ROUTES } from '#/modules/auth/constants';
 import { loginFormStyles as styles } from './login-form.styles';
 
 const maps = [{ Component: EmailInput }, { Component: PasswordInput }];
@@ -76,6 +76,8 @@ export function LoginForm() {
       </Box>
 
       <GoogleAuthButton />
+
+      <AuthRedirectButton link={ROUTES.signup} message="Create an account" />
     </>
   );
 }
