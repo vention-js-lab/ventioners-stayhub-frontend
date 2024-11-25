@@ -1,3 +1,4 @@
+import type { User } from '#/entities';
 import type { UseFormRegister } from 'react-hook-form';
 
 export type AuthFormData = {
@@ -19,4 +20,8 @@ export type FormInputProps = {
 
 export type AxiosErrorResponse = {
   message: string;
+};
+
+export type AxiosAuthResponse = {
+  user: User;
 };
