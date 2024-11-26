@@ -16,7 +16,7 @@ export const userNavigationStyles = {
     height: 20,
   },
   menuIcon: { width: 24, height: 24, color: '#717171' },
-  accountCircleIcon: { width: 32, height: 32, color: '#717171' },
+  accountCircleIcon: { width: 32, height: 32, color: '#717171', marginRight: '5px' },
   menuContainer: {
     anchorOrigin: {
       vertical: 'bottom',

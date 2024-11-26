@@ -11,6 +11,11 @@ import { LanguageModal } from './modals';
 import { Language } from '../../types/enums';
 import { userNavigationStyles } from './styles';
 import { MenuItemLink } from './menu-item-link';
+import { useAppDispatch, useAppSelector } from '#/redux/hooks';
+import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
+import { axiosInstance } from '#/configs';
+import { UserProfileIcon } from './user-profile-icon';
+import { removeUser } from '#/redux/auth/authSlice';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -21,6 +26,8 @@ interface MenuProps {
 export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuClose, handleMenuOpen }: T) {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.UZ);
+  const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   const handleLanguageIconClick = () => {
     setIsLanguageModalOpen(true);
@@ -33,6 +40,18 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
   const handleLanguageSelect = (language: Language) => {
     setSelectedLanguage(language);
   };
+
+  async function handleLogout() {
+    try {
+      await axiosInstance.get(AUTH_ENDPOINTS.logout);
+    } catch (err) {
+      console.error(err);
+    }
+
+    dispatch(removeUser());
+
+    handleMenuClose();
+  }
 
   return (
     <Box sx={userNavigationStyles.container}>
@@ -55,7 +74,13 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         variant="outlined"
         onClick={handleMenuOpen}
         startIcon={<MenuIcon sx={userNavigationStyles.menuIcon} />}
-        endIcon={<AccountCircle sx={userNavigationStyles.accountCircleIcon} />}
+        endIcon={
+          auth.loggedIn ? (
+            <UserProfileIcon firstName={auth.user!.firstName} />
+          ) : (
+            <AccountCircle sx={userNavigationStyles.accountCircleIcon} />
+          )
+        }
       />
 
       <Menu
@@ -66,27 +91,27 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         transformOrigin={userNavigationStyles.menuContainer.transformOrigin}
         elevation={userNavigationStyles.menuContainer.elevation}
       >
-        <MenuItemLink onClick={handleMenuClose} to="/signup">
-          Sign up
-        </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/login" sx={{ borderBottom: '1px solid #DDDDDD' }}>
-          Log in
+        {!auth.loggedIn && (
+          <>
+            <MenuItemLink onClick={handleMenuClose} to="/signup">
+              Sign up
+            </MenuItemLink>
+            <MenuItemLink onClick={handleMenuClose} to="/login" sx={{ borderBottom: '1px solid #DDDDDD' }}>
+              Log in
+            </MenuItemLink>
+          </>
+        )}
+        <MenuItemLink onClick={handleMenuClose} to="/host/homes">
+          Airbnb your home
         </MenuItemLink>
         <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
           Wishlist
         </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/giftcards">
-          Gift cards
-        </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/host/homes">
-          Airbnb your home
-        </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/host/experiences">
-          Host experience
-        </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/help">
-          Help center
-        </MenuItemLink>
+        {auth.loggedIn && (
+          <MenuItemLink to="/" onClick={handleLogout}>
+            Logout
+          </MenuItemLink>
+        )}
       </Menu>
     </Box>
   );
