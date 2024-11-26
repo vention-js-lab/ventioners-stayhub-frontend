@@ -1,26 +1,16 @@
 import { axiosInstance } from '#/configs';
-import { useAppDispatch } from '#/redux/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { ENDPOINTS } from '../constants';
-import { AxiosAuthResponse } from '../types';
-import { createUser } from '#/redux/auth/authSlice';
 
 export function useAuth() {
-  const dispatch = useAppDispatch();
-
-  function getUser() {
-    axiosInstance
-      .get(ENDPOINTS.user)
-      .then((res) => {
-        const resData = res.data as AxiosAuthResponse;
-        dispatch(createUser(resData.user));
-
-        return resData.user;
-      })
-      .catch((err) => {
-        console.error(err);
-        throw err;
-      });
+  async function getUser() {
+    try {
+      const { data } = await axiosInstance.get(ENDPOINTS.user);
+      return data.user;
+    } catch (err) {
+      console.error(err);
+      throw new Error('Could not fetch user');
+    }
   }
 
   return useQuery({
