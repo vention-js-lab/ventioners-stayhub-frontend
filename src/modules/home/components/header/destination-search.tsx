@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Popover from '@mui/material/Popover';
 import TextField from '@mui/material/TextField';
@@ -51,13 +51,15 @@ export function DestinationSearch({ searchValue, setSearchValue, setSelectedLoca
   );
 
   return (
-    <SearchSection onClick={(e) => setAnchorEl(e.currentTarget)} sx={searchbarStyles.searchSection.container}>
-      <Stack alignItems="flex-start" sx={searchbarStyles.searchButtonContainer}>
-        <Typography sx={searchbarStyles.commonTypography.title}>Search here</Typography>
-        <Typography sx={searchbarStyles.commonTypography.subtitle}>
-          {searchValue || (selectedDestination?.name ?? 'Search destinations')}
-        </Typography>
-      </Stack>
+    <>
+      <SearchSection onClick={(e) => setAnchorEl(e.currentTarget)} sx={searchbarStyles.searchSection.container}>
+        <Stack alignItems="flex-start" sx={searchbarStyles.searchButtonContainer}>
+          <Typography sx={searchbarStyles.commonTypography.title}>Search here</Typography>
+          <Typography sx={searchbarStyles.commonTypography.subtitle}>
+            {searchValue || (selectedDestination?.name ?? 'Search destinations')}
+          </Typography>
+        </Stack>
+      </SearchSection>
 
       <Popover
         open={Boolean(anchorEl)}
@@ -107,6 +109,6 @@ export function DestinationSearch({ searchValue, setSearchValue, setSelectedLoca
           )}
         </List>
       </Popover>
-    </SearchSection>
+    </>
   );
 }
