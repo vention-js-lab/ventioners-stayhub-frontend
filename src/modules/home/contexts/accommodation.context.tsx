@@ -20,10 +20,10 @@ export function AccommodationProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<AccommodationFormData>({
     name: '',
     description: '',
-    images: [],
     location: '',
     pricePerNight: 0,
     categoryId: '',
+    images: [],
     amenityIds: [],
   });
 
