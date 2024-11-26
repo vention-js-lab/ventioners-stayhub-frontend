@@ -3,11 +3,13 @@ import type { AccommodationFormData } from '#/modules/home/types/accommodation-f
 import { axiosInstance } from '#/configs';
 import { ENDPOINTS } from '#/modules/home/constants/endpoints.constant.ts';
 import { toast } from 'react-toastify';
+import { type AccommodationBasics } from '#/modules/home/types/accommodation-basics.type.ts';
+import { type Accommodation } from '#/modules/home/types/accommodation.type.ts';
 
 export const useCreateAccommodation = () => {
   return useMutation({
-    mutationFn: (data: AccommodationFormData) =>
-      axiosInstance.post(ENDPOINTS.accommodations, data, {
+    mutationFn: (data: AccommodationFormData & AccommodationBasics) =>
+      axiosInstance.post<Accommodation>(ENDPOINTS.accommodations, data, {
         headers: { 'Content-Type': 'application/json' },
       }),
     onSuccess: () => {
