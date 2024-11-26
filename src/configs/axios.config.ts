@@ -12,16 +12,25 @@ export const axiosInstance = axios.create({
   },
 });
 
-// TODO: further work on interceptor required
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response && error.response?.status === 401 && error.message !== 'Invalid refresh token') {
+    const origReq = error.config;
+
+    let retryCnt = Number(origReq.headers['X-Refresh-Token-Retry-Count']);
+    if (Number.isNaN(retryCnt)) {
+      origReq.headers['X-Refresh-Token-Retry-Count'] = 0;
+      retryCnt = 0;
+    }
+
+    if (error.response && error.response?.status === 401 && retryCnt === 0) {
       try {
-        await axiosInstance.get(ENDPOINTS.refresh);
-        return axiosInstance(error.config);
+        await axiosInstance.get(ENDPOINTS.refresh, {
+          headers: { 'X-Refresh-Token-Retry-Count': retryCnt + 1 },
+        });
+
+        return axiosInstance(origReq);
       } catch (refreshError) {
-        window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     }

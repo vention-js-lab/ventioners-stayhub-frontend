@@ -7,7 +7,6 @@ export const router = createBrowserRouter([
   {
     id: 'App wrapper public',
     path: '/',
-    element: <AuthLayout protectedRoute={false} />,
     children: [...publicRoutes],
   },
   {
