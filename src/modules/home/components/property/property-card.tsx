@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -16,43 +16,34 @@ import './swiper.css';
 
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { axiosInstance } from '#/configs';
-import { useWishlistedProperties } from '../../api/get-wishlisted-properties';
 
-export function ApartmentCard({ id, name, location, pricePerNight, images }: Accommodation) {
-  const { data } = useWishlistedProperties();
-  const navidate = useNavigate();
-  const [isLiked, setIsLiked] = useState(false);
-
-  useEffect(() => {
-    if (data?.data) {
-      const likedFromData = data.data.find((item) => item.id === id);
-      setIsLiked(!!likedFromData);
-    }
-  }, [data, id]);
+export function ApartmentCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
+  const navigate = useNavigate();
+  const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
 
   const handleFavoriteClick = async (event: React.MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
-    const isUserExist = localStorage.getItem(`isUserLoggedIn`);
+    // const isUserExist = localStorage.getItem(`isUserLoggedIn`);
 
-    if (!isUserExist) {
-      navidate('/login');
-      return;
-    }
+    // if (!isUserExist) {
+    //   navigate('/login');
+    //   return;
+    // }
 
     try {
-      setIsLiked((prev) => !prev);
-      await axiosInstance.post(`/accommodations/${id}/like`);
+      setInWishlist((prev) => !prev);
+      await axiosInstance.post(`/accommodations/${id}/wishlist`);
     } catch (error) {
-      console.error('Failed to like/unlike accommodation:', error);
-      setIsLiked((prev) => !prev);
+      alert('Failed to add/remove to wishlist');
+      setInWishlist((prev) => !prev);
     }
   };
 
   return (
     <Link to={`/apartment/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
-        {isLiked ? (
+        {isInWishlist ? (
           <FavoriteIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} style={{ color: 'red' }} />
         ) : (
           <FavoriteBorderIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} />
@@ -70,7 +61,7 @@ export function ApartmentCard({ id, name, location, pricePerNight, images }: Acc
           className="mySwiper"
         >
           {images.map((image) => (
-            <SwiperSlide key={id}>
+            <SwiperSlide key={image}>
               <img src={image} alt="Image of Apartment" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </SwiperSlide>
           ))}

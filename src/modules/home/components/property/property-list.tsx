@@ -3,6 +3,7 @@ import { ApartmentCard } from '#/modules/home/components/property/property-card'
 import Typography from '@mui/material/Typography';
 import { type Accommodation } from '../../types/accommodation.type';
 import { propertyListStyles } from './property-list.styles';
+import { useWishlistedProperties } from '../../api/get-wishlisted-properties';
 
 interface PropertyListProps {
   isLoading: boolean;
@@ -11,6 +12,8 @@ interface PropertyListProps {
 }
 
 export function PropertyList({ emptyMessage = 'No properties found', isLoading, data }: PropertyListProps) {
+  const { data: wishlistedData } = useWishlistedProperties();
+
   if (isLoading) {
     return (
       <Box sx={propertyListStyles.loadingMessage}>
@@ -18,7 +21,7 @@ export function PropertyList({ emptyMessage = 'No properties found', isLoading, 
       </Box>
     );
   }
-
+  const wishlistedIds = wishlistedData?.data?.map((item: Accommodation) => item.id) ?? [];
   const propertiesData = data?.data ?? [];
 
   if (propertiesData.length === 0) {
@@ -32,7 +35,7 @@ export function PropertyList({ emptyMessage = 'No properties found', isLoading, 
   return (
     <Box sx={propertyListStyles.container}>
       {propertiesData.map((item) => (
-        <ApartmentCard key={item.id} {...item} />
+        <ApartmentCard key={item.id} {...item} isAddedToWishlist={wishlistedIds.includes(item.id)} />
       ))}
     </Box>
   );
