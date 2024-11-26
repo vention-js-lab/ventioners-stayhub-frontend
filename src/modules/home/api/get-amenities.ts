@@ -8,7 +8,7 @@ type GetAmenitiesResponse = {
 };
 
 export async function getAmenities(): Promise<GetAmenitiesResponse> {
-  const response = await axiosInstance.get<GetAmenitiesResponse>(ENDPOINTS.categories);
+  const response = await axiosInstance.get<GetAmenitiesResponse>(ENDPOINTS.amenities);
 
   return response.data;
 }
