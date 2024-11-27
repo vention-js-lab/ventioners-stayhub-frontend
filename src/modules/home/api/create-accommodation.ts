@@ -9,9 +9,7 @@ import { type Accommodation } from '#/modules/home/types/accommodation.type.ts';
 export const useCreateAccommodation = () => {
   return useMutation({
     mutationFn: (data: AccommodationFormData & AccommodationBasics) =>
-      axiosInstance.post<Accommodation>(ENDPOINTS.accommodations, data, {
-        headers: { 'Content-Type': 'application/json' },
-      }),
+      axiosInstance.post<Accommodation>(ENDPOINTS.accommodations, data),
     onSuccess: () => {
       toast.success('Accommodation created successfully!');
       window.location.href = ENDPOINTS.root;
