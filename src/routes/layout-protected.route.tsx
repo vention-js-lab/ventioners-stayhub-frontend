@@ -4,23 +4,7 @@ import { useAppDispatch } from '#/redux/hooks';
 import { createUser, removeUser } from '#/redux/auth/auth-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-
-const styles = {
-  container: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  spinner: {
-    color: '#000000',
-  },
-};
+import { layoutProtectedStyles as styles } from '#/styles/layout-protected.styles';
 
 type Props = {
   protectedRoute: boolean;
