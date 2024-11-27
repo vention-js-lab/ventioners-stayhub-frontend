@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Popover from '@mui/material/Popover';
 import TextField from '@mui/material/TextField';

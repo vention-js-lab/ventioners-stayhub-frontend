@@ -53,7 +53,6 @@ export default tseslint.config(
       'guard-for-in': 'error',
       'no-bitwise': 'error',
       'no-caller': 'error',
-      'no-console': 'error',
       'no-div-regex': 'error',
       'no-else-return': 'error',
       'no-eq-null': 'error',
@@ -188,7 +187,7 @@ export default tseslint.config(
       'react/jsx-no-leaked-render': 'error',
       'react/jsx-no-useless-fragment': ['warn', { allowExpressions: true }],
       'react/jsx-pascal-case': 'error',
-      'react/no-array-index-key': 'warn',
+      'react/no-array-index-key': 'off',
       'react/no-danger': 'error',
       'react/no-unstable-nested-components': [
         'error',
