@@ -1,5 +1,5 @@
-import type { User } from '#/interfaces';
-import type { UseFormRegister } from 'react-hook-form';
+import { type User } from '#/types';
+import { type UseFormRegister } from 'react-hook-form';
 
 export type AuthFormData = {
   firstName: string;
