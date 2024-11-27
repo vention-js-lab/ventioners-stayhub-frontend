@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '#/redux/hooks';
 import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
 import { axiosInstance } from '#/configs';
 import { UserProfileIcon } from './user-profile-icon';
-import { removeUser } from '#/redux/auth/auth-slice';
+import { removeUser, selectAuth } from '#/redux/auth/auth-slice';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -26,7 +26,7 @@ interface MenuProps {
 export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuClose, handleMenuOpen }: T) {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.UZ);
-  const auth = useAppSelector((state) => state.auth);
+  const auth = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
 
   const handleLanguageIconClick = () => {
