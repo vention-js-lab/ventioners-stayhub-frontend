@@ -16,6 +16,7 @@ import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
 import { api } from '#/configs';
 import { UserProfileIcon } from './user-profile-icon';
 import { removeUser, selectAuth } from '#/redux/auth/auth-slice';
+import { toast } from 'react-toastify';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -44,8 +45,9 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
   async function handleLogout() {
     try {
       await api.get(AUTH_ENDPOINTS.logout);
-    } catch (err) {
-      console.error(err);
+      toast('Logged out successfully');
+    } catch {
+      toast("Couldn't log you out. Please try again");
     }
 
     dispatch(removeUser());
