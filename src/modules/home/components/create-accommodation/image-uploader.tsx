@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef, type ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -12,7 +12,7 @@ export function ImageUploader() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { data, updateData } = useAccommodation();
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.currentTarget.files || []);
 
     const newPreviews = files.filter((file) => file instanceof File);
