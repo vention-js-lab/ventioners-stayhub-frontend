@@ -12,7 +12,6 @@ import { AccommodationDetailsForm } from './accommodation-details-form.tsx';
 import { ImageUploader } from './image-uploader.tsx';
 import { useCreateAccommodation } from '#/modules/home/api/create-accommodation.ts';
 import { useAccommodation } from '#/modules/home/contexts';
-import { useUploadAccommodationImages } from '#/modules/home/api/create-images.ts';
 import { ENDPOINTS } from '#/modules/auth/constants';
 
 export function CreateAccommodation() {
@@ -26,11 +25,10 @@ export function CreateAccommodation() {
     images: [],
     amenityIds: [],
   });
-  const [createdAccommodationId, setCreatedAccommodationId] = useState<string | null>(null);
+
   const { data, basics } = useAccommodation();
 
   const createAccommodation = useCreateAccommodation();
-  const uploadImages = useUploadAccommodationImages();
 
   const handleNext = () => {
     if (activeStep === 0) {
@@ -40,17 +38,7 @@ export function CreateAccommodation() {
         return;
       }
 
-      const creationPayload = {
-        ...data,
-        ...basics,
-      };
-
-      createAccommodation.mutate(creationPayload, {
-        onSuccess: (response) => {
-          setCreatedAccommodationId(response.data.id);
-          setActiveStep(1);
-        },
-      });
+      setActiveStep(1);
     } else if (activeStep === 1) {
       const imagesToUpload = data.images.filter((image) => image instanceof File);
 
@@ -59,17 +47,18 @@ export function CreateAccommodation() {
         return;
       }
 
-      if (createdAccommodationId) {
-        uploadImages.mutate(
-          { files: imagesToUpload, accommodationId: createdAccommodationId },
-          {
-            onSuccess: () => {
-              toast.success('Accommodation created successfully!');
-              window.location.href = ENDPOINTS.root;
-            },
-          }
-        );
-      }
+      const creationPayload = {
+        ...data,
+        ...basics,
+        images: imagesToUpload,
+      };
+
+      createAccommodation.mutate(creationPayload, {
+        onSuccess: () => {
+          toast.success('Accommodation created successfully!');
+          window.location.href = ENDPOINTS.root;
+        },
+      });
     }
   };
 

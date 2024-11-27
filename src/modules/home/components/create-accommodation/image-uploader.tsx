@@ -9,11 +9,11 @@ import { imageUploaderStyles } from './styles';
 import { useAccommodation } from '#/modules/home/contexts';
 
 export function ImageUploader() {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { data, updateData } = useAccommodation();
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files || []);
+    const files = Array.from(event.currentTarget.files || []);
 
     const newPreviews = files.filter((file) => file instanceof File);
 
@@ -21,7 +21,7 @@ export function ImageUploader() {
       images: [...data.images, ...newPreviews],
     });
 
-    if (fileInputRef.current) {
+    if (fileInputRef.current && 'value' in fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
