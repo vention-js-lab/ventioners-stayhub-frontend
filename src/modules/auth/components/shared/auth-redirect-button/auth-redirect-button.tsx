@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
-import mailIcon from '#/modules/auth/assets/icons/mail.svg';
+import mailIcon from '#/assets/mail.svg';
 import { authRedirectButtonStyles as styles } from './auth-redirect-button.styles';
 import { ROUTES } from '#/modules/auth/constants';
 
