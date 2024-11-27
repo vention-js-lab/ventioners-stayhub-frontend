@@ -47,4 +47,4 @@ export function AccommodationProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export const useAccommodation = () => useContext(AccommodationContext);
+export const useAccommodationContext = () => useContext(AccommodationContext);

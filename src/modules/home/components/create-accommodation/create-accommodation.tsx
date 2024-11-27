@@ -11,7 +11,7 @@ import { createAccommodationStyles } from './styles';
 import { AccommodationDetailsForm } from './accommodation-details-form.tsx';
 import { ImageUploader } from './image-uploader.tsx';
 import { useCreateAccommodation } from '#/modules/home/api/create-accommodation.ts';
-import { useAccommodation } from '#/modules/home/contexts';
+import { useAccommodationContext } from '#/modules/home/contexts';
 import { ENDPOINTS } from '#/modules/auth/constants';
 
 export function CreateAccommodation() {
@@ -26,7 +26,7 @@ export function CreateAccommodation() {
     amenityIds: [],
   });
 
-  const { data, basics } = useAccommodation();
+  const { data, basics } = useAccommodationContext();
 
   const createAccommodation = useCreateAccommodation();
 
