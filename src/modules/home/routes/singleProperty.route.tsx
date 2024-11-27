@@ -6,8 +6,8 @@ import { PropertyImagesWrapper } from '../components/singleProperty/singleProper
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { singlePropertyStyles } from './singleProperty.route.styles';
-import SinglePropertyAmenity from '../components/singleProperty/singlePropertyAmenity';
-import SinglePropertyReview from '../components/singleProperty/singlePropertyReview';
+import { SinglePropertyAmenity } from '../components/singleProperty/singlePropertyAmenity';
+import { SinglePropertyReview } from '../components/singleProperty/singlePropertyReview';
 import Divider from '@mui/material/Divider';
 
 const accommodation = {

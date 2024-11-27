@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { type Dayjs } from 'dayjs';
+import dayjs, { type Dayjs } from 'dayjs';
 
 interface Amenity {
   id: string;
@@ -22,7 +22,7 @@ interface SinglePropertyAmenityProps {
   pricePerNight: number;
 }
 
-const SinglePropertyAmenity: React.FC<SinglePropertyAmenityProps> = ({ owner, amenities, description, pricePerNight }) => {
+function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }: SinglePropertyAmenityProps) {
   const [showAll, setShowAll] = useState(false);
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
@@ -39,17 +39,19 @@ const SinglePropertyAmenity: React.FC<SinglePropertyAmenityProps> = ({ owner, am
       checkOutDate &&
       checkOutDate.isValid() &&
       checkInDate.isValid() &&
-      checkOutDate.diff(checkInDate, 'day') > 0
+      checkOutDate.diff(checkInDate, 'day') >= 0
     ) {
       const diffInDays = checkOutDate.diff(checkInDate, 'day');
-      const totalPrice = diffInDays * pricePerNight;
-      const serviceFee = 20;
-      return { totalPrice, serviceFee, diffInDays };
+      const basePrice = (diffInDays === 0 ? 1 : diffInDays) * pricePerNight;
+      const serviceFee = 0.1 * basePrice;
+      return { basePrice, serviceFee, diffInDays };
     }
-    return { totalPrice: 4 * pricePerNight, serviceFee: 20, diffInDays: 4 };
+    return { basePrice: 4 * pricePerNight, serviceFee: 4 * pricePerNight * 0.1, diffInDays: 4 };
   }, [checkInDate, checkOutDate, pricePerNight]);
 
-  const isDatePicked = calculatePrice.diffInDays > 0;
+  const isDatePicked = calculatePrice.diffInDays >= 0;
+
+  const totalPrice = calculatePrice.basePrice + calculatePrice.serviceFee;
 
   return (
     <Box
@@ -62,7 +64,7 @@ const SinglePropertyAmenity: React.FC<SinglePropertyAmenityProps> = ({ owner, am
         flexDirection: { xs: 'column', md: 'row' },
       }}
     >
-      <Box sx={{ maxWidth: 800, p: 2, flex: '1 1 60%' }}>
+      <Box sx={{ maxWidth: 800, p: 2, pl: { md: 0, xs: 2 }, flex: '1 1 60%' }}>
         <Divider sx={{ mb: 3 }} />
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <Avatar
@@ -140,10 +142,21 @@ const SinglePropertyAmenity: React.FC<SinglePropertyAmenityProps> = ({ owner, am
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, mt: 2 }}>
             <Box sx={{ flex: '1' }}>
-              <DatePicker label="Check-in" value={checkInDate} onChange={(newDate) => setCheckInDate(newDate)} />
+              <DatePicker
+                label="Check-in"
+                value={checkInDate}
+                onChange={(newDate) => setCheckInDate(newDate)}
+                minDate={dayjs()}
+              />
             </Box>
             <Box sx={{ flex: '1' }}>
-              <DatePicker label="Check-out" value={checkOutDate} onChange={(newDate) => setCheckOutDate(newDate)} />
+              <DatePicker
+                label="Check-out"
+                value={checkOutDate}
+                onChange={(newDate) => setCheckOutDate(newDate)}
+                minDate={checkInDate || dayjs()} // Disable dates before check-in or past dates
+                disabled={!checkInDate}
+              />
             </Box>
           </Box>
         </LocalizationProvider>
@@ -153,26 +166,27 @@ const SinglePropertyAmenity: React.FC<SinglePropertyAmenityProps> = ({ owner, am
         <Box sx={{ mt: 2 }}>
           <Typography variant="body1" sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Typography variant="body1">
-              ${pricePerNight} x {isDatePicked ? calculatePrice.diffInDays : 4} nights{' '}
-            </Typography>{' '}
-            <Typography variant="body1">${calculatePrice.totalPrice}</Typography>
+              ${pricePerNight} x {isDatePicked ? calculatePrice.diffInDays : 4} nights
+            </Typography>
+            <Typography variant="body1">${calculatePrice.basePrice}</Typography>
           </Typography>
           <Typography variant="body1" sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
-            <Typography variant="body1">StayHub Service Fee</Typography> <Typography variant="body1">$20</Typography>
+            <Typography variant="body1">StayHub Service Fee</Typography>{' '}
+            <Typography variant="body1">${calculatePrice.serviceFee}</Typography>
           </Typography>
           <Divider sx={{ my: 2 }} />
           <Typography variant="body1" sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
             <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
               Total
-            </Typography>{' '}
+            </Typography>
             <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-              ${calculatePrice.totalPrice + calculatePrice.serviceFee}
+              ${totalPrice}
             </Typography>
           </Typography>
         </Box>
       </Box>
     </Box>
   );
-};
+}
 
-export default SinglePropertyAmenity;
+export { SinglePropertyAmenity };

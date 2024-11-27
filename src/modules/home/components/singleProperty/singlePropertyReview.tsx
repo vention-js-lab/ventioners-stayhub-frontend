@@ -17,7 +17,7 @@ interface SinglePropertyReviewProps {
   reviews: Review[];
 }
 
-const SinglePropertyReview: React.FC<SinglePropertyReviewProps> = ({ reviews }) => {
+function SinglePropertyReview({ reviews }: SinglePropertyReviewProps) {
   const [numReviews, setNumReviews] = useState(12);
 
   const handleShowMore = () => {
@@ -27,7 +27,7 @@ const SinglePropertyReview: React.FC<SinglePropertyReviewProps> = ({ reviews }) 
   const overallRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
 
   return (
-    <Box sx={{ px: { md: 2, xs: 1 }, mt: { md: 0, xs: 4 } }}>
+    <Box sx={{ px: { md: 1, xs: 1 }, mt: { md: 0, xs: 4 } }}>
       <Typography variant="h4" sx={{ mb: 3, display: 'flex', alignItems: 'center', ml: { md: 0, xs: 2 } }}>
         <StarIcon sx={{ fontSize: '30px', mr: 1 }} /> {overallRating} ({reviews.length} reviews)
       </Typography>
@@ -115,6 +115,6 @@ const SinglePropertyReview: React.FC<SinglePropertyReviewProps> = ({ reviews }) 
       )}
     </Box>
   );
-};
+}
 
-export default SinglePropertyReview;
+export { SinglePropertyReview };
