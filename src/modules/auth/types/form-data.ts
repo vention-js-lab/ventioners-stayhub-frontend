@@ -1,4 +1,4 @@
-import type { User } from '#/entities';
+import type { User } from '#/interfaces';
 import type { UseFormRegister } from 'react-hook-form';
 
 export type AuthFormData = {

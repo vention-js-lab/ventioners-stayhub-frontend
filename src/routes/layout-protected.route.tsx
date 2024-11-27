@@ -1,7 +1,7 @@
 import { useAuth } from '#/modules/auth/hooks';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '#/redux/hooks';
-import { createUser, removeUser } from '#/redux/auth/authSlice';
+import { createUser, removeUser } from '#/redux/auth/auth-slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 

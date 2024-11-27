@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '#/redux/hooks';
 import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
 import { axiosInstance } from '#/configs';
 import { UserProfileIcon } from './user-profile-icon';
-import { removeUser } from '#/redux/auth/authSlice';
+import { removeUser } from '#/redux/auth/auth-slice';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
