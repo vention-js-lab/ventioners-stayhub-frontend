@@ -21,7 +21,7 @@ export function PropertyList({ emptyMessage = 'No properties found', isLoading, 
       </Box>
     );
   }
-  const wishlistedIds = wishlistedData?.data?.map((item: Accommodation) => item.id) ?? [];
+  const wishlistedIds = wishlistedData?.data.map((item: Accommodation) => item.id) ?? [];
   const propertiesData = data?.data ?? [];
 
   if (propertiesData.length === 0) {

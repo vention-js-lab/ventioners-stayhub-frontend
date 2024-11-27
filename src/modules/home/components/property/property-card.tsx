@@ -13,30 +13,41 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './swiper.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
-import { axiosInstance } from '#/configs';
+import { postWishlist } from '../../api/post-wishlist';
+import { useMutation } from '@tanstack/react-query';
 
 export function ApartmentCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const navigate = useNavigate();
   const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
 
-  const handleFavoriteClick = async (event: React.MouseEvent) => {
+  const mutation = useMutation({
+    mutationFn: () => postWishlist(id),
+    onSuccess: () => {
+      setInWishlist((prev) => !prev);
+    },
+    onError: () => {
+      toast.error('Failed to add/remove to wishlist');
+    },
+  });
+
+  const isLoading = mutation.status === 'pending';
+
+  const handleFavoriteClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
     event.preventDefault();
-    // const isUserExist = localStorage.getItem(`isUserLoggedIn`);
+    const isUserExist = localStorage.getItem(`isUserLoggedIn`);
 
-    // if (!isUserExist) {
-    //   navigate('/login');
-    //   return;
-    // }
+    if (!isUserExist) {
+      navigate('/login');
+      return;
+    }
 
-    try {
-      setInWishlist((prev) => !prev);
-      await axiosInstance.post(`/accommodations/${id}/wishlist`);
-    } catch (error) {
-      alert('Failed to add/remove to wishlist');
-      setInWishlist((prev) => !prev);
+    if (!isLoading) {
+      mutation.mutate();
     }
   };
 
@@ -75,6 +86,17 @@ export function ApartmentCard({ id, name, location, pricePerNight, images, isAdd
           </Typography>
         </CardContent>
       </Card>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss={true}
+        draggable={true}
+        pauseOnHover={true}
+      />
     </Link>
   );
 }
