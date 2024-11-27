@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const URL = import.meta.env.VITE_API_URL;
 
-export const axiosInstance = axios.create({
+export const api = axios.create({
   baseURL: URL,
   withCredentials: true,
   headers: {
@@ -12,7 +12,7 @@ export const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const origReq = error.config;
@@ -25,11 +25,11 @@ axiosInstance.interceptors.response.use(
 
     if (error.response && error.response?.status === 401 && retryCnt === 0) {
       try {
-        await axiosInstance.get(ENDPOINTS.refresh, {
+        await api.get(ENDPOINTS.refresh, {
           headers: { 'X-Refresh-Token-Retry-Count': retryCnt + 1 },
         });
 
-        return axiosInstance(origReq);
+        return api(origReq);
       } catch (refreshError) {
         return Promise.reject(refreshError);
       }

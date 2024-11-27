@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { axiosInstance } from '#/configs';
+import { api } from '#/configs';
 import { AxiosError } from 'axios';
 import Box from '@mui/material/Box';
 import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswordInput } from '../components';
@@ -41,7 +41,7 @@ export function SignupForm() {
   }
 
   function onSubmit(data: AuthFormData) {
-    axiosInstance
+    api
       .post(ENDPOINTS.signup, data)
       .then(() => navigate(ENDPOINTS.root))
       .catch((err) => {

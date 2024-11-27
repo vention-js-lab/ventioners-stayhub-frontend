@@ -1,4 +1,4 @@
-import { axiosInstance } from '#/configs/axios.config';
+import { api } from '#/configs/axios.config';
 import { useQuery } from '@tanstack/react-query';
 import { ENDPOINTS } from '../constants/endpoints.constant';
 import { type Category } from '../types/category.type';
@@ -8,7 +8,7 @@ type GetCategoriesResponse = {
 };
 
 export async function getCategories(): Promise<GetCategoriesResponse> {
-  const response = await axiosInstance.get<GetCategoriesResponse>(ENDPOINTS.categories);
+  const response = await api.get<GetCategoriesResponse>(ENDPOINTS.categories);
 
   return response.data;
 }

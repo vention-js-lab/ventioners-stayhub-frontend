@@ -13,7 +13,7 @@ import { userNavigationStyles } from './styles';
 import { MenuItemLink } from './menu-item-link';
 import { useAppDispatch, useAppSelector } from '#/redux/hooks';
 import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
-import { axiosInstance } from '#/configs';
+import { api } from '#/configs';
 import { UserProfileIcon } from './user-profile-icon';
 import { removeUser, selectAuth } from '#/redux/auth/auth-slice';
 
@@ -43,7 +43,7 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
 
   async function handleLogout() {
     try {
-      await axiosInstance.get(AUTH_ENDPOINTS.logout);
+      await api.get(AUTH_ENDPOINTS.logout);
     } catch (err) {
       console.error(err);
     }
@@ -75,8 +75,8 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         onClick={handleMenuOpen}
         startIcon={<MenuIcon sx={userNavigationStyles.menuIcon} />}
         endIcon={
-          auth.loggedIn ? (
-            <UserProfileIcon firstName={auth.user!.firstName} />
+          auth.user ? (
+            <UserProfileIcon firstName={auth.user.firstName} />
           ) : (
             <AccountCircle sx={userNavigationStyles.accountCircleIcon} />
           )
@@ -107,11 +107,16 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
           Wishlist
         </MenuItemLink>
-        {auth.loggedIn && (
-          <MenuItemLink to="/" onClick={handleLogout}>
+        {auth.loggedIn ? (
+          <MenuItemLink
+            to="/"
+            onClick={() => {
+              handleLogout();
+            }}
+          >
             Logout
           </MenuItemLink>
-        )}
+        ) : null}
       </Menu>
     </Box>
   );

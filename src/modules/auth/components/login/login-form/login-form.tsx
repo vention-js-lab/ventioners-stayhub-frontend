@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
-import { axiosInstance } from '#/configs';
+import { api } from '#/configs';
 import Box from '@mui/material/Box';
 import { EmailInput, PasswordInput } from '../components';
 import { UserLoginSchema } from '#/zod';
@@ -34,7 +34,7 @@ export function LoginForm() {
   }
 
   function onSubmit(data: AuthFormData) {
-    axiosInstance
+    api
       .post(ENDPOINTS.login, data)
       .then(() => navigate(ENDPOINTS.root))
       .catch((err) => {
