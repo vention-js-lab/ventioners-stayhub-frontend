@@ -17,6 +17,9 @@ import { api } from '#/configs';
 import { UserProfileIcon } from './user-profile-icon';
 import { removeUser, selectAuth } from '#/redux/auth/auth-slice';
 import { toast } from 'react-toastify';
+import { queryClient } from '#/main';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../../constants/endpoints.constant';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -27,6 +30,7 @@ interface MenuProps {
 export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuClose, handleMenuOpen }: T) {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.UZ);
+  const navigate = useNavigate();
   const auth = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
 
@@ -45,12 +49,14 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
   async function handleLogout() {
     try {
       await api.get(AUTH_ENDPOINTS.logout);
+      queryClient.invalidateQueries({ queryKey: ['auth-user'] });
+      dispatch(removeUser());
+      navigate(ROUTES.root);
+
       toast('Logged out successfully');
     } catch {
       toast("Couldn't log you out. Please try again");
     }
-
-    dispatch(removeUser());
 
     handleMenuClose();
   }
@@ -60,18 +66,15 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
       <Button color="inherit" sx={userNavigationStyles.airBnbYourHomeButton} href="/host/homes">
         Airbnb your home
       </Button>
-
       <IconButton color="inherit" onClick={handleLanguageIconClick} sx={userNavigationStyles.languageIconButton}>
         <LanguageIcon sx={userNavigationStyles.languageIcon} />
       </IconButton>
-
       <LanguageModal
         open={isLanguageModalOpen}
         onClose={handleLanguageModalClose}
         selectedLanguage={selectedLanguage}
         onLanguageSelect={handleLanguageSelect}
       />
-
       <UserMenu
         variant="outlined"
         onClick={handleMenuOpen}
@@ -84,7 +87,6 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
           )
         }
       />
-
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

@@ -18,7 +18,7 @@ if (!rootElement) {
   throw new Error('Root element not found');
 }
 
-const queryClient = new QueryClient(QueryClientConfig);
+export const queryClient = new QueryClient(QueryClientConfig);
 
 createRoot(rootElement).render(
   <StrictMode>

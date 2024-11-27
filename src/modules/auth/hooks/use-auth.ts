@@ -7,10 +7,6 @@ export function useAuth() {
   async function getUser() {
     const { data } = await api.get<AxiosAuthResponse>(ENDPOINTS.user);
 
-    if (!Object.keys(data).includes('user')) {
-      throw new Error('Could not fetch user');
-    }
-
     return data.user;
   }
 
