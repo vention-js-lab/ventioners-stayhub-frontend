@@ -5,18 +5,13 @@ import { type AxiosAuthResponse } from '../types';
 
 export function useAuth() {
   async function getUser() {
-    try {
-      const { data } = await api.get<AxiosAuthResponse>(ENDPOINTS.user);
+    const { data } = await api.get<AxiosAuthResponse>(ENDPOINTS.user);
 
-      if (!Object.keys(data).includes('user')) {
-        throw new Error('Could not fetch user');
-      }
-
-      return data.user;
-    } catch (err) {
-      console.error(err);
+    if (!Object.keys(data).includes('user')) {
       throw new Error('Could not fetch user');
     }
+
+    return data.user;
   }
 
   return useQuery({
