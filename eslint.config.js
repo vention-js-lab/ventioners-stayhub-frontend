@@ -53,6 +53,7 @@ export default tseslint.config(
       'guard-for-in': 'error',
       'no-bitwise': 'error',
       'no-caller': 'error',
+      'no-console': 'error',
       'no-div-regex': 'error',
       'no-else-return': 'error',
       'no-eq-null': 'error',
