@@ -92,14 +92,14 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         elevation={userNavigationStyles.menuContainer.elevation}
       >
         {!auth.loggedIn && (
-          <>
+          <Box>
             <MenuItemLink onClick={handleMenuClose} to="/signup">
               Sign up
             </MenuItemLink>
             <MenuItemLink onClick={handleMenuClose} to="/login" sx={{ borderBottom: '1px solid #DDDDDD' }}>
               Log in
             </MenuItemLink>
-          </>
+          </Box>
         )}
         <MenuItemLink onClick={handleMenuClose} to="/host/homes">
           Airbnb your home
