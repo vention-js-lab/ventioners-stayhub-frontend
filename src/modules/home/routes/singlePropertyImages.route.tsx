@@ -1,4 +1,3 @@
-// import { Box, CardMedia, IconButton, Typography, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
