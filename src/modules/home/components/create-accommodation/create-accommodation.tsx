@@ -4,13 +4,12 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Box from '@mui/material/Box';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { type AccommodationFormData } from '../../types/accommodation-form-data.interface';
 import { createAccommodationStyles } from './styles';
 import { AccommodationDetailsForm } from './accommodation-details-form.tsx';
 import { ImageUploader } from './image-uploader.tsx';
-import { NOTIFICATION_TIME } from '../../constants/notification-time.constant';
 import { useCreateAccommodation } from '#/modules/home/api/create-accommodation.ts';
 import { useAccommodation } from '#/modules/home/contexts';
 import { useUploadAccommodationImages } from '#/modules/home/api/create-images.ts';
@@ -95,8 +94,6 @@ export function CreateAccommodation() {
 
       {activeStep === 0 && <AccommodationDetailsForm formData={formData} updateFormData={updateFormData} />}
       {activeStep === 1 && <ImageUploader />}
-
-      <ToastContainer autoClose={NOTIFICATION_TIME.success} />
 
       <Box sx={createAccommodationStyles.buttonGroup}>
         {activeStep > 0 && (

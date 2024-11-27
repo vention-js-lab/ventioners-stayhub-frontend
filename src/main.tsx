@@ -1,3 +1,4 @@
+import { ToastContainer } from 'react-toastify';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { StrictMode } from 'react';
@@ -26,6 +27,7 @@ createRoot(rootElement).render(
         <ThemeProvider theme={appTheme}>
           <RouterProvider router={router} />
           <CssBaseline />
+          <ToastContainer autoClose={3000} />
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
       </QueryClientProvider>
