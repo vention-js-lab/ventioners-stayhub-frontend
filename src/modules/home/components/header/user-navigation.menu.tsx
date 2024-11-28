@@ -96,16 +96,16 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
             <MenuItemLink onClick={handleMenuClose} to="/signup">
               Sign up
             </MenuItemLink>
-            <MenuItemLink onClick={handleMenuClose} to="/login" sx={{ borderBottom: '1px solid #DDDDDD' }}>
+            <MenuItemLink onClick={handleMenuClose} to="/login">
               Log in
             </MenuItemLink>
           </Box>
         )}
-        <MenuItemLink onClick={handleMenuClose} to="/host/homes">
-          Airbnb your home
-        </MenuItemLink>
         {auth.loggedIn ? (
           <Box>
+            <MenuItemLink onClick={handleMenuClose} to="/host/homes">
+              StayHub your home
+            </MenuItemLink>
             <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
               Wishlist
             </MenuItemLink>
