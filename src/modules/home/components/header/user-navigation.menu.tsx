@@ -18,8 +18,6 @@ import { UserProfileIcon } from './user-profile-icon';
 import { removeUser, selectAuth } from '#/redux/auth/auth-slice';
 import { toast } from 'react-toastify';
 import { queryClient } from '#/main';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '../../constants/endpoints.constant';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -30,7 +28,6 @@ interface MenuProps {
 export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuClose, handleMenuOpen }: T) {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.UZ);
-  const navigate = useNavigate();
   const auth = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
 
@@ -51,7 +48,6 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
       await api.get(AUTH_ENDPOINTS.logout);
       queryClient.invalidateQueries({ queryKey: ['auth-user'] });
       dispatch(removeUser());
-      navigate(ROUTES.root);
 
       toast('Logged out successfully');
     } catch {
@@ -108,18 +104,20 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         <MenuItemLink onClick={handleMenuClose} to="/host/homes">
           Airbnb your home
         </MenuItemLink>
-        <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
-          Wishlist
-        </MenuItemLink>
         {auth.loggedIn ? (
-          <MenuItemLink
-            to="/"
-            onClick={() => {
-              handleLogout();
-            }}
-          >
-            Logout
-          </MenuItemLink>
+          <Box>
+            <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
+              Wishlist
+            </MenuItemLink>
+            <MenuItemLink
+              to="/"
+              onClick={() => {
+                handleLogout();
+              }}
+            >
+              Logout
+            </MenuItemLink>
+          </Box>
         ) : null}
       </Menu>
     </Box>
