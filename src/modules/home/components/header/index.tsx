@@ -34,7 +34,12 @@ export function HeaderComponent({ setSelectedLocation, showStaysAndExperiences, 
   };
 
   return (
-    <AppBar position="static" color="default" elevation={0} sx={{ backgroundColor: 'white' }}>
+    <AppBar
+      position="static"
+      color="default"
+      elevation={0}
+      sx={{ backgroundColor: 'white', borderBottom: '1px solid rgba(128, 128, 128, 0.486)' }}
+    >
       <Container maxWidth="xl">
         <Toolbar sx={{ justifyContent: 'space-between', height: 80, position: 'relative' }}>
           <Button
@@ -59,10 +64,10 @@ export function HeaderComponent({ setSelectedLocation, showStaysAndExperiences, 
 
           {showStaysAndExperiences ? (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <NavButton active={activeNav === 'stays'} onClick={() => setActiveNav('stays')}>
+              <NavButton active={(activeNav === 'stays').toString()} onClick={() => setActiveNav('stays')}>
                 <Typography sx={{ fontWeight: activeNav === 'stays' ? 600 : 500 }}>Stays</Typography>
               </NavButton>
-              <NavButton active={activeNav === 'experiences'} onClick={() => setActiveNav('experiences')}>
+              <NavButton active={(activeNav === 'experiences').toString()} onClick={() => setActiveNav('experiences')}>
                 <Typography sx={{ fontWeight: activeNav === 'experiences' ? 600 : 500 }}>Experiences</Typography>
               </NavButton>
             </Box>

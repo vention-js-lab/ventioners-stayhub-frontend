@@ -1,5 +1,5 @@
-import { axiosInstance } from '#/configs';
+import { api } from '#/configs';
 
 export async function postWishlist(id: string) {
-  await axiosInstance.post(`/accommodations/${id}/wishlist`);
+  await api.post(`/accommodations/${id}/wishlist`);
 }

@@ -11,6 +11,13 @@ import { LanguageModal } from './modals';
 import { Language } from '../../types/enums';
 import { userNavigationStyles } from './styles';
 import { MenuItemLink } from './menu-item-link';
+import { useAppDispatch, useAppSelector } from '#/redux/hooks';
+import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
+import { api } from '#/configs';
+import { UserProfileIcon } from './user-profile-icon';
+import { removeUser, selectAuth } from '#/redux/auth/auth-slice';
+import { toast } from 'react-toastify';
+import { queryClient } from '#/main';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -21,6 +28,8 @@ interface MenuProps {
 export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuClose, handleMenuOpen }: T) {
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.UZ);
+  const auth = useAppSelector(selectAuth);
+  const dispatch = useAppDispatch();
 
   const handleLanguageIconClick = () => {
     setIsLanguageModalOpen(true);
@@ -34,30 +43,46 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
     setSelectedLanguage(language);
   };
 
+  async function handleLogout() {
+    try {
+      await api.get(AUTH_ENDPOINTS.logout);
+      queryClient.invalidateQueries({ queryKey: ['auth-user'] });
+      dispatch(removeUser());
+
+      toast('Logged out successfully');
+    } catch {
+      toast("Couldn't log you out. Please try again");
+    }
+
+    handleMenuClose();
+  }
+
   return (
     <Box sx={userNavigationStyles.container}>
-      <Button color="inherit" sx={userNavigationStyles.airBnbYourHomeButton} href="/host/homes">
-        Airbnb your home
+      <Button color="inherit" sx={userNavigationStyles.stayhubYourHomeButton} href="/host/homes">
+        StayHub your home
       </Button>
-
       <IconButton color="inherit" onClick={handleLanguageIconClick} sx={userNavigationStyles.languageIconButton}>
         <LanguageIcon sx={userNavigationStyles.languageIcon} />
       </IconButton>
-
       <LanguageModal
         open={isLanguageModalOpen}
         onClose={handleLanguageModalClose}
         selectedLanguage={selectedLanguage}
         onLanguageSelect={handleLanguageSelect}
       />
-
       <UserMenu
         variant="outlined"
         onClick={handleMenuOpen}
         startIcon={<MenuIcon sx={userNavigationStyles.menuIcon} />}
-        endIcon={<AccountCircle sx={userNavigationStyles.accountCircleIcon} />}
+        endIcon={
+          auth.user ? (
+            <UserProfileIcon firstName={auth.user.firstName} />
+          ) : (
+            <AccountCircle sx={userNavigationStyles.accountCircleIcon} />
+          )
+        }
       />
-
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -66,27 +91,34 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         transformOrigin={userNavigationStyles.menuContainer.transformOrigin}
         elevation={userNavigationStyles.menuContainer.elevation}
       >
-        <MenuItemLink onClick={handleMenuClose} to="/signup">
-          Sign up
-        </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/login" sx={{ borderBottom: '1px solid #DDDDDD' }}>
-          Log in
-        </MenuItemLink>
-        <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
-          Wishlist
-        </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/giftcards">
-          Gift cards
-        </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/host/homes">
-          Airbnb your home
-        </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/host/experiences">
-          Host experience
-        </MenuItemLink>
-        <MenuItemLink onClick={handleMenuClose} to="/help">
-          Help center
-        </MenuItemLink>
+        {!auth.loggedIn && (
+          <Box>
+            <MenuItemLink onClick={handleMenuClose} to="/signup">
+              Sign up
+            </MenuItemLink>
+            <MenuItemLink onClick={handleMenuClose} to="/login">
+              Log in
+            </MenuItemLink>
+          </Box>
+        )}
+        {auth.loggedIn ? (
+          <Box>
+            <MenuItemLink onClick={handleMenuClose} to="/host/homes">
+              StayHub your home
+            </MenuItemLink>
+            <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
+              Wishlist
+            </MenuItemLink>
+            <MenuItemLink
+              to="/"
+              onClick={() => {
+                handleLogout();
+              }}
+            >
+              Logout
+            </MenuItemLink>
+          </Box>
+        ) : null}
       </Menu>
     </Box>
   );

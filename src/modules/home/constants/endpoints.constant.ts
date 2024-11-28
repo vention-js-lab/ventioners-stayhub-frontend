@@ -4,3 +4,7 @@ export const ENDPOINTS = {
   categories: '/categories',
   wishlist: '/users/wishlist',
 } as const;
+
+export const ROUTES = {
+  root: '/',
+} as const;

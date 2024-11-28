@@ -188,7 +188,7 @@ export default tseslint.config(
       'react/jsx-no-leaked-render': 'error',
       'react/jsx-no-useless-fragment': ['warn', { allowExpressions: true }],
       'react/jsx-pascal-case': 'error',
-      'react/no-array-index-key': 'warn',
+      'react/no-array-index-key': 'off',
       'react/no-danger': 'error',
       'react/no-unstable-nested-components': [
         'error',

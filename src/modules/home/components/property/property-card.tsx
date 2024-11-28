@@ -19,6 +19,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { postWishlist } from '../../api/post-wishlist';
 import { useMutation } from '@tanstack/react-query';
+import { useAppSelector } from '#/redux/hooks';
+import { selectAuth } from '#/redux/auth/auth-slice';
 
 export function ApartmentCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const navigate = useNavigate();
@@ -36,12 +38,12 @@ export function ApartmentCard({ id, name, location, pricePerNight, images, isAdd
 
   const isLoading = mutation.status === 'pending';
 
+  const auth = useAppSelector(selectAuth);
   const handleFavoriteClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
     event.preventDefault();
-    const isUserExist = localStorage.getItem(`isUserLoggedIn`);
 
-    if (!isUserExist) {
+    if (!auth.user) {
       navigate('/login');
       return;
     }
@@ -52,7 +54,7 @@ export function ApartmentCard({ id, name, location, pricePerNight, images, isAdd
   };
 
   return (
-    <Link to={`/apartment/${id}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/property/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
         {isInWishlist ? (
           <FavoriteIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} style={{ color: 'red' }} />

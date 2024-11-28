@@ -1,7 +1,7 @@
 import { z, type ZodType } from 'zod';
-import { type LoginFormData } from '#/modules/auth/types';
+import { type AuthFormData } from '#/modules/auth/types';
 
-export const UserLoginSchema: ZodType<LoginFormData> = z.object({
+export const UserLoginSchema: ZodType<Pick<AuthFormData, 'email' | 'password'>> = z.object({
   email: z.string().email({ message: 'Please enter a valid email (e.g. john@stayhub.com)' }),
-  password: z.string().min(8, { message: 'Entered password is too short' }).max(64, { message: 'Entered password is too long' }),
+  password: z.string(),
 });
