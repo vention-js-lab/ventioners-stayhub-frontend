@@ -8,7 +8,7 @@
       "https://miro.medium.com/v2/resize:fit:1024/1*w7fSHgKimriL-ryZJ52Uig.png"
     ],
     "location": "Miami Beach, FL",
-    "price_per_night": 250.0,
+    "pricePerNight": 250.0,
     "type": "Villa",
     "amenities": ["Wi-Fi", "Pool", "Air Conditioning", "Parking"],
     "status": "available",
@@ -24,7 +24,7 @@
       "https://miro.medium.com/v2/resize:fit:1024/1*w7fSHgKimriL-ryZJ52Uig.png"
     ],
     "location": "Aspen, CO",
-    "price_per_night": 180.0,
+    "pricePerNight": 180.0,
     "type": "Cabin",
     "amenities": ["Wi-Fi", "Fireplace", "Kitchen", "Hot Tub"],
     "status": "booked",
@@ -40,7 +40,7 @@
       "https://miro.medium.com/v2/resize:fit:1024/1*w7fSHgKimriL-ryZJ52Uig.png"
     ],
     "location": "New York, NY",
-    "price_per_night": 300.0,
+    "pricePerNight": 300.0,
     "type": "Apartment",
     "amenities": ["Wi-Fi", "Gym", "24-hour security", "Balcony"],
     "status": "available",
@@ -56,7 +56,7 @@
       "https://miro.medium.com/v2/resize:fit:1024/1*w7fSHgKimriL-ryZJ52Uig.png"
     ],
     "location": "Lake Tahoe, CA",
-    "price_per_night": 400.0,
+    "pricePerNight": 400.0,
     "type": "House",
     "amenities": ["Wi-Fi", "Boating Dock", "Grill", "Fireplace"],
     "status": "under_maintenance",
