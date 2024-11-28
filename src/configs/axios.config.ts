@@ -15,11 +15,11 @@ export const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const origReq = error.config;
+    const originalRequest = error.config;
 
-    let retryCnt = Number(origReq.headers['X-Refresh-Token-Retry-Count']);
+    let retryCnt = Number(originalRequest.headers['X-Refresh-Token-Retry-Count']);
     if (Number.isNaN(retryCnt)) {
-      origReq.headers['X-Refresh-Token-Retry-Count'] = 0;
+      originalRequest.headers['X-Refresh-Token-Retry-Count'] = 0;
       retryCnt = 0;
     }
 
@@ -29,7 +29,7 @@ api.interceptors.response.use(
           headers: { 'X-Refresh-Token-Retry-Count': retryCnt + 1 },
         });
 
-        return api(origReq);
+        return api(originalRequest);
       } catch (refreshError) {
         return Promise.reject(refreshError);
       }
