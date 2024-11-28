@@ -17,13 +17,15 @@ export function AuthLayout({ protectedRoute }: Props) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (isError || !user) {
+    if ((isError || !user) && !isLoading) {
       dispatch(removeUser());
 
       if (protectedRoute) {
         navigate('/login', { replace: true });
       }
-    } else {
+    }
+
+    if (user) {
       dispatch(createUser(user));
     }
   }, [user, isError]);
