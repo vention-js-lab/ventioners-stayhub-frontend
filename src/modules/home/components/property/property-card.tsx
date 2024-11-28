@@ -15,13 +15,14 @@ import './swiper.css';
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 
 export function ApartmentCard(apartment: Accommodation) {
+  const { id, name, location, images, pricePerNight } = apartment;
   const handleFavoriteClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
   };
 
   return (
-    <Link to={`/property/${apartment.id}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/property/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
         <FavoriteBorderIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} />
         <Swiper
@@ -36,7 +37,7 @@ export function ApartmentCard(apartment: Accommodation) {
           modules={[EffectFade, Navigation, Pagination]}
           className="mySwiper"
         >
-          {apartment.images.map((image, index) => (
+          {images.map((image, index) => (
             <SwiperSlide key={index}>
               <img src={image} alt="Image of Apartment" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </SwiperSlide>
@@ -44,10 +45,10 @@ export function ApartmentCard(apartment: Accommodation) {
         </Swiper>
 
         <CardContent sx={{ padding: '16px 0px' }}>
-          <Typography variant="h6">{apartment.name}</Typography>
-          <Typography sx={{ opacity: '.7' }}>{apartment.location}</Typography>
+          <Typography variant="h6">{name}</Typography>
+          <Typography sx={{ opacity: '.7' }}>{location}</Typography>
           <Typography>
-            <strong>${apartment.pricePerNight}</strong> night
+            <strong>${pricePerNight}</strong> night
           </Typography>
         </CardContent>
       </Card>

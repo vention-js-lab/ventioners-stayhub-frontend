@@ -10,24 +10,28 @@ import { QueryClientConfig } from './configs';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '#/routes';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error('Root element not found');
 }
 
-const queryClient = new QueryClient(QueryClientConfig);
+export const queryClient = new QueryClient(QueryClientConfig);
 
 createRoot(rootElement).render(
   <StrictMode>
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={appTheme}>
-          <RouterProvider router={router} />
-          <CssBaseline />
-        </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
-      </QueryClientProvider>
-    </HelmetProvider>
+    <Provider store={store}>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={appTheme}>
+            <RouterProvider router={router} />
+            <CssBaseline />
+          </ThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
+        </QueryClientProvider>
+      </HelmetProvider>
+    </Provider>
   </StrictMode>
 );

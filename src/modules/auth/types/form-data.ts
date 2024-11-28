@@ -1,4 +1,5 @@
-import type { UseFormRegister } from 'react-hook-form';
+import { type User } from '#/types';
+import { type UseFormRegister } from 'react-hook-form';
 
 export type AuthFormData = {
   firstName: string;
@@ -19,4 +20,8 @@ export type FormInputProps = {
 
 export type AxiosErrorResponse = {
   message: string;
+};
+
+export type AxiosAuthResponse = {
+  user: User;
 };
