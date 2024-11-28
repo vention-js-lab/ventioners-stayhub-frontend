@@ -6,11 +6,11 @@ import IconButton from '@mui/material/IconButton';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { imageUploaderStyles } from './styles';
-import { useAccommodation } from '#/modules/home/contexts';
+import { useAccommodationContext } from '#/modules/home/contexts';
 
 export function ImageUploader() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const { data, updateData } = useAccommodation();
+  const { data, updateData } = useAccommodationContext();
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.currentTarget.files || []);

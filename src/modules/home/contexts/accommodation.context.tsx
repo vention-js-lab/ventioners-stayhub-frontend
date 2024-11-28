@@ -9,7 +9,7 @@ export interface AccommodationContextType {
   updateBasics: (newBasics: Partial<AccommodationBasics>) => void;
 }
 
-const AccommodationContext = createContext<AccommodationContextType>({
+const AccommodationContext = createContext<AccommodationContextType | null>({
   data: {} as AccommodationFormData,
   updateData: () => {},
   basics: {} as AccommodationBasics,
@@ -47,4 +47,12 @@ export function AccommodationProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export const useAccommodationContext = () => useContext(AccommodationContext);
+export const useAccommodationContext = () => {
+  const context = useContext(AccommodationContext);
+
+  if (!context) {
+    throw new Error('useAccommodationContext must be used within a AccommodationProvider');
+  }
+
+  return context;
+};
