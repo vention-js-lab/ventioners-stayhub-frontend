@@ -2,12 +2,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { HeaderComponent } from '../components/header';
-import { PropertyImagesWrapper } from '../components/singleProperty/singlePropertyWrapper';
+import { PropertyImagesWrapper } from '../components/single-property/single-property-wrapper';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IosShareIcon from '@mui/icons-material/IosShare';
-import { singlePropertyStyles } from './singleProperty.route.styles';
-import { SinglePropertyAmenity } from '../components/singleProperty/singlePropertyAmenity';
-import { SinglePropertyReview } from '../components/singleProperty/singlePropertyReview';
+import { singlePropertyStyles } from './single-property.route.styles';
+import { SinglePropertyAmenity } from '../components/single-property/single-property-amenity';
+import { SinglePropertyReview } from '../components/single-property/single-property-review';
 import Divider from '@mui/material/Divider';
 
 const accommodation = {

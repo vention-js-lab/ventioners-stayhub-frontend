@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -8,16 +8,12 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { type Dayjs } from 'dayjs';
-
-interface Amenity {
-  id: string;
-  name: string;
-  description: string;
-}
+import { SinglePropertyAmenityStyles } from './single-property-amenity.styles';
+import { type AmenityInterface } from '../../../../types/amenity.types';
 
 interface SinglePropertyAmenityProps {
   owner: string;
-  amenities: Amenity[];
+  amenities: AmenityInterface[];
   description: string;
   pricePerNight: number;
 }
@@ -50,59 +46,24 @@ function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }:
   }, [checkInDate, checkOutDate, pricePerNight]);
 
   const isDatePicked = calculatePrice.diffInDays >= 0;
-
   const totalPrice = calculatePrice.basePrice + calculatePrice.serviceFee;
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        alignItems: { xs: 'center', md: 'flex-start' },
-        mt: 6,
-        flexDirection: { xs: 'column', md: 'row' },
-      }}
-    >
-      <Box sx={{ maxWidth: 800, p: 2, pl: { md: 0, xs: 2 }, flex: '1 1 60%' }}>
-        <Divider sx={{ mb: 3 }} />
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-          <Avatar
-            sx={{
-              width: 56,
-              height: 56,
-              background: 'rgb(219,10,98)',
-              color: 'white',
-              mr: 2,
-              fontSize: 24,
-            }}
-          >
-            {owner.charAt(0).toUpperCase()}
-          </Avatar>
+    <Box sx={SinglePropertyAmenityStyles.mainContainerBox}>
+      <Box sx={SinglePropertyAmenityStyles.leftContainerBox}>
+        <Divider sx={SinglePropertyAmenityStyles.divider} />
+        <Box sx={SinglePropertyAmenityStyles.avatarBox}>
+          <Avatar sx={SinglePropertyAmenityStyles.avatar}>{owner.charAt(0).toUpperCase()}</Avatar>
           <Typography variant="h6">{owner}</Typography>
         </Box>
 
-        <Divider sx={{ mb: 3 }} />
+        <Divider sx={SinglePropertyAmenityStyles.divider} />
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 2,
-            justifyContent: 'space-between',
-          }}
-        >
+        <Box sx={SinglePropertyAmenityStyles.unshownAmenitiesBox}>
           {displayedAmenities.map((amenity) => (
-            <Box
-              key={amenity.id}
-              sx={{
-                flex: { xs: '1 1 100%', md: '1 1 calc(50% - 16px)' },
-                minWidth: { xs: '100%', md: 'calc(50% - 16px)' },
-                maxWidth: { xs: '100%', md: 'calc(50% - 16px)' },
-              }}
-            >
+            <Box key={amenity.id} sx={SinglePropertyAmenityStyles.unshownAmenitiesCard}>
               <Box>
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                <Typography variant="subtitle1" sx={SinglePropertyAmenityStyles.priceBoxBoldTypography}>
                   {amenity.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
@@ -119,29 +80,18 @@ function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }:
           </Button>
         )}
 
-        <Divider sx={{ my: 3 }} />
+        <Divider sx={SinglePropertyAmenityStyles.divider} />
 
         <Typography variant="body1">{description}</Typography>
 
-        <Divider sx={{ my: 3, display: { md: 'none', xs: 'block' } }} />
+        <Divider sx={SinglePropertyAmenityStyles.customDivider} />
       </Box>
 
-      <Box
-        sx={{
-          p: 2,
-          maxWidth: 400,
-          flex: '1 1 35%',
-          border: '1px solid rgba(0, 0, 0, 0.1)',
-          mt: { xs: 0, md: 2 },
-          borderRadius: '15px',
-          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1), 0px 2px 5px rgba(0, 0, 0, 0.06)',
-          mx: { xs: 2, md: 0 },
-        }}
-      >
+      <Box sx={SinglePropertyAmenityStyles.rightContainerBox}>
         <Typography variant="h6">${pricePerNight}</Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, mt: 2 }}>
-            <Box sx={{ flex: '1' }}>
+          <Box sx={SinglePropertyAmenityStyles.datePickBox}>
+            <Box sx={SinglePropertyAmenityStyles.datePick}>
               <DatePicker
                 label="Check-in"
                 value={checkInDate}
@@ -149,37 +99,37 @@ function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }:
                 minDate={dayjs()}
               />
             </Box>
-            <Box sx={{ flex: '1' }}>
+            <Box sx={SinglePropertyAmenityStyles.datePick}>
               <DatePicker
                 label="Check-out"
                 value={checkOutDate}
                 onChange={(newDate) => setCheckOutDate(newDate)}
-                minDate={checkInDate || dayjs()} // Disable dates before check-in or past dates
+                minDate={checkInDate ? checkInDate.add(1, 'day') : dayjs()}
                 disabled={!checkInDate}
               />
             </Box>
           </Box>
         </LocalizationProvider>
-        <Button sx={{ mt: 2, width: '100%', background: 'rgb(219,10,98)', py: 1 }} variant="contained">
+        <Button sx={SinglePropertyAmenityStyles.reserveButton} variant="contained">
           Reserve
         </Button>
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="body1" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={SinglePropertyAmenityStyles.priceBox}>
+          <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxTypography1}>
             <Typography variant="body1">
               ${pricePerNight} x {isDatePicked ? calculatePrice.diffInDays : 4} nights
             </Typography>
             <Typography variant="body1">${calculatePrice.basePrice}</Typography>
           </Typography>
-          <Typography variant="body1" sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
+          <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxTypography2}>
             <Typography variant="body1">StayHub Service Fee</Typography>{' '}
             <Typography variant="body1">${calculatePrice.serviceFee}</Typography>
           </Typography>
-          <Divider sx={{ my: 2 }} />
-          <Typography variant="body1" sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
-            <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+          <Divider sx={SinglePropertyAmenityStyles.priceBoxDivider} />
+          <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxTypography3}>
+            <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxBoldTypography}>
               Total
             </Typography>
-            <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxBoldTypography}>
               ${totalPrice}
             </Typography>
           </Typography>

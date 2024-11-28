@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { singlePropertyStyles } from './singlePropertyWrapper.styles';
+import { singlePropertyStyles } from './single-property-wrapper.styles';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Link, useParams } from 'react-router-dom';
