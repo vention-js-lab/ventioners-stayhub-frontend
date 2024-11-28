@@ -59,8 +59,8 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
 
   return (
     <Box sx={userNavigationStyles.container}>
-      <Button color="inherit" sx={userNavigationStyles.airBnbYourHomeButton} href="/host/homes">
-        Airbnb your home
+      <Button color="inherit" sx={userNavigationStyles.stayhubYourHomeButton} href="/host/homes">
+        StayHub your home
       </Button>
       <IconButton color="inherit" onClick={handleLanguageIconClick} sx={userNavigationStyles.languageIconButton}>
         <LanguageIcon sx={userNavigationStyles.languageIcon} />

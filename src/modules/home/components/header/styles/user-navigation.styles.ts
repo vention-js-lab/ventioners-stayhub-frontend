@@ -1,6 +1,6 @@
 export const userNavigationStyles = {
   container: { display: 'flex', gap: 2 },
-  airBnbYourHomeButton: {
+  stayhubYourHomeButton: {
     borderRadius: 20,
     '&:hover': { backgroundColor: '#F7F7F7' },
     fontFamily: 'sans-serif',
