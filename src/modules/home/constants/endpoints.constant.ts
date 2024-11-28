@@ -5,3 +5,7 @@ export const ENDPOINTS = {
   wishlist: '/users/wishlist',
   amenities: '/amenities',
 } as const;
+
+export const ROUTES = {
+  root: '/',
+} as const;

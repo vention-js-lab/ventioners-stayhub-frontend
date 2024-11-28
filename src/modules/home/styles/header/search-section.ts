@@ -4,7 +4,7 @@ import styled from '@mui/material/styles/styled';
 export const SearchSection = styled(Button)(({ theme }) => ({
   textTransform: 'none',
   borderRadius: 50,
-  padding: '8px 24px',
+  padding: '8px 15px',
   height: '100%',
   color: '#222222',
   backgroundColor: 'transparent',

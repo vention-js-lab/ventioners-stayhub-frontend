@@ -10,7 +10,7 @@ export const authPageStyles = {
   wrapper: {
     border: Styles.primaryBorderColor,
     borderRadius: '12px',
-    marginTop: '32px',
+    marginTop: '20px',
     marginBottom: '32px',
     maxWidth: '566px',
     width: '566px',

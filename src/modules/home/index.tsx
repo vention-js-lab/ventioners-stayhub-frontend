@@ -1,21 +1,29 @@
 import { lazyRoute } from '#/utils/router.util';
 import { type RouteObject } from 'react-router-dom';
-import { WishlistRoute } from './routes/wishlist.route';
-import { CreateAccommodatioRoute } from './routes/create-acccommodation.route';
+import { AuthLayout } from '#/routes/layout-protected.route';
 
 const { HomeRoute } = lazyRoute(() => import('./routes/home.route'), 'HomeRoute');
+const { WishlistRoute } = lazyRoute(() => import('./routes/wishlist.route'), 'WishlistRoute');
 
 export const HomeRoutes: RouteObject[] = [
   {
     path: '/',
-    element: <HomeRoute />,
+    element: <AuthLayout protectedRoute={false} />,
+    children: [
+      {
+        path: '',
+        element: <HomeRoute />,
+      },
+    ],
   },
   {
     path: '/wishlist',
-    element: <WishlistRoute />,
-  },
-  {
-    path: '/host/homes',
-    element: <CreateAccommodatioRoute />,
+    element: <AuthLayout protectedRoute={true} />,
+    children: [
+      {
+        path: '',
+        element: <WishlistRoute />,
+      },
+    ],
   },
 ];
