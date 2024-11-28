@@ -12,7 +12,6 @@ import { AccommodationDetailsForm } from './accommodation-details-form.tsx';
 import { ImageUploader } from './image-uploader.tsx';
 import { useCreateAccommodation } from '#/modules/home/api/create-accommodation.ts';
 import { useAccommodationContext } from '#/modules/home/contexts';
-import { ENDPOINTS } from '#/modules/auth/constants';
 
 export function CreateAccommodation() {
   const [activeStep, setActiveStep] = useState<0 | 1>(0);
@@ -53,12 +52,7 @@ export function CreateAccommodation() {
         images: imagesToUpload,
       };
 
-      createAccommodation.mutate(creationPayload, {
-        onSuccess: () => {
-          toast.success('Accommodation created successfully!');
-          window.location.href = ENDPOINTS.root;
-        },
-      });
+      createAccommodation.mutate(creationPayload);
     }
   };
 
