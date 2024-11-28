@@ -5,6 +5,7 @@ export type Accommodation = {
   images: string[];
   location: string;
   pricePerNight: number;
+  isAddedToWishlist: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
