@@ -5,6 +5,7 @@ import { ENDPOINTS } from '#/modules/home/constants/endpoints.constant.ts';
 import { toast } from 'react-toastify';
 import { type AccommodationBasics } from '#/modules/home/types/accommodation-basics.type.ts';
 import { type Accommodation } from '#/modules/home/types/accommodation.type.ts';
+import { type AxiosError } from 'axios';
 
 export const useCreateAccommodation = () => {
   return useMutation({
@@ -14,8 +15,8 @@ export const useCreateAccommodation = () => {
       toast.success('Accommodation created successfully!');
       window.location.href = ENDPOINTS.root;
     },
-    onError: (error) => {
-      toast.error(`Error creating accommodation: ${error}`);
+    onError: (error: AxiosError) => {
+      toast.error(`Error creating accommodation: ${error.message}`);
     },
   });
 };
