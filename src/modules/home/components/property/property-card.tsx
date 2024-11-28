@@ -22,7 +22,7 @@ export function ApartmentCard(apartment: Accommodation) {
   };
 
   return (
-    <Link to={`/apartment/${id}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/property/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
         <FavoriteBorderIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} />
         <Swiper
