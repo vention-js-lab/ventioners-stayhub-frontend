@@ -15,7 +15,7 @@ import { useAccommodationContext } from '#/modules/home/contexts';
 import { ENDPOINTS } from '#/modules/auth/constants';
 
 export function CreateAccommodation() {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState<0 | 1>(0);
   const [formData, setFormData] = useState<AccommodationFormData>({
     name: '',
     description: '',
@@ -39,7 +39,7 @@ export function CreateAccommodation() {
       }
 
       setActiveStep(1);
-    } else if (activeStep === 1) {
+    } else {
       const imagesToUpload = data.images.filter((image) => image instanceof File);
 
       if (imagesToUpload.length === 0) {
@@ -63,7 +63,9 @@ export function CreateAccommodation() {
   };
 
   const handleBack = () => {
-    setActiveStep((prev) => prev - 1);
+    if (activeStep === 1) {
+      setActiveStep(0);
+    }
   };
 
   const updateFormData = (updates: Partial<AccommodationFormData>) => {
