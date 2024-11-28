@@ -1,4 +1,4 @@
-export const SinglePropertyAmenityStyles = {
+export const PropertyAmenityStyles = {
   mainContainerBox: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -8,7 +8,7 @@ export const SinglePropertyAmenityStyles = {
     flexDirection: { xs: 'column', md: 'row' },
   },
   leftContainerBox: { maxWidth: 800, p: 2, pl: { md: 0, xs: 2 }, flex: '1 1 60%' },
-  divider: { mb: 3 },
+  divider: { mt: 3, mb: 3 },
   avatarBox: { display: 'flex', alignItems: 'center', mb: 3 },
   avatar: {
     width: 56,

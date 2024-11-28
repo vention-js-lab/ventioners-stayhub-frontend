@@ -6,12 +6,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Link, useParams } from 'react-router-dom';
 
-interface SinglePropertyImagesProps {
+interface LargeViewProps {
   images: string[];
   id: string;
 }
 
-function SinglePropertyImages({ images, id }: SinglePropertyImagesProps) {
+function LargeView({ images, id }: LargeViewProps) {
   return (
     <Box sx={singlePropertyStyles.mainBox}>
       <Box sx={{ width: { xs: '100%', md: '50%' } }}>
@@ -39,7 +39,7 @@ function SinglePropertyImages({ images, id }: SinglePropertyImagesProps) {
   );
 }
 
-function MobileView({ images, id }: SinglePropertyImagesProps) {
+function MobileView({ images, id }: LargeViewProps) {
   return (
     <Box>
       <Swiper loop={true} pagination={{ clickable: true }}>
@@ -66,7 +66,7 @@ function PropertyImagesWrapper({ images }: { images: string[] }) {
 
   if (!id) return null;
 
-  return <Box>{isMobile ? <MobileView images={images} id={id} /> : <SinglePropertyImages images={images} id={id} />}</Box>;
+  return <Box>{isMobile ? <MobileView images={images} id={id} /> : <LargeView images={images} id={id} />}</Box>;
 }
 
 export { PropertyImagesWrapper };

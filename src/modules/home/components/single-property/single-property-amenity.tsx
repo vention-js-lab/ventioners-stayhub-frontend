@@ -8,17 +8,19 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { type Dayjs } from 'dayjs';
-import { SinglePropertyAmenityStyles } from './single-property-amenity.styles';
-import { type AmenityInterface } from '../../../../types/amenity.types';
+import { PropertyAmenityStyles } from './single-property-amenity.styles';
+import { type AmenityInterface } from '#/types/amenity.types';
+import { ServiceFeePortion } from '../../constants/price.constant';
+import { DefaulStayingDays } from '../../constants/staying-days.constant';
 
-interface SinglePropertyAmenityProps {
+interface PropertyAmenityProps {
   owner: string;
   amenities: AmenityInterface[];
   description: string;
   pricePerNight: number;
 }
 
-function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }: SinglePropertyAmenityProps) {
+function PropertyAmenity({ owner, amenities, description, pricePerNight }: PropertyAmenityProps) {
   const [showAll, setShowAll] = useState(false);
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
@@ -35,35 +37,39 @@ function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }:
       checkOutDate &&
       checkOutDate.isValid() &&
       checkInDate.isValid() &&
-      checkOutDate.diff(checkInDate, 'day') >= 0
+      checkOutDate.diff(checkInDate, 'day') > 0
     ) {
       const diffInDays = checkOutDate.diff(checkInDate, 'day');
-      const basePrice = (diffInDays === 0 ? 1 : diffInDays) * pricePerNight;
-      const serviceFee = 0.1 * basePrice;
+      const basePrice = diffInDays * pricePerNight;
+      const serviceFee = ServiceFeePortion * basePrice;
       return { basePrice, serviceFee, diffInDays };
     }
-    return { basePrice: 4 * pricePerNight, serviceFee: 4 * pricePerNight * 0.1, diffInDays: 4 };
+    return {
+      basePrice: DefaulStayingDays * pricePerNight,
+      serviceFee: DefaulStayingDays * pricePerNight * ServiceFeePortion,
+      diffInDays: DefaulStayingDays,
+    };
   }, [checkInDate, checkOutDate, pricePerNight]);
 
   const isDatePicked = calculatePrice.diffInDays >= 0;
   const totalPrice = calculatePrice.basePrice + calculatePrice.serviceFee;
 
   return (
-    <Box sx={SinglePropertyAmenityStyles.mainContainerBox}>
-      <Box sx={SinglePropertyAmenityStyles.leftContainerBox}>
-        <Divider sx={SinglePropertyAmenityStyles.divider} />
-        <Box sx={SinglePropertyAmenityStyles.avatarBox}>
-          <Avatar sx={SinglePropertyAmenityStyles.avatar}>{owner.charAt(0).toUpperCase()}</Avatar>
+    <Box sx={PropertyAmenityStyles.mainContainerBox}>
+      <Box sx={PropertyAmenityStyles.leftContainerBox}>
+        <Divider sx={PropertyAmenityStyles.divider} />
+        <Box sx={PropertyAmenityStyles.avatarBox}>
+          <Avatar sx={PropertyAmenityStyles.avatar}>{owner.charAt(0).toUpperCase()}</Avatar>
           <Typography variant="h6">{owner}</Typography>
         </Box>
 
-        <Divider sx={SinglePropertyAmenityStyles.divider} />
+        <Divider sx={PropertyAmenityStyles.divider} />
 
-        <Box sx={SinglePropertyAmenityStyles.unshownAmenitiesBox}>
+        <Box sx={PropertyAmenityStyles.unshownAmenitiesBox}>
           {displayedAmenities.map((amenity) => (
-            <Box key={amenity.id} sx={SinglePropertyAmenityStyles.unshownAmenitiesCard}>
+            <Box key={amenity.id} sx={PropertyAmenityStyles.unshownAmenitiesCard}>
               <Box>
-                <Typography variant="subtitle1" sx={SinglePropertyAmenityStyles.priceBoxBoldTypography}>
+                <Typography variant="subtitle1" sx={PropertyAmenityStyles.priceBoxBoldTypography}>
                   {amenity.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
@@ -80,18 +86,18 @@ function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }:
           </Button>
         )}
 
-        <Divider sx={SinglePropertyAmenityStyles.divider} />
+        <Divider sx={PropertyAmenityStyles.divider} />
 
         <Typography variant="body1">{description}</Typography>
 
-        <Divider sx={SinglePropertyAmenityStyles.customDivider} />
+        <Divider sx={PropertyAmenityStyles.customDivider} />
       </Box>
 
-      <Box sx={SinglePropertyAmenityStyles.rightContainerBox}>
+      <Box sx={PropertyAmenityStyles.rightContainerBox}>
         <Typography variant="h6">${pricePerNight}</Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Box sx={SinglePropertyAmenityStyles.datePickBox}>
-            <Box sx={SinglePropertyAmenityStyles.datePick}>
+          <Box sx={PropertyAmenityStyles.datePickBox}>
+            <Box sx={PropertyAmenityStyles.datePick}>
               <DatePicker
                 label="Check-in"
                 value={checkInDate}
@@ -99,7 +105,7 @@ function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }:
                 minDate={dayjs()}
               />
             </Box>
-            <Box sx={SinglePropertyAmenityStyles.datePick}>
+            <Box sx={PropertyAmenityStyles.datePick}>
               <DatePicker
                 label="Check-out"
                 value={checkOutDate}
@@ -110,26 +116,26 @@ function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }:
             </Box>
           </Box>
         </LocalizationProvider>
-        <Button sx={SinglePropertyAmenityStyles.reserveButton} variant="contained">
+        <Button sx={PropertyAmenityStyles.reserveButton} variant="contained">
           Reserve
         </Button>
-        <Box sx={SinglePropertyAmenityStyles.priceBox}>
-          <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxTypography1}>
+        <Box sx={PropertyAmenityStyles.priceBox}>
+          <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxTypography1}>
             <Typography variant="body1">
-              ${pricePerNight} x {isDatePicked ? calculatePrice.diffInDays : 4} nights
+              ${pricePerNight} x {isDatePicked ? calculatePrice.diffInDays : DefaulStayingDays} nights
             </Typography>
             <Typography variant="body1">${calculatePrice.basePrice}</Typography>
           </Typography>
-          <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxTypography2}>
+          <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxTypography2}>
             <Typography variant="body1">StayHub Service Fee</Typography>{' '}
             <Typography variant="body1">${calculatePrice.serviceFee}</Typography>
           </Typography>
-          <Divider sx={SinglePropertyAmenityStyles.priceBoxDivider} />
-          <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxTypography3}>
-            <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxBoldTypography}>
+          <Divider sx={PropertyAmenityStyles.priceBoxDivider} />
+          <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxTypography3}>
+            <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxBoldTypography}>
               Total
             </Typography>
-            <Typography variant="body1" sx={SinglePropertyAmenityStyles.priceBoxBoldTypography}>
+            <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxBoldTypography}>
               ${totalPrice}
             </Typography>
           </Typography>
@@ -139,4 +145,4 @@ function SinglePropertyAmenity({ owner, amenities, description, pricePerNight }:
   );
 }
 
-export { SinglePropertyAmenity };
+export { PropertyAmenity };
