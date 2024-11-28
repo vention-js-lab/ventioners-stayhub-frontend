@@ -13,14 +13,14 @@ import { type AmenityInterface } from '#/types/amenity.types';
 import { ServiceFeePortion } from '../../constants/price.constant';
 import { DefaulStayingDays } from '../../constants/staying-days.constant';
 
-interface PropertyAmenityProps {
+interface PropertyProps {
   owner: string;
   amenities: AmenityInterface[];
   description: string;
   pricePerNight: number;
 }
 
-function PropertyAmenity({ owner, amenities, description, pricePerNight }: PropertyAmenityProps) {
+function Property({ owner, amenities, description, pricePerNight }: PropertyProps) {
   const [showAll, setShowAll] = useState(false);
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
@@ -145,4 +145,4 @@ function PropertyAmenity({ owner, amenities, description, pricePerNight }: Prope
   );
 }
 
-export { PropertyAmenity };
+export { Property };

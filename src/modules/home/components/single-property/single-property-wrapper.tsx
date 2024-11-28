@@ -5,7 +5,7 @@ import { singlePropertyStyles } from './single-property-wrapper.styles';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useState } from 'react';
-import { SinglePropertyImages } from '../../routes/single-property-images.route';
+import { SinglePropertyImages } from './single-property-images.route';
 import Dialog from '@mui/material/Dialog';
 
 interface LargeViewProps {

@@ -6,7 +6,7 @@ import { PropertyImagesWrapper } from '../components/single-property/single-prop
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { singlePropertyStyles } from './single-property.route.styles';
-import { PropertyAmenity } from '../components/single-property/single-property-amenity';
+import { Property } from '../components/single-property/single-property-amenity';
 import { PropertyReview } from '../components/single-property/single-property-review';
 import Divider from '@mui/material/Divider';
 import { accommodation } from '../temp-data/single-accommodation';
@@ -40,7 +40,7 @@ export function SinglePropertyRoute() {
           </Box>
 
           <PropertyImagesWrapper images={accommodation.images} />
-          <PropertyAmenity
+          <Property
             owner={accommodation.owner}
             amenities={accommodation.amenities}
             description={accommodation.description}
