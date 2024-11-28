@@ -1,5 +1,6 @@
 import { lazyRoute } from '#/utils/router.util';
 import { type RouteObject } from 'react-router-dom';
+import { SinglePropertyRoute } from './routes/single-property.route';
 import { AuthLayout } from '#/routes/layout-protected.route';
 
 const { HomeRoute } = lazyRoute(() => import('./routes/home.route'), 'HomeRoute');
@@ -25,5 +26,9 @@ export const HomeRoutes: RouteObject[] = [
         element: <WishlistRoute />,
       },
     ],
+  },
+  {
+    path: '/property/:id',
+    element: <SinglePropertyRoute />,
   },
 ];
