@@ -4,14 +4,16 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { singlePropertyStyles } from './single-property-wrapper.styles';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { Link, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { SinglePropertyImages } from '../../routes/single-property-images.route';
+import Dialog from '@mui/material/Dialog';
 
 interface LargeViewProps {
   images: string[];
-  id: string;
+  onImageClick: () => void;
 }
 
-function LargeView({ images, id }: LargeViewProps) {
+function LargeView({ images, onImageClick }: LargeViewProps) {
   return (
     <Box sx={singlePropertyStyles.mainBox}>
       <Box sx={{ width: { xs: '100%', md: '50%' } }}>
@@ -32,27 +34,26 @@ function LargeView({ images, id }: LargeViewProps) {
           <CardMedia component="img" image={images[4]} alt="Property Image" sx={{ objectFit: 'cover', height: '100%' }} />
         </Box>
       </Box>
-      <Link to={`/property/${id}/images`} style={singlePropertyStyles.viewMoreLink}>
+      <Box onClick={onImageClick} style={singlePropertyStyles.viewMoreLink}>
         View All Photos
-      </Link>
+      </Box>
     </Box>
   );
 }
 
-function MobileView({ images, id }: LargeViewProps) {
+function MobileView({ images, onImageClick }: LargeViewProps) {
   return (
     <Box>
       <Swiper loop={true} pagination={{ clickable: true }}>
         {images.map((image) => (
           <SwiperSlide key={image}>
-            <Link to={`/property/${id}/images`}>
-              <CardMedia
-                component="img"
-                image={image}
-                alt="Property Image"
-                sx={{ objectFit: 'cover', width: '100%', aspectRatio: '3/2' }}
-              />
-            </Link>
+            <CardMedia
+              component="img"
+              image={image}
+              alt="Property Image"
+              sx={{ objectFit: 'cover', width: '100%', aspectRatio: '3/2', cursor: 'pointer' }}
+              onClick={onImageClick}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -62,11 +63,24 @@ function MobileView({ images, id }: LargeViewProps) {
 
 function PropertyImagesWrapper({ images }: { images: string[] }) {
   const isMobile = useMediaQuery('(max-width:700px)');
-  const { id } = useParams<{ id: string }>();
+  const [openModal, setOpenModal] = useState(false);
 
-  if (!id) return null;
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
-  return <Box>{isMobile ? <MobileView images={images} id={id} /> : <LargeView images={images} id={id} />}</Box>;
+  return (
+    <Box>
+      {isMobile ? (
+        <MobileView images={images} onImageClick={handleOpenModal} />
+      ) : (
+        <LargeView images={images} onImageClick={handleOpenModal} />
+      )}
+
+      <Dialog open={openModal} onClose={handleCloseModal} fullScreen={true} maxWidth="lg" fullWidth={true}>
+        <SinglePropertyImages images={images} onClose={handleCloseModal} />
+      </Dialog>
+    </Box>
+  );
 }
 
 export { PropertyImagesWrapper };
