@@ -4,6 +4,7 @@ import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import { PropertyReviewStyles } from './single-property-review.styles';
 import StarIcon from '@mui/icons-material/Star';
+import { truncateString } from '#/utils/truncate-string.util';
 
 interface Review {
   id: string;
@@ -12,14 +13,7 @@ interface Review {
   rating: number;
 }
 
-function PropertyreviewCard({ review }: { review: Review }) {
-  function truncateString(str: string, maxLength: number) {
-    if (str.length > maxLength) {
-      return `${str.slice(0, maxLength)}...`;
-    }
-    return str;
-  }
-
+function PropertyReviewCard({ review }: { review: Review }) {
   return (
     <Box key={review.id} sx={PropertyReviewStyles.reviewBox}>
       <Divider />
@@ -50,4 +44,4 @@ function PropertyreviewCard({ review }: { review: Review }) {
   );
 }
 
-export { PropertyreviewCard };
+export { PropertyReviewCard };

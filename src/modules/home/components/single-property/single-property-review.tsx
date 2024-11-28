@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import StarIcon from '@mui/icons-material/Star';
 import Button from '@mui/material/Button';
 import { PropertyReviewStyles } from './single-property-review.styles';
-import { PropertyreviewCard } from './property-review-card';
+import { PropertyReviewCard } from './property-review-card';
 
 interface Review {
   id: string;
@@ -32,7 +32,7 @@ function PropertyReview({ reviews, overallRating }: PropertyReviewProps) {
       </Typography>
       <Box sx={PropertyReviewStyles.reviewContainerBox}>
         {reviews.slice(0, numReviews).map((review) => (
-          <PropertyreviewCard key={review.id} review={review} />
+          <PropertyReviewCard key={review.id} review={review} />
         ))}
       </Box>
       {numReviews < reviews.length && (
