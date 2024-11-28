@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { axiosInstance } from '#/configs';
+import { api } from '#/configs';
 import { AxiosError } from 'axios';
 import Box from '@mui/material/Box';
 import { EmailInput, PasswordInput, FirstNameInput, LastNameInput, ConfirmPasswordInput } from '../components';
 import { UserSignupSchema } from '#/zod';
-import type { AuthFormData, AxiosErrorResponse } from '#/modules/auth/types';
-import { ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
+import type { AuthFormData, AxiosErrorResponse, FormDataKeys } from '#/modules/auth/types';
+import { AuthRedirectButton, ErrorMessage, GoogleAuthButton, SubmitButton } from '../../shared';
 import { getFirstErrorMessage } from '#/utils';
-import { ENDPOINTS } from '#/modules/auth/constants';
+import { ENDPOINTS, ROUTES } from '#/modules/auth/constants';
 import { signupFormStyles as styles } from './signup-form.styles';
 
 const maps = [
@@ -29,10 +29,10 @@ export function SignupForm() {
     setError,
   } = useForm<AuthFormData>({ resolver: zodResolver(UserSignupSchema) });
 
-  const [focusedField, setFocusedField] = useState<AuthFormData | null>(null);
+  const [focusedField, setFocusedField] = useState<FormDataKeys | null>(null);
   const navigate = useNavigate();
 
-  function handleFocus(field: AuthFormData) {
+  function handleFocus(field: FormDataKeys) {
     setFocusedField(field);
   }
 
@@ -41,7 +41,7 @@ export function SignupForm() {
   }
 
   function onSubmit(data: AuthFormData) {
-    axiosInstance
+    api
       .post(ENDPOINTS.signup, data)
       .then(() => navigate(ENDPOINTS.root))
       .catch((err) => {
@@ -95,6 +95,8 @@ export function SignupForm() {
       </Box>
 
       <GoogleAuthButton />
+
+      <AuthRedirectButton link={ROUTES.login} message="Log in to your account" />
     </>
   );
 }

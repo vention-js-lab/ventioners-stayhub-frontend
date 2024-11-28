@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const URL = import.meta.env.VITE_API_URL;
 
-export const axiosInstance = axios.create({
+export const api = axios.create({
   baseURL: URL,
   withCredentials: true,
   headers: {
@@ -12,16 +12,25 @@ export const axiosInstance = axios.create({
   },
 });
 
-// TODO: further work on interceptor required
-axiosInstance.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response && error.response?.status === 401 && error.message !== 'Invalid refresh token') {
+    const originalRequest = error.config;
+
+    let retryCnt = Number(originalRequest.headers['X-Refresh-Token-Retry-Count']);
+    if (Number.isNaN(retryCnt)) {
+      originalRequest.headers['X-Refresh-Token-Retry-Count'] = 0;
+      retryCnt = 0;
+    }
+
+    if (error.response && error.response?.status === 401 && retryCnt === 0) {
       try {
-        await axiosInstance.get(ENDPOINTS.refresh);
-        return axiosInstance(error.config);
+        await api.get(ENDPOINTS.refresh, {
+          headers: { 'X-Refresh-Token-Retry-Count': retryCnt + 1 },
+        });
+
+        return api(originalRequest);
       } catch (refreshError) {
-        window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     }

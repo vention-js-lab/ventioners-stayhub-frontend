@@ -3,7 +3,7 @@ export const searchbarStyles = {
     elevation: 2,
     styles: {
       width: { xs: '90%', sm: '80%', md: '80%', lg: '70%' },
-      height: '4rem',
+      height: '4.5rem',
       maxWidth: '850px',
       transition: 'all 0.3s ease',
     },

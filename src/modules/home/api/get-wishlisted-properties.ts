@@ -1,4 +1,4 @@
-import { axiosInstance } from '#/configs/axios.config';
+import { api } from '#/configs/axios.config';
 import { useQuery } from '@tanstack/react-query';
 import { type Accommodation } from '../types/accommodation.type';
 import { ENDPOINTS } from '../constants/endpoints.constant';
@@ -8,7 +8,7 @@ type GetWishlistedPropertiesResponse = {
 };
 
 export async function getWishlistedProperties(): Promise<GetWishlistedPropertiesResponse> {
-  const response = await axiosInstance.get<GetWishlistedPropertiesResponse>(ENDPOINTS.wishlist);
+  const response = await api.get<GetWishlistedPropertiesResponse>(ENDPOINTS.wishlist);
 
   return response.data;
 }
