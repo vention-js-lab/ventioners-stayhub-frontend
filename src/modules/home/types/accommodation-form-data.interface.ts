@@ -1,7 +1,8 @@
 import { type Accommodation } from './accommodation.type';
 
-export interface AccommodationFormData extends Omit<Accommodation, 'id' | 'createdAt' | 'updatedAt' | 'isAddedToWishlist'> {
+export interface AccommodationFormData
+  extends Omit<Accommodation, 'id' | 'createdAt' | 'updatedAt' | 'images' | 'isAddedToWishlist'> {
   categoryId: string;
   amenityIds: string[];
-  images: File[];
+  images?: (string | File)[];
 }
