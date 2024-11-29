@@ -18,10 +18,10 @@ export function ImageUploader() {
 
     if (newFiles.length === 0) return;
 
-    // Preserve existing string URLs and add new Files
     const updatedImages = [...(data.images || []), ...newFiles];
 
     updateData({
+      ...data,
       images: updatedImages,
     });
 
@@ -34,7 +34,10 @@ export function ImageUploader() {
     if (!data.images) return;
 
     const updatedImages = data.images.filter((_, index) => index !== indexToRemove);
-    updateData({ images: updatedImages });
+    updateData({
+      ...data,
+      images: updatedImages,
+    });
   };
 
   const handleUploadClick = () => {
