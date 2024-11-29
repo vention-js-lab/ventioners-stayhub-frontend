@@ -25,7 +25,7 @@ export function CreateAccommodation() {
     amenityIds: [],
   });
 
-  const { data } = useAccommodationContext();
+  const { data, updateData } = useAccommodationContext();
 
   const createAccommodation = useCreateAccommodation();
 
@@ -39,9 +39,9 @@ export function CreateAccommodation() {
 
       setActiveStep(1);
     } else {
-      const imagesToUpload = data.images.filter((image) => image instanceof File);
+      const imagesToUpload = data.images?.filter((image) => image instanceof File);
 
-      if (imagesToUpload.length === 0) {
+      if (imagesToUpload?.length === 0) {
         toast.error('Please upload at least one image');
         return;
       }
@@ -63,6 +63,7 @@ export function CreateAccommodation() {
 
   const updateFormData = (updates: Partial<AccommodationFormData>) => {
     setFormData((prev) => ({ ...prev, ...updates }));
+    updateData({ ...data, ...updates });
   };
 
   return (
