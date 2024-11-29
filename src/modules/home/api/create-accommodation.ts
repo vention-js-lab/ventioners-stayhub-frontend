@@ -7,13 +7,11 @@ import { type AxiosError } from 'axios';
 import { api } from '#/configs';
 
 export const useCreateAccommodation = () => {
+  api.defaults.headers['Content-Type'] = 'multipart/form-data';
   return useMutation({
-    mutationFn: (data: AccommodationFormData) =>
-      api.post<Accommodation>(ENDPOINTS.accommodations, data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }),
+    mutationFn: async (data: AccommodationFormData) => {
+      return await api.post<Accommodation>(ENDPOINTS.accommodations, data);
+    },
     onSuccess: () => {
       toast.success('Accommodation created successfully!');
       window.location.href = ENDPOINTS.root;
