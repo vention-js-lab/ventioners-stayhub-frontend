@@ -4,7 +4,7 @@ import { createAccommodationRouteStyles } from './create-accommodation.route.sty
 import { AccommodationProvider } from '../contexts';
 import { CreateAccommodation } from '../components/create-accommodation';
 
-export function CreateAccommodatioRoute() {
+export function CreateAccommodationRoute() {
   return (
     <Box sx={createAccommodationRouteStyles.container}>
       <HeaderComponent />

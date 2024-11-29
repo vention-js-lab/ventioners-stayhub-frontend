@@ -25,7 +25,7 @@ export function CreateAccommodation() {
     amenityIds: [],
   });
 
-  const { data, basics } = useAccommodationContext();
+  const { data } = useAccommodationContext();
 
   const createAccommodation = useCreateAccommodation();
 
@@ -48,7 +48,6 @@ export function CreateAccommodation() {
 
       const creationPayload = {
         ...data,
-        ...basics,
         images: imagesToUpload,
       };
 
