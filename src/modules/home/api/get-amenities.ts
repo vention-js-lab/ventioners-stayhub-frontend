@@ -1,4 +1,4 @@
-import { axiosInstance } from '#/configs/axios.config';
+import { api } from '#/configs/axios.config';
 import { useQuery } from '@tanstack/react-query';
 import { ENDPOINTS } from '../constants/endpoints.constant';
 import { type Amenity } from '../types/amenity.type';
@@ -8,7 +8,7 @@ type GetAmenitiesResponse = {
 };
 
 export async function getAmenities(): Promise<GetAmenitiesResponse> {
-  const response = await axiosInstance.get<GetAmenitiesResponse>(ENDPOINTS.amenities);
+  const response = await api.get<GetAmenitiesResponse>(ENDPOINTS.amenities);
 
   return response.data;
 }
