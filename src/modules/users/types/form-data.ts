@@ -5,9 +5,9 @@ export type ProfileFormData = {
   firstName: User['firstName'];
   lastName: User['lastName'];
   email: User['email'];
+  oldPassword: string;
   password: string;
   confirmPassword: string;
-  oldconfirmPassword: string;
 };
 
 export type FormDataKeys = keyof ProfileFormData;
