@@ -10,26 +10,22 @@ interface Location {
   lng: number;
 }
 
-interface MapClickEvent {
+interface MapMouseEvent {
   detail: {
-    placeId: string | null;
     latLng: {
       lat: number;
       lng: number;
-    };
+    } | null;
   };
 }
 
-function CustomMap() {
-  const [markerLocation, setMarkerLocation] = useState<Location>({
-    lat: 41.28332127984398,
-    lng: 69.2118501663208,
-  });
+export function CustomMap({ lat, lng }: Location) {
+  const [markerLocation, setMarkerLocation] = useState<Location>({ lat, lng });
 
-  const handleMapClick = (mapProps: MapClickEvent) => {
-    if (mapProps.detail.placeId) {
-      const { lat, lng } = mapProps.detail.latLng;
-      setMarkerLocation({ lat, lng });
+  const handleMapClick = (event: MapMouseEvent) => {
+    const clickedLatLng = event.detail.latLng;
+    if (clickedLatLng) {
+      setMarkerLocation({ lat: clickedLatLng.lat, lng: clickedLatLng.lng });
     } else {
       toast.error('Please select a specific location', {
         position: 'top-right',
@@ -42,17 +38,12 @@ function CustomMap() {
   return (
     <Box sx={mapContainerStyles.container}>
       <Map
-        style={{
-          borderRadius: '20px',
-          height: '100%',
-          width: '100%',
-          overflow: 'hidden',
-        }}
+        style={mapContainerStyles.mapStyle}
         defaultZoom={13}
         defaultCenter={markerLocation}
         gestureHandling="greedy"
         disableDefaultUI={true}
-        onClick={(mapProps) => handleMapClick(mapProps)}
+        onClick={handleMapClick}
       >
         <Marker position={markerLocation} />
       </Map>
@@ -60,5 +51,3 @@ function CustomMap() {
     </Box>
   );
 }
-
-export default CustomMap;

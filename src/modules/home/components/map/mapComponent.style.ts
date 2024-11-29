@@ -8,4 +8,10 @@ export const mapContainerStyles = {
     boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
     border: '1px solid black',
   },
+  mapStyle: {
+    borderRadius: '20px',
+    height: '100%',
+    width: '100%',
+    overflow: 'hidden',
+  },
 } satisfies MuiStylesObject;
