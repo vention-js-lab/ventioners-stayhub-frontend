@@ -13,7 +13,7 @@ import { AxiosError } from 'axios';
 import { ROUTES } from '#/modules/users/constants';
 import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
 import { api } from '#/configs';
-import { ErrorMessage } from '#/modules/users/components';
+import { DeleteAccountModal, ErrorMessage } from '#/modules/users/components';
 import { getFirstErrorMessage } from '#/utils';
 import { ConfirmPasswordInput, OldPasswordInput, PasswordInput } from '../../input-fields';
 import { HeaderComponent } from '#/modules/home/components/header';
@@ -103,6 +103,12 @@ export function SecurityForm() {
             Save
           </Button>
         </form>
+
+        <Box sx={styles.deleteAccountContainer}>
+          <Typography sx={styles.label}>Deactivate your account</Typography>
+
+          <DeleteAccountModal />
+        </Box>
       </Box>
     </Fragment>
   );

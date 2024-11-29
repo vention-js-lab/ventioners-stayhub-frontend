@@ -1,3 +1,5 @@
+import { type MuiStylesObject } from '#/types/mui-styles-object.type';
+
 export const settingsPageStyles = {
   container: {
     paddingTop: '12px',
@@ -11,6 +13,9 @@ export const settingsPageStyles = {
     },
   },
   headingContainer: {
+    display: 'flex',
+    gap: '30px',
+    alignItems: 'start',
     textAlign: 'start',
     marginLeft: '16px',
     marginTop: '64px',
@@ -23,18 +28,13 @@ export const settingsPageStyles = {
     fontWeight: 600,
   },
   headingDetails: {
-    display: 'flex',
     marginTop: '8px',
     marginBottom: '16px',
     fontSize: '18px',
   },
   firstName: {
-    fontWeight: 600,
-  },
-  profileRef: {
-    all: 'unset',
-    textDecoration: 'underline',
-    color: '#000000',
+    marginTop: '18px',
+    marginBottom: '6px',
     fontWeight: 600,
   },
   grid: {
@@ -42,4 +42,10 @@ export const settingsPageStyles = {
     flexWrap: 'wrap',
     paddingX: '12px',
   },
-} as const;
+  noProfileIcon: {
+    width: 32,
+    height: 32,
+    color: '#717171',
+    marginRight: '5px',
+  },
+} satisfies MuiStylesObject;

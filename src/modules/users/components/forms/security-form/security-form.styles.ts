@@ -56,4 +56,11 @@ export const securityFormStyles = {
       backgroundColor: '#000000',
     },
   },
+  deleteAccountContainer: {
+    marginTop: '40px',
+    borderTop: '1px solid rgb(235, 235, 235)',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 } satisfies MuiStylesObject;
