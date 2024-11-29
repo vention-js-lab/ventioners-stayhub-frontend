@@ -14,7 +14,7 @@ import { MenuItemLink } from './menu-item-link';
 import { useAppDispatch, useAppSelector } from '#/redux/hooks';
 import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
 import { api } from '#/configs';
-import { UserProfileIcon } from './user-profile-icon';
+import { UserProfilePicture } from './user-profile-picture/user-profile-picture';
 import { removeUser, selectAuth } from '#/redux/auth/auth-slice';
 import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
@@ -80,7 +80,7 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         startIcon={<MenuIcon sx={userNavigationStyles.menuIcon} />}
         endIcon={
           auth.user?.firstName ? (
-            <UserProfileIcon firstName={auth.user.firstName} />
+            <UserProfilePicture user={auth.user} size="small" />
           ) : (
             <AccountCircle sx={userNavigationStyles.accountCircleIcon} />
           )

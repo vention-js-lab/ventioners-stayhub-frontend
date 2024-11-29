@@ -1,13 +1,17 @@
-import Box from '@mui/material/Box';
+import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 
-type Props = {
-  firstName: string;
-};
-
-const styles = {
+export const userProfilePictureStyles = {
   container: {
     width: '32px',
     height: '32px',
+    large: {
+      width: '200px',
+      height: '200px',
+      '@media (max-width: 450px)': {
+        width: '120px',
+        height: '120px',
+      },
+    },
     backgroundColor: '#000000',
     color: '#ffffff',
     borderRadius: '50%',
@@ -21,12 +25,4 @@ const styles = {
     fontWeight: '400',
     textTransform: 'uppercase',
   },
-} as const;
-
-export function UserProfileIcon({ firstName }: Props) {
-  return (
-    <Box sx={styles.container}>
-      <Box sx={styles.text}>{firstName[0]}</Box>
-    </Box>
-  );
-}
+} satisfies MuiStylesObject;
