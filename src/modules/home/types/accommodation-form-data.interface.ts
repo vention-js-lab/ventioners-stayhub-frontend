@@ -3,6 +3,6 @@ import { type Accommodation } from './accommodation.type';
 export interface AccommodationFormData
   extends Omit<Accommodation, 'id' | 'createdAt' | 'updatedAt' | 'images' | 'isAddedToWishlist'> {
   categoryId: string;
-  amenityIds: string[];
+  amenities: string[];
   images?: (string | File)[];
 }

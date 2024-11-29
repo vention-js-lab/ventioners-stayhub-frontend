@@ -22,7 +22,7 @@ export function CreateAccommodation() {
     pricePerNight: 0,
     categoryId: '',
     images: [],
-    amenityIds: [],
+    amenities: [],
   });
 
   const { data, updateData } = useAccommodationContext();

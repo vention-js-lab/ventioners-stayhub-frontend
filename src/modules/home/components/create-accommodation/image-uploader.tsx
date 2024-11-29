@@ -21,7 +21,6 @@ export function ImageUploader() {
     const updatedImages = [...(data.images || []), ...newFiles];
 
     updateData({
-      ...data,
       images: updatedImages,
     });
 
@@ -35,7 +34,6 @@ export function ImageUploader() {
 
     const updatedImages = data.images.filter((_, index) => index !== indexToRemove);
     updateData({
-      ...data,
       images: updatedImages,
     });
   };

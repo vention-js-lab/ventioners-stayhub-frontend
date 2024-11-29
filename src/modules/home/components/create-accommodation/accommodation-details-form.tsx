@@ -25,12 +25,12 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
   const { data: amenitiesResponse } = useAmenities();
 
   const handleAmenityToggle = (amenityId: string) => {
-    const currentAmenities = formData.amenityIds;
+    const currentAmenities = formData.amenities;
     const updatedAmenities = currentAmenities.includes(amenityId)
       ? currentAmenities.filter((id) => id !== amenityId)
       : [...currentAmenities, amenityId];
 
-    updateFormData({ amenityIds: updatedAmenities });
+    updateFormData({ amenities: updatedAmenities });
   };
 
   return (
@@ -119,7 +119,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
                 onClick={() => handleAmenityToggle(amenity.id)}
                 sx={[
                   accommodationDetailsFormStyles.amenityChip,
-                  formData.amenityIds.includes(amenity.id) ? accommodationDetailsFormStyles.selectedAmenityChip : {},
+                  formData.amenities.includes(amenity.id) ? accommodationDetailsFormStyles.selectedAmenityChip : {},
                 ]}
               />
             ))}
