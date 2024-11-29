@@ -2,6 +2,8 @@ import { mapContainerStyles } from './mapComponent.style';
 import { useState } from 'react';
 import { Map, Marker } from '@vis.gl/react-google-maps';
 import Box from '@mui/material/Box';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Location {
   lat: number;
@@ -19,7 +21,6 @@ interface MapClickEvent {
 }
 
 function CustomMap() {
-  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
   const [markerLocation, setMarkerLocation] = useState<Location>({
     lat: 41.28332127984398,
     lng: 69.2118501663208,
@@ -27,27 +28,35 @@ function CustomMap() {
 
   const handleMapClick = (mapProps: MapClickEvent) => {
     if (mapProps.detail.placeId) {
-      const lat = mapProps.detail.latLng.lat;
-      const lng = mapProps.detail.latLng.lng;
-      setSelectedLocation({ lat, lng });
+      const { lat, lng } = mapProps.detail.latLng;
       setMarkerLocation({ lat, lng });
     } else {
-      alert('Please select the specific location');
+      toast.error('Please select a specific location', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: true,
+      });
     }
   };
 
   return (
     <Box sx={mapContainerStyles.container}>
       <Map
-        style={{ borderRadius: '20px', height: '100%', width: '100%', overflow: 'hidden' }}
+        style={{
+          borderRadius: '20px',
+          height: '100%',
+          width: '100%',
+          overflow: 'hidden',
+        }}
         defaultZoom={13}
         defaultCenter={markerLocation}
-        gestureHandling={'greedy'}
+        gestureHandling="greedy"
         disableDefaultUI={true}
         onClick={(mapProps) => handleMapClick(mapProps)}
       >
         <Marker position={markerLocation} />
       </Map>
+      <ToastContainer />
     </Box>
   );
 }
