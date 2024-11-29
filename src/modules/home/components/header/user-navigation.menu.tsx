@@ -51,6 +51,8 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
       dispatch(removeUser());
 
       toast('Logged out successfully');
+
+      window.location.href = '/';
     } catch {
       toast("Couldn't log you out. Please try again");
     }
