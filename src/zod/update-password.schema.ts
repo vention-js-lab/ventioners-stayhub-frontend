@@ -13,4 +13,8 @@ export const UpdatePasswordSchema: ZodType<Partial<ProfileFormData>> = z
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
     path: ['confirmPassword'],
+  })
+  .refine((data) => data.oldPassword !== data.password, {
+    message: 'Old & new passwords are the same',
+    path: ['password'],
   });
