@@ -1,6 +1,6 @@
 export const userNavigationStyles = {
   container: { display: 'flex', gap: 2 },
-  airBnbYourHomeButton: {
+  stayhubYourHomeButton: {
     borderRadius: 20,
     '&:hover': { backgroundColor: '#F7F7F7' },
     fontFamily: 'sans-serif',
@@ -16,7 +16,7 @@ export const userNavigationStyles = {
     height: 20,
   },
   menuIcon: { width: 24, height: 24, color: '#717171' },
-  accountCircleIcon: { width: 32, height: 32, color: '#717171' },
+  accountCircleIcon: { width: 32, height: 32, color: '#717171', marginRight: '5px' },
   menuContainer: {
     anchorOrigin: {
       vertical: 'bottom',

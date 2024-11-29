@@ -1,4 +1,4 @@
-import { axiosInstance } from '#/configs/axios.config';
+import { api } from '#/configs/axios.config';
 import { useQuery } from '@tanstack/react-query';
 import { type Accommodation } from '../types/accommodation.type';
 import { ENDPOINTS } from '../constants/endpoints.constant';
@@ -26,7 +26,7 @@ export async function getProperties({ page, categoryId, search }: GetPropertiesP
     params.search = search;
   }
 
-  const response = await axiosInstance.get<GetPropertiesResponse>(ENDPOINTS.accommodations, {
+  const response = await api.get<GetPropertiesResponse>(ENDPOINTS.accommodations, {
     params,
   });
 
