@@ -77,7 +77,7 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         onClick={handleMenuOpen}
         startIcon={<MenuIcon sx={userNavigationStyles.menuIcon} />}
         endIcon={
-          auth.user ? (
+          auth.user?.firstName ? (
             <UserProfileIcon firstName={auth.user.firstName} />
           ) : (
             <AccountCircle sx={userNavigationStyles.accountCircleIcon} />

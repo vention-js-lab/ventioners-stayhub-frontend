@@ -1,18 +1,23 @@
+import { type User } from '#/types';
 import type { UseFormRegister } from 'react-hook-form';
 
-export type PersonalInfoFormData = {
+export type ProfileFormData = {
   firstName: User['firstName'];
   lastName: User['lastName'];
   email: User['email'];
+  password: string;
+  confirmPassword: string;
+  oldconfirmPassword: string;
 };
 
-export type FormDataKeys = keyof PersonalInfoFormData;
+export type FormDataKeys = keyof ProfileFormData;
 
 export type FormInputProps = {
   focusedField: FormDataKeys | null;
   handleBlur: () => void;
   handleFocus: (field: FormDataKeys) => void;
-  register: UseFormRegister<PersonalInfoFormData>;
+  register: UseFormRegister<ProfileFormData>;
+  content?: string;
 };
 
 export type AxiosErrorResponse = {

@@ -1,7 +1,7 @@
 import { z, type ZodType } from 'zod';
-import { type PersonalInfoFormData } from '#/modules/users/types';
+import { type ProfileFormData } from '#/modules/users/types';
 
-export const PersonalInfoSchema: ZodType<PersonalInfoFormData> = z.object({
+export const PersonalInfoSchema: ZodType<Partial<ProfileFormData>> = z.object({
   firstName: z
     .string()
     .min(1, { message: 'Please enter a valid first name' })

@@ -8,7 +8,7 @@ type Props = FormInputProps & {
   inputName: FormDataKeys;
 };
 
-export function BasicInput({ inputName, register, inputRef, focusedField, handleBlur, handleFocus }: Props) {
+export function BasicInput({ inputName, register, inputRef, focusedField, handleBlur, handleFocus, content }: Props) {
   const { ref, ...rest } = register(inputName);
 
   function getInputType(name: Props['inputName']) {
@@ -28,6 +28,7 @@ export function BasicInput({ inputName, register, inputRef, focusedField, handle
       sx={styles(focusedField === inputName, !isInputFieldEmpty(inputRef)).input}
       onFocus={() => handleFocus(inputName)}
       onBlur={handleBlur}
+      defaultValue={content}
     />
   );
 }
