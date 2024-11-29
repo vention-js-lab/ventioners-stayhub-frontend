@@ -7,8 +7,9 @@ import { CategoryList } from '../components/category/category-list';
 import { homeRouteStyles } from './home.route.styles';
 import { useSearchParamsState } from '../hooks/use-search-params-state';
 import { useProperties } from '../api/get-properties';
-import CustomMap from '../components/map/mapComponent';
+import { CustomMap } from '../components/map/mapComponent';
 import { APIProvider } from '@vis.gl/react-google-maps';
+import { lat, lng } from '../constants/map.constant';
 
 export function HomeRoute() {
   const [selectedCategory, setSelectedCategory] = useSearchParamsState('category', '');
@@ -24,7 +25,7 @@ export function HomeRoute() {
         <PropertyList isLoading={isLoading} data={data} />
         <Box sx={homeRouteStyles.mapContainer}>
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-            <CustomMap />
+            <CustomMap lat={lat} lng={lng} />
           </APIProvider>
         </Box>
       </Container>
