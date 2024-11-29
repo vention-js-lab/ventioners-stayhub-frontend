@@ -10,7 +10,7 @@ interface Location {
   lng: number;
 }
 
-interface MapMouseEvent {
+interface MapClickEvent {
   detail: {
     latLng: {
       lat: number;
@@ -22,7 +22,7 @@ interface MapMouseEvent {
 export function CustomMap({ lat, lng }: Location) {
   const [markerLocation, setMarkerLocation] = useState<Location>({ lat, lng });
 
-  const handleMapClick = (event: MapMouseEvent) => {
+  const handleMapClick = (event: MapClickEvent) => {
     const clickedLatLng = event.detail.latLng;
     if (clickedLatLng) {
       setMarkerLocation({ lat: clickedLatLng.lat, lng: clickedLatLng.lng });
