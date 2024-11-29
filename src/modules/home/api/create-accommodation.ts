@@ -8,7 +8,12 @@ import { api } from '#/configs';
 
 export const useCreateAccommodation = () => {
   return useMutation({
-    mutationFn: (data: AccommodationFormData) => api.post<Accommodation>(ENDPOINTS.accommodations, data),
+    mutationFn: (data: AccommodationFormData) =>
+      api.post<Accommodation>(ENDPOINTS.accommodations, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
     onSuccess: () => {
       toast.success('Accommodation created successfully!');
       window.location.href = ENDPOINTS.root;
