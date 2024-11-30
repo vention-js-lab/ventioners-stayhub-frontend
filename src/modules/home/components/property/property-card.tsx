@@ -73,11 +73,16 @@ export function ApartmentCard({ id, name, location, pricePerNight, images, isAdd
           modules={[EffectFade, Navigation, Pagination]}
           className="mySwiper"
         >
-          {images.map((image) => (
-            <SwiperSlide key={image}>
-              <img src={image} alt="Image of Apartment" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </SwiperSlide>
-          ))}
+          {Array.isArray(images) &&
+            images.map((image) => (
+              <SwiperSlide key={Math.floor(Math.random() * 100)}>
+                <img
+                  src={image as string}
+                  alt="Image of Apartment"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </SwiperSlide>
+            ))}
         </Swiper>
 
         <CardContent sx={{ padding: '16px 0px' }}>
