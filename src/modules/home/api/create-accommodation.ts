@@ -3,14 +3,32 @@ import type { AccommodationFormData } from '#/modules/home/types/accommodation-f
 import { ENDPOINTS } from '#/modules/home/constants/endpoints.constant.ts';
 import { toast } from 'react-toastify';
 import { type Accommodation } from '#/modules/home/types/accommodation.type.ts';
-import { type AxiosError } from 'axios';
 import { api } from '#/configs';
+import { type AxiosError } from 'axios';
 
 export const useCreateAccommodation = () => {
   api.defaults.headers['Content-Type'] = 'multipart/form-data';
   return useMutation({
     mutationFn: async (data: AccommodationFormData) => {
-      return await api.post<Accommodation>(ENDPOINTS.accommodations, data);
+      const formData = new FormData();
+
+      Object.entries(data).forEach(([key, value]) => {
+        if (value instanceof File) {
+          formData.append(key, value);
+        } else if (Array.isArray(value)) {
+          value.forEach((item, index) => {
+            if (item instanceof File) {
+              formData.append(`${key}`, item);
+            } else {
+              formData.append(`${key}[${index}]`, item as string);
+            }
+          });
+        } else if (value !== null && value !== undefined) {
+          formData.append(key, value as string);
+        }
+      });
+
+      return await api.post<Accommodation>(ENDPOINTS.accommodations, formData);
     },
     onSuccess: () => {
       toast.success('Accommodation created successfully!');
