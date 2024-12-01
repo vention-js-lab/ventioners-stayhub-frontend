@@ -74,8 +74,8 @@ export function ApartmentCard({ id, name, location, pricePerNight, images, isAdd
           className="mySwiper"
         >
           {images.map((image) => (
-            <SwiperSlide key={image}>
-              <img src={image} alt="Image of Apartment" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <SwiperSlide key={image.id}>
+              <img src={image.url} alt="Image of Apartment" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </SwiperSlide>
           ))}
         </Swiper>
