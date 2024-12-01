@@ -3,6 +3,7 @@ export const ENDPOINTS = {
   accommodations: '/accommodations',
   categories: '/categories',
   wishlist: '/users/wishlist',
+  amenities: '/amenities',
 } as const;
 
 export const ROUTES = {
