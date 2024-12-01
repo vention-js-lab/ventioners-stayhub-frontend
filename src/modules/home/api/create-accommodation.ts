@@ -7,7 +7,6 @@ import { api } from '#/configs';
 import { type AxiosError } from 'axios';
 
 export const useCreateAccommodation = () => {
-  api.defaults.headers['Content-Type'] = 'multipart/form-data';
   return useMutation({
     mutationFn: async (data: AccommodationFormData) => {
       const formData = new FormData();
@@ -28,7 +27,11 @@ export const useCreateAccommodation = () => {
         }
       });
 
-      return await api.post<Accommodation>(ENDPOINTS.accommodations, formData);
+      return await api.post<Accommodation>(ENDPOINTS.accommodations, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
     },
     onSuccess: () => {
       toast.success('Accommodation created successfully!');
