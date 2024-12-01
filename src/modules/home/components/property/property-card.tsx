@@ -21,7 +21,6 @@ import { postWishlist } from '../../api/post-wishlist';
 import { useMutation } from '@tanstack/react-query';
 import { useAppSelector } from '#/redux/hooks';
 import { selectAuth } from '#/redux/auth/auth-slice';
-import { type Image } from '#/modules/home/types/image.type.ts';
 
 export function ApartmentCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const navigate = useNavigate();
@@ -74,7 +73,7 @@ export function ApartmentCard({ id, name, location, pricePerNight, images, isAdd
           modules={[EffectFade, Navigation, Pagination]}
           className="mySwiper"
         >
-          {(images as Image[]).map((image) => (
+          {images.map((image) => (
             <SwiperSlide key={image.id}>
               <img src={image.url} alt="Image of Apartment" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </SwiperSlide>

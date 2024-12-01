@@ -4,7 +4,7 @@ export type Accommodation = {
   id: string;
   name: string;
   description: string;
-  images: string[] | Image[];
+  images: Image[];
   location: string;
   pricePerNight: number;
   isAddedToWishlist: boolean;
