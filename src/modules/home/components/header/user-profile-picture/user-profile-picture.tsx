@@ -45,24 +45,12 @@ export function UserProfilePicture({ user, size }: Props) {
   }
 
   return (
-    <Box sx={styles.container}>
-      <Box
-        sx={{
-          ...styles.image,
-          ...(size === 'large' && styles.image.large),
-          ...(user.profilePictureUrl && {
-            backgroundImage: `url(${user.profilePictureUrl})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }),
-        }}
-      >
-        {!user.profilePictureUrl && (
-          <Box sx={{ ...styles.text, ...(size === 'large' && { fontSize: '32px' }) }}>{user.firstName[0]}</Box>
-        )}
+    <Box sx={styles().container}>
+      <Box sx={styles(size, user.profilePictureUrl).image}>
+        {!user.profilePictureUrl && <Box sx={styles(size).text}>{user.firstName[0]}</Box>}
 
         {size === 'large' && (
-          <Button disableRipple={true} sx={styles.button} onClick={() => imageInputRef.current?.click()}>
+          <Button disableRipple={true} sx={styles().button} onClick={() => imageInputRef.current?.click()}>
             <img src={cameraIcon} />
             &nbsp;Edit
             <input type="file" ref={imageInputRef} style={{ display: 'none' }} onChange={handleSubmit} accept="image/*" />
