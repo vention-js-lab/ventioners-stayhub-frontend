@@ -15,7 +15,7 @@ import { ENDPOINTS, ROUTES } from '#/modules/users/constants';
 import { api } from '#/configs';
 import { ErrorMessage } from '#/modules/users/components';
 import { getFirstErrorMessage, omit } from '#/utils';
-import { EmailInput, FirstNameInput, LastNameInput } from '../../input-fields';
+import { EmailInput, FirstNameInput, LastNameInput } from '#/modules/users/components/input-fields';
 import { useAppDispatch, useAppSelector } from '#/redux/hooks';
 import { HeaderComponent } from '#/modules/home/components/header';
 import { personalInfoFormStyles as styles } from './personal-info-form.styles';
@@ -37,7 +37,7 @@ export function PersonalInfoForm() {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
 
-  function handleClick() {
+  function redirectToSettings() {
     navigate(ROUTES.accountSettings);
   }
 
@@ -49,7 +49,7 @@ export function PersonalInfoForm() {
     setFocusedField(null);
   }
 
-  function onSubmit(data: ProfileFormData) {
+  function handleUpdateUserInfo(data: ProfileFormData) {
     api
       .put(`${ENDPOINTS.users}/${user?.id}`, data)
       .then((res) => {
@@ -77,7 +77,7 @@ export function PersonalInfoForm() {
 
       <Box sx={styles.container}>
         <Breadcrumbs separator=">">
-          <Link underline="hover" key="1" onClick={handleClick} sx={styles.breadcrumbs}>
+          <Link underline="hover" key="1" onClick={redirectToSettings} sx={styles.breadcrumbs}>
             Account
           </Link>
           <Typography key="2" sx={styles.breadcrumbs}>
@@ -91,7 +91,7 @@ export function PersonalInfoForm() {
 
         <form
           onSubmit={(e) => {
-            handleSubmit(onSubmit)(e);
+            handleSubmit(handleUpdateUserInfo)(e);
           }}
         >
           <Box sx={styles.nameContainer}>

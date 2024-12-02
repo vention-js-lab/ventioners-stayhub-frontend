@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { ROUTES } from '../../constants';
+import { ROUTES } from '#/modules/users/constants';
 import { settingsCardStyles as styles } from './settings-card.styles';
 
 type Props = {

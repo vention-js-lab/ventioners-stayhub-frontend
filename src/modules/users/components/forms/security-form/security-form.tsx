@@ -15,7 +15,7 @@ import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
 import { api } from '#/configs';
 import { DeleteAccountModal, ErrorMessage } from '#/modules/users/components';
 import { getFirstErrorMessage } from '#/utils';
-import { ConfirmPasswordInput, OldPasswordInput, PasswordInput } from '../../input-fields';
+import { ConfirmPasswordInput, OldPasswordInput, PasswordInput } from '#/modules/users/components/input-fields';
 import { HeaderComponent } from '#/modules/home/components/header';
 import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
@@ -33,7 +33,7 @@ export function SecurityForm() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  function handleClick() {
+  function redirectToSettings() {
     navigate(ROUTES.accountSettings);
   }
 
@@ -45,7 +45,7 @@ export function SecurityForm() {
     setFocusedField(null);
   }
 
-  function onSubmit(data: ProfileFormData) {
+  function handleUpdateUserPassword(data: ProfileFormData) {
     api
       .post(`${AUTH_ENDPOINTS.updatePassword}`, { oldPassword: data.oldPassword, newPassword: data.password })
       .then(() => {
@@ -70,7 +70,7 @@ export function SecurityForm() {
 
       <Box sx={styles.container}>
         <Breadcrumbs separator=">">
-          <Link underline="hover" key="1" onClick={handleClick} sx={styles.breadcrumbs}>
+          <Link underline="hover" key="1" onClick={redirectToSettings} sx={styles.breadcrumbs}>
             Account
           </Link>
           <Typography key="2" sx={styles.breadcrumbs}>
@@ -84,7 +84,7 @@ export function SecurityForm() {
 
         <form
           onSubmit={(e) => {
-            handleSubmit(onSubmit)(e);
+            handleSubmit(handleUpdateUserPassword)(e);
           }}
         >
           <Typography sx={styles.label}>Update Your Password</Typography>

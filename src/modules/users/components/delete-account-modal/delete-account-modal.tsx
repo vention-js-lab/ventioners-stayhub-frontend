@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { api } from '#/configs';
 import { Fragment } from 'react/jsx-runtime';
-import { ENDPOINTS } from '../../constants';
+import { ENDPOINTS } from '#/modules/users/constants';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';

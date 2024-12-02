@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import { BasicInput } from '#/modules/users/components';
-import { type FormInputProps } from '../../types';
+import { type FormInputProps } from '#/modules/users/types';
 import { isInputFieldEmpty } from '#/utils';
-import { inputStyles as styles } from '../../styles/input.styles';
+import { inputStyles as styles } from '#/modules/users/styles/input.styles';
 
 export function FirstNameInput(props: FormInputProps) {
   const { focusedField } = props;
