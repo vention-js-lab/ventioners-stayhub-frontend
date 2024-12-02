@@ -26,6 +26,7 @@ export function UserProfilePicture({ user, size }: Props) {
     const file = event.target.files?.[0];
 
     if (!file) {
+      toast('No image specified');
       return;
     }
 
