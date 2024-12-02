@@ -14,7 +14,7 @@ interface Location {
   lng: number;
 }
 
-interface MapMouseEvent {
+interface MapClickEvent {
   detail: {
     latLng: {
       lat: number;
