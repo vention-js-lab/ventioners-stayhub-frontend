@@ -7,22 +7,17 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
-import { type ProfileFormData, type FormDataKeys, type AxiosErrorResponse } from '#/modules/users/types';
+import { type ProfileFormData, type FormDataKeys } from '#/modules/users/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AxiosError } from 'axios';
 import { PersonalInfoSchema } from '#/zod';
-import { ENDPOINTS, ROUTES } from '#/modules/users/constants';
-import { api } from '#/configs';
+import { ROUTES } from '#/modules/users/constants';
 import { ErrorMessage } from '#/modules/users/components';
-import { getFirstErrorMessage, omit } from '#/utils';
+import { getFirstErrorMessage } from '#/utils';
 import { EmailInput, FirstNameInput, LastNameInput } from '#/modules/users/components/input-fields';
-import { useAppDispatch, useAppSelector } from '#/redux/hooks';
+import { useAppSelector } from '#/redux/hooks';
 import { HeaderComponent } from '#/modules/home/components/header';
 import { personalInfoFormStyles as styles } from './personal-info-form.styles';
-import { toast } from 'react-toastify';
-import { createUser } from '#/redux/auth/auth-slice';
-import { type User } from '#/types';
-import { useQueryClient } from '@tanstack/react-query';
+import { useUpdateUser } from '#/modules/users/api';
 
 export function PersonalInfoForm() {
   const {
@@ -34,8 +29,7 @@ export function PersonalInfoForm() {
   const [focusedField, setFocusedField] = useState<FormDataKeys | null>('lastName');
   const user = useAppSelector((state) => state.auth.user);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
+  const updateUser = useUpdateUser(user?.id, setError);
 
   function redirectToSettings() {
     navigate(ROUTES.accountSettings);
@@ -50,25 +44,7 @@ export function PersonalInfoForm() {
   }
 
   function handleUpdateUserInfo(data: ProfileFormData) {
-    api
-      .put(`${ENDPOINTS.users}/${user?.id}`, data)
-      .then((res) => {
-        const updatedUser = omit(res.data, ['createdAt', 'updatedAt', 'passwordHash']) as User;
-
-        queryClient.invalidateQueries({ queryKey: ['auth-user'] });
-        dispatch(createUser(updatedUser));
-        toast('Success');
-
-        navigate(-1);
-      })
-      .catch((err) => {
-        if (err instanceof AxiosError) {
-          const errorData = err.response?.data as AxiosErrorResponse;
-          setError('firstName', { message: errorData.message });
-        } else {
-          setError('firstName', { message: 'Something went wrong' });
-        }
-      });
+    updateUser.mutate(data);
   }
 
   return (

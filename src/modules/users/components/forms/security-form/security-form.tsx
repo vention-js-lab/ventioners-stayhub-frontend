@@ -57,9 +57,9 @@ export function SecurityForm() {
       .catch((err) => {
         if (err instanceof AxiosError) {
           const errorData = err.response?.data as AxiosErrorResponse;
-          setError('firstName', { message: errorData.message });
+          setError('root', { message: errorData.message });
         } else {
-          setError('firstName', { message: 'Something went wrong' });
+          setError('root', { message: 'Something went wrong' });
         }
       });
   }

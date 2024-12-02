@@ -6,11 +6,11 @@ import { type User } from '#/types';
 import { userProfilePictureStyles as styles } from './user-profile-picture.styles';
 import { api } from '#/configs';
 import { ENDPOINTS } from '#/modules/users/constants';
-import { omit } from '#/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAppDispatch } from '#/redux/hooks';
 import { createUser } from '#/redux/auth/auth-slice';
 import { toast } from 'react-toastify';
+import { omit } from 'lodash';
 
 type Props = {
   user: User;

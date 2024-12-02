@@ -5,7 +5,7 @@ const { PersonalInfoForm } = lazyRoute(() => import('./components'), 'PersonalIn
 const { SecurityForm } = lazyRoute(() => import('./components'), 'SecurityForm');
 const { ProfileRoute } = lazyRoute(() => import('./routes/profile.route'), 'ProfileRoute');
 
-export const UsersRoutes: RouteObject[] = [
+export const ProfileRoutes: RouteObject[] = [
   {
     path: '/account-settings',
     element: <ProfileRoute />,

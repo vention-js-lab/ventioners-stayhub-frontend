@@ -6,7 +6,7 @@ import { settingsCardStyles as styles } from './settings-card.styles';
 
 type Props = {
   icon: string;
-  title: string;
+  title: keyof typeof maps;
   description: string;
 };
 
@@ -20,7 +20,7 @@ export function SettingsCard({ icon, title, description }: Props) {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate(maps[title as keyof typeof maps]);
+    navigate(maps[title]);
   }
 
   return (

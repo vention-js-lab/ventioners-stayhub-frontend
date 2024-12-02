@@ -8,5 +8,4 @@ export const ROUTES = {
   personalInfo: '/account-settings/personal-info',
   loginAndSecurity: '/account-settings/login-and-security',
   preferences: '/account-settings/preferences',
-  profile: '/users',
 } as const;
