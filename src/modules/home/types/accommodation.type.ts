@@ -6,7 +6,6 @@ export interface Location {
   lat: number;
   lng: number;
 }
-
 type LocationCoordinates = {
   type: string;
   coordinates: number[];
@@ -17,8 +16,8 @@ export type Accommodation = {
   name: string;
   description: string;
   images: Image[];
-  locationCoordinates: LocationCoordinates;
   amenities: AmenityInterface[];
+  locationCoordinates: LocationCoordinates;
   location: string;
   pricePerNight: number;
   isAddedToWishlist: boolean;

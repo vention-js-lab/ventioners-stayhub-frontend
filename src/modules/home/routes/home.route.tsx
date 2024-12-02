@@ -19,7 +19,6 @@ export function HomeRoute() {
   const [searchQuery, setSearchQuery] = useSearchParamsState('search', '');
   const [isMapView, setIsMapView] = useState(false); // State to toggle view
   const { isLoading, data } = useProperties({ page: 1, categoryId: selectedCategory, search: searchQuery });
-
   const toggleView = () => {
     setIsMapView((prev) => !prev);
   };
