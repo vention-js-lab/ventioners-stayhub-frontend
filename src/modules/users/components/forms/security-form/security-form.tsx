@@ -7,20 +7,16 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
-import { type ProfileFormData, type FormDataKeys, type AxiosErrorResponse } from '#/modules/users/types';
+import { type ProfileFormData, type FormDataKeys } from '#/modules/users/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AxiosError } from 'axios';
 import { ROUTES } from '#/modules/users/constants';
-import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
-import { api } from '#/configs';
 import { DeleteAccountModal, ErrorMessage } from '#/modules/users/components';
 import { getFirstErrorMessage } from '#/utils';
 import { ConfirmPasswordInput, OldPasswordInput, PasswordInput } from '#/modules/users/components/input-fields';
 import { HeaderComponent } from '#/modules/home/components/header';
-import { toast } from 'react-toastify';
-import { useQueryClient } from '@tanstack/react-query';
 import { UpdatePasswordSchema } from '#/zod';
 import { securityFormStyles as styles } from './security-form.styles';
+import { useUpdateUserPassword } from '#/modules/users/api';
 
 export function SecurityForm() {
   const {
@@ -31,7 +27,7 @@ export function SecurityForm() {
   } = useForm<ProfileFormData>({ resolver: zodResolver(UpdatePasswordSchema) });
   const [focusedField, setFocusedField] = useState<FormDataKeys | null>(null);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const updateUserPassword = useUpdateUserPassword(setError);
 
   function redirectToSettings() {
     navigate(ROUTES.accountSettings);
@@ -46,22 +42,7 @@ export function SecurityForm() {
   }
 
   function handleUpdateUserPassword(data: ProfileFormData) {
-    api
-      .post(`${AUTH_ENDPOINTS.updatePassword}`, { oldPassword: data.oldPassword, newPassword: data.password })
-      .then(() => {
-        queryClient.invalidateQueries({ queryKey: ['auth-user'] });
-        toast('Success');
-
-        navigate(ROUTES.root);
-      })
-      .catch((err) => {
-        if (err instanceof AxiosError) {
-          const errorData = err.response?.data as AxiosErrorResponse;
-          setError('root', { message: errorData.message });
-        } else {
-          setError('root', { message: 'Something went wrong' });
-        }
-      });
+    updateUserPassword.mutate(data);
   }
 
   return (

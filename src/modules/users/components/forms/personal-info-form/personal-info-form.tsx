@@ -17,7 +17,7 @@ import { EmailInput, FirstNameInput, LastNameInput } from '#/modules/users/compo
 import { useAppSelector } from '#/redux/hooks';
 import { HeaderComponent } from '#/modules/home/components/header';
 import { personalInfoFormStyles as styles } from './personal-info-form.styles';
-import { useUpdateUser } from '#/modules/users/api';
+import { useUpdateUserInfo } from '#/modules/users/api';
 
 export function PersonalInfoForm() {
   const {
@@ -29,7 +29,7 @@ export function PersonalInfoForm() {
   const [focusedField, setFocusedField] = useState<FormDataKeys | null>('lastName');
   const user = useAppSelector((state) => state.auth.user);
   const navigate = useNavigate();
-  const updateUser = useUpdateUser(user?.id, setError);
+  const updateUserInfo = useUpdateUserInfo(user?.id, setError);
 
   function redirectToSettings() {
     navigate(ROUTES.accountSettings);
@@ -44,7 +44,7 @@ export function PersonalInfoForm() {
   }
 
   function handleUpdateUserInfo(data: ProfileFormData) {
-    updateUser.mutate(data);
+    updateUserInfo.mutate(data);
   }
 
   return (
