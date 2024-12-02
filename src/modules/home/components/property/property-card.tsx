@@ -25,7 +25,6 @@ import { selectAuth } from '#/redux/auth/auth-slice';
 export function ApartmentCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const navigate = useNavigate();
   const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
-
   const mutation = useMutation({
     mutationFn: () => postWishlist(id),
     onSuccess: () => {

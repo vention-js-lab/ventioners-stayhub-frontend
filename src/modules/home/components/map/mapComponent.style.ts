@@ -14,4 +14,15 @@ export const mapContainerStyles = {
     width: '100%',
     overflow: 'hidden',
   },
+  accommodationInfo: {
+    maxWidth: '100%',
+    height: '150px',
+    overflow: 'hidden',
+  },
+  imageInfo: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    marginBottom: '50px',
+  },
 } satisfies MuiStylesObject;

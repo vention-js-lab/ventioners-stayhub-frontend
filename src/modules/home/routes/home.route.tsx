@@ -9,13 +9,11 @@ import { useSearchParamsState } from '../hooks/use-search-params-state';
 import { useProperties } from '../api/get-properties';
 import { CustomMap } from '../components/map/mapComponent';
 import { APIProvider } from '@vis.gl/react-google-maps';
-import { lat, lng } from '../constants/map.constant';
 
 export function HomeRoute() {
   const [selectedCategory, setSelectedCategory] = useSearchParamsState('category', '');
   const [searchQuery, setSearchQuery] = useSearchParamsState('search', '');
   const { isLoading, data } = useProperties({ page: 1, categoryId: selectedCategory, search: searchQuery });
-
   return (
     <Box sx={homeRouteStyles.container}>
       <HeaderComponent setSelectedLocation={setSearchQuery} showSearchBar={true} showStaysAndExperiences={true} />
@@ -25,7 +23,7 @@ export function HomeRoute() {
         <PropertyList isLoading={isLoading} data={data} />
         <Box sx={homeRouteStyles.mapContainer}>
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-            <CustomMap lat={lat} lng={lng} />
+            <CustomMap isLoading={isLoading} data={data} />
           </APIProvider>
         </Box>
       </Container>
