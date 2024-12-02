@@ -9,25 +9,26 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { type AxiosError } from 'axios';
 import { type UseFormSetError } from 'react-hook-form';
+import { type User } from '#/types';
 
 export function useUpdateUserInfo(userId: string | undefined, setError: UseFormSetError<ProfileFormData>) {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  return useMutation<AxiosAuthResponse, AxiosError<AxiosErrorResponse>, ProfileFormData>({
+  return useMutation<User, AxiosError<AxiosErrorResponse>, ProfileFormData>({
     mutationFn: async (data) => {
       if (!userId) throw new Error('User id is required to update user information');
 
       const response = await api.put<AxiosAuthResponse>(`${ENDPOINTS.users}/${userId}`, data);
-      return response.data;
+      return response.data.data;
     },
-    onSuccess(data) {
-      dispatch(createUser(data.user));
+    onSuccess(user) {
+      queryClient.invalidateQueries({ queryKey: ['auth-user'] });
+      dispatch(createUser(user));
       toast('Success');
-      navigate(-1);
 
-      return queryClient.invalidateQueries({ queryKey: ['auth-user'] });
+      navigate(-1);
     },
     onError(err) {
       if (err.response?.data) {

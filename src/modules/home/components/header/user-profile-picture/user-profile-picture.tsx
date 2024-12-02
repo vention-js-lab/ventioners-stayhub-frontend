@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useAppDispatch } from '#/redux/hooks';
 import { createUser } from '#/redux/auth/auth-slice';
 import { toast } from 'react-toastify';
-import { omit } from 'lodash';
+import { type AxiosAuthResponse } from '#/modules/auth/types';
 
 type Props = {
   user: User;
@@ -34,12 +34,14 @@ export function UserProfilePicture({ user, size }: Props) {
     formData.append('file', file);
 
     api
-      .put(`${ENDPOINTS.users}/${user.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .put<AxiosAuthResponse>(`${ENDPOINTS.users}/${user.id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((res) => {
-        const updatedUser = omit(res.data, ['createdAt', 'updatedAt', 'passwordHash']) as User;
-
         queryClient.invalidateQueries({ queryKey: ['auth-user'] });
-        dispatch(createUser(updatedUser));
+        dispatch(createUser(res.data.data));
         toast('Success');
       })
       .catch(() => toast('There was an error while saving your picture'));

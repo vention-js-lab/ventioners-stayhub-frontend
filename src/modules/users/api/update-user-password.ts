@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '#/configs';
 import { type AxiosErrorResponse, type ProfileFormData } from '../types';
-import { type AxiosAuthResponse } from '#/modules/auth/types';
 import { ROUTES } from '../constants';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -13,13 +12,12 @@ export function useUpdateUserPassword(setError: UseFormSetError<ProfileFormData>
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  return useMutation<AxiosAuthResponse, AxiosError<AxiosErrorResponse>, ProfileFormData>({
+  return useMutation<unknown, AxiosError<AxiosErrorResponse>, ProfileFormData>({
     mutationFn: async (data) => {
-      const response = await api.post<AxiosAuthResponse>(`${AUTH_ENDPOINTS.updatePassword}`, {
+      await api.post(`${AUTH_ENDPOINTS.updatePassword}`, {
         oldPassword: data.oldPassword,
         newPassword: data.password,
       });
-      return response.data;
     },
     onSuccess() {
       toast('Success');

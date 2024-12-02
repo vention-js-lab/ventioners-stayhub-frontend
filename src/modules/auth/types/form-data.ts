@@ -23,5 +23,5 @@ export type AxiosErrorResponse = {
 };
 
 export type AxiosAuthResponse = {
-  user: User;
+  data: User;
 };
