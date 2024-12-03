@@ -13,5 +13,5 @@ export const singlePropertyStyles = {
     mx: { md: 0, xs: '16px' },
   },
   titleActionBox: { display: 'flex', gap: '10px', alignItems: 'center', marginRight: '16px' },
-  titleActionItem: { display: 'flex', gap: '3px', alignItems: 'center', textDecoration: 'underline' },
+  titleActionItem: { display: 'flex', gap: '3px', alignItems: 'center', textDecoration: 'underline', cursor: 'pointer' },
 };
