@@ -22,7 +22,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useAppSelector } from '#/redux/hooks';
 import { selectAuth } from '#/redux/auth/auth-slice';
 
-export function ApartmentCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
+export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const navigate = useNavigate();
   const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
 
