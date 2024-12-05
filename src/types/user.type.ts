@@ -3,5 +3,6 @@ export type User = {
   email: string;
   firstName: string;
   lastName: string;
+  profilePictureUrl: string | null;
   role: string;
 };

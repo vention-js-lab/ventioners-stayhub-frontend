@@ -1,6 +1,6 @@
 import InputBase from '@mui/material/InputBase';
 import { inputStyles as styles } from '#/modules/auth/styles/input.styles';
-import { isInputFieldEmpty } from '#/modules/auth/utils';
+import { isInputFieldEmpty } from '#/utils';
 import type { FormInputProps, FormDataKeys } from '#/modules/auth/types';
 
 type Props = FormInputProps & {
