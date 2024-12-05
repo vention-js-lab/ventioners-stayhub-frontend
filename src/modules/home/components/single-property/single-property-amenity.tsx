@@ -18,9 +18,10 @@ interface PropertyProps {
   amenities: AmenityInterface[];
   description: string;
   pricePerNight: number;
+  numberOfGuests: number;
 }
 
-function Property({ owner, amenities, description, pricePerNight }: PropertyProps) {
+function Property({ owner, amenities, description, pricePerNight, numberOfGuests }: PropertyProps) {
   const [showAll, setShowAll] = useState(false);
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
@@ -60,7 +61,12 @@ function Property({ owner, amenities, description, pricePerNight }: PropertyProp
         <Divider sx={PropertyAmenityStyles.divider} />
         <Box sx={PropertyAmenityStyles.avatarBox}>
           <Avatar sx={PropertyAmenityStyles.avatar}>{owner.charAt(0).toUpperCase()}</Avatar>
-          <Typography variant="h6">{owner}</Typography>
+          <Box>
+            <Typography variant="h6">{owner}</Typography>
+            <Typography>
+              {numberOfGuests} guest{numberOfGuests > 1 && 's'}
+            </Typography>
+          </Box>
         </Box>
 
         <Divider sx={PropertyAmenityStyles.divider} />

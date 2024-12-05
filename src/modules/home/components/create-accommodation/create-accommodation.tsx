@@ -23,17 +23,24 @@ export function CreateAccommodation() {
     categoryId: '',
     images: [],
     amenities: [],
+    numberOfGuests: 4,
   });
 
   const { data, updateData } = useAccommodationContext();
 
   const createAccommodation = useCreateAccommodation();
 
-  const handleNext = () => {
+  function handleNext() {
     if (activeStep === 0) {
-      const { name, description, location, pricePerNight, categoryId } = formData;
-      if (!name || !description || !location || !pricePerNight || !categoryId) {
-        toast.error('Please fill all required fields');
+      for (const field of Object.keys(formData)) {
+        if (!formData[field as keyof AccommodationFormData]) {
+          toast.error('Please fill all required fields');
+          return;
+        }
+      }
+
+      if (formData.pricePerNight < 0 || formData.numberOfGuests <= 0) {
+        toast.error('Please enter valid price per night and/or number of guests');
         return;
       }
 
@@ -53,7 +60,7 @@ export function CreateAccommodation() {
 
       createAccommodation.mutate(creationPayload);
     }
-  };
+  }
 
   const handleBack = () => {
     if (activeStep === 1) {

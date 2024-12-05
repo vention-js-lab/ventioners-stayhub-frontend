@@ -22,6 +22,7 @@ export type Accommodation = {
     lastName: string;
   };
   overallRating: number;
+  numberOfGuests: number;
   createdAt: Date;
   updatedAt: Date;
 };
