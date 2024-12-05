@@ -13,6 +13,7 @@ export const accommodation = {
   ],
   location: 'New York, USA',
   pricePerNight: 150.0,
+  numberOfGuests: 4,
   amenities: [
     { id: '1', name: 'Extraordinary Home', description: 'A masterpiece of design and comfort.' },
     { id: '2', name: 'Private Pool', description: 'Relax in the tranquil waters of your own pool.' },

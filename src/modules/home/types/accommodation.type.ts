@@ -8,6 +8,7 @@ export type Accommodation = {
   location: string;
   pricePerNight: number;
   isAddedToWishlist: boolean;
+  numberOfGuests: number;
   createdAt: Date;
   updatedAt: Date;
 };

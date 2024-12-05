@@ -5,4 +5,5 @@ export interface AccommodationFormData
   categoryId: string;
   amenities: string[];
   images?: (string | File)[];
+  numberOfGuests: number;
 }
