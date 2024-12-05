@@ -12,6 +12,8 @@ import Divider from '@mui/material/Divider';
 import { useAccommodationById } from '../api/get-accommodation';
 import { useParams } from 'react-router-dom';
 import { type Accommodation } from '../types/accommodation.type';
+import { type User } from '#/types';
+import { type Image } from '../types/image.type';
 
 export function SinglePropertyRoute() {
   const isMobile = useMediaQuery('(max-width:700px)');
@@ -30,7 +32,7 @@ export function SinglePropertyRoute() {
   const accommodationData: Accommodation = data.data;
 
   const reviews = accommodationData.reviews.map(
-    (review: { id: string; user: { firstName: string; lastName: string }; comment: string; rating: number }) => ({
+    (review: { id: string; user: Pick<User, 'firstName' | 'lastName'>; comment: string; rating: number }) => ({
       id: review.id,
       name: `${review.user.firstName} ${review.user.lastName}`,
       comment: review.comment,
@@ -38,7 +40,7 @@ export function SinglePropertyRoute() {
     })
   );
 
-  const images = accommodationData.images.map((image: { id: string; url: string }) => image.url);
+  const images = accommodationData.images.map((image: Image) => image.url);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
 
   return (

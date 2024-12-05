@@ -1,4 +1,5 @@
 import { type Image } from '#/modules/home/types/image.type.ts';
+import { type User } from '#/types';
 import { type AmenityInterface } from '#/types/amenity.types';
 
 export type Accommodation = {
@@ -12,10 +13,7 @@ export type Accommodation = {
   isAddedToWishlist: boolean;
   reviews: {
     id: string;
-    user: {
-      firstName: string;
-      lastName: string;
-    };
+    user: Pick<User, 'firstName' | 'lastName'>;
     comment: string;
     rating: number;
   }[];
