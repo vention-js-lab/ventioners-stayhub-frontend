@@ -2,7 +2,7 @@ import { mapContainerStyles } from './mapComponent.style';
 import { useState } from 'react';
 import { Map, Marker } from '@vis.gl/react-google-maps';
 import Box from '@mui/material/Box';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface Location {
@@ -47,7 +47,6 @@ export function CustomMap({ lat, lng }: Location) {
       >
         <Marker position={markerLocation} />
       </Map>
-      <ToastContainer />
     </Box>
   );
 }
