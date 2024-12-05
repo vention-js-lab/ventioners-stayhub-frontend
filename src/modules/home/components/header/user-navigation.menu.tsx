@@ -14,10 +14,10 @@ import { MenuItemLink } from './menu-item-link';
 import { useAppDispatch, useAppSelector } from '#/redux/hooks';
 import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
 import { api } from '#/configs';
-import { UserProfileIcon } from './user-profile-icon';
+import { UserProfilePicture } from './user-profile-picture/user-profile-picture';
 import { removeUser, selectAuth } from '#/redux/auth/auth-slice';
 import { toast } from 'react-toastify';
-import { queryClient } from '#/main';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -30,6 +30,7 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.UZ);
   const auth = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
 
   const handleLanguageIconClick = () => {
     setIsLanguageModalOpen(true);
@@ -50,6 +51,8 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
       dispatch(removeUser());
 
       toast('Logged out successfully');
+
+      window.location.href = '/';
     } catch {
       toast("Couldn't log you out. Please try again");
     }
@@ -78,8 +81,8 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         onClick={handleMenuOpen}
         startIcon={<MenuIcon sx={userNavigationStyles.menuIcon} />}
         endIcon={
-          auth.user ? (
-            <UserProfileIcon firstName={auth.user.firstName} />
+          auth.user?.firstName ? (
+            <UserProfilePicture user={auth.user} size="small" />
           ) : (
             <AccountCircle sx={userNavigationStyles.accountCircleIcon} />
           )
@@ -110,6 +113,9 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
             </MenuItemLink>
             <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
               Wishlist
+            </MenuItemLink>
+            <MenuItemLink onClick={handleMenuClose} to="/account-settings">
+              Account
             </MenuItemLink>
             <MenuItemLink
               to="/"

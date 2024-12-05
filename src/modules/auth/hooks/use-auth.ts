@@ -7,7 +7,7 @@ export function useAuth() {
   async function getUser() {
     const { data } = await api.get<AxiosAuthResponse>(ENDPOINTS.user);
 
-    return data.user;
+    return data.data;
   }
 
   return useQuery({
