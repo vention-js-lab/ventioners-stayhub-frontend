@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useAppDispatch, useAppSelector } from '#/redux/hooks';
 import { toast } from 'react-toastify';
-import { removeUser } from '#/redux/auth/auth-slice';
+import { removeUser } from '#/redux/auth/auth.slice';
 import { useQueryClient } from '@tanstack/react-query';
 import { deleteAccountModalStyles as styles } from './delete-account-modal.styles';
 

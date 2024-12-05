@@ -8,7 +8,7 @@ import { api } from '#/configs';
 import { ENDPOINTS } from '#/modules/users/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAppDispatch } from '#/redux/hooks';
-import { createUser } from '#/redux/auth/auth-slice';
+import { createUser } from '#/redux/auth/auth.slice';
 import { toast } from 'react-toastify';
 import { type AxiosAuthResponse } from '#/modules/auth/types';
 

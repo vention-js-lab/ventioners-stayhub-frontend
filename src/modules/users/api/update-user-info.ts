@@ -4,7 +4,7 @@ import { type AxiosErrorResponse, type ProfileFormData } from '../types';
 import { type AxiosAuthResponse } from '#/modules/auth/types';
 import { ENDPOINTS } from '../constants';
 import { useAppDispatch } from '#/redux/hooks';
-import { createUser } from '#/redux/auth/auth-slice';
+import { createUser } from '#/redux/auth/auth.slice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { type AxiosError } from 'axios';
