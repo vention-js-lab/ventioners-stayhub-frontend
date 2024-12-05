@@ -26,7 +26,7 @@ function PropertyReviewCard({ review }: { review: Review }) {
         </Box>
 
         <Rating
-          value={review.rating}
+          value={Number(review.rating)}
           precision={0.5}
           icon={<StarIcon />}
           emptyIcon={<StarIcon style={{ opacity: 0.3 }} />}
