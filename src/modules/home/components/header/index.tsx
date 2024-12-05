@@ -34,12 +34,7 @@ export function HeaderComponent({ setSelectedLocation, showStaysAndExperiences, 
   };
 
   return (
-    <AppBar
-      position="static"
-      color="default"
-      elevation={0}
-      sx={{ backgroundColor: 'white', borderBottom: '1px solid rgba(128, 128, 128, 0.486)' }}
-    >
+    <AppBar position="static" color="default" elevation={0} sx={{ backgroundColor: 'white' }}>
       <Container maxWidth="xl">
         <Toolbar sx={{ justifyContent: 'space-between', height: 80, position: 'relative' }}>
           <Button
