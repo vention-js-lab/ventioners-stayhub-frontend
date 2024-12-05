@@ -20,7 +20,7 @@ import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { postWishlist } from '../../api/post-wishlist';
 import { useMutation } from '@tanstack/react-query';
 import { useAppSelector } from '#/redux/hooks';
-import { selectAuth } from '#/redux/auth/auth-slice';
+import { selectAuth } from '#/redux/auth/auth.slice';
 
 export function ApartmentCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const navigate = useNavigate();

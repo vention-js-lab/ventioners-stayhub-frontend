@@ -8,7 +8,7 @@ import securityShieldIcon from '#/assets/security-shield.svg';
 import togglesIcon from '#/assets/toggles.svg';
 import { settingsPageStyles as styles } from '../styles/settings-page.styles';
 import { useAppSelector } from '#/redux/hooks';
-import { selectAuth } from '#/redux/auth/auth-slice';
+import { selectAuth } from '#/redux/auth/auth.slice';
 import { UserProfilePicture } from '#/modules/home/components/header/user-profile-picture/user-profile-picture';
 
 export function ProfileRoute() {
