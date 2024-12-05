@@ -57,5 +57,12 @@ export const accommodationDetailsFormStyles = {
     '&:hover': {
       borderColor: 'rgb(34, 34, 34)',
     },
+    '&:disabled': {
+      borderColor: 'rgb(235, 235, 235)',
+    },
+    '&:disabled img': {
+      opacity: '25%',
+      userSelect: 'none',
+    },
   },
 } satisfies MuiStylesObject;
