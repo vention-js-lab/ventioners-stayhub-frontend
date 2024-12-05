@@ -116,11 +116,21 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
           </Typography>
 
           <Box sx={accommodationDetailsFormStyles.guestsCountControls}>
-            <Button disableRipple={true} sx={accommodationDetailsFormStyles.guestsCountButton}>
+            <Button
+              disableRipple={true}
+              sx={accommodationDetailsFormStyles.guestsCountButton}
+              onClick={() => updateFormData({ numberOfGuests: formData.numberOfGuests - 1 })}
+              disabled={formData.numberOfGuests === 1}
+            >
               <img src={minusIcon} />
             </Button>
             <Typography>{formData.numberOfGuests}</Typography>
-            <Button disableRipple={true} sx={accommodationDetailsFormStyles.guestsCountButton}>
+            <Button
+              disableRipple={true}
+              sx={accommodationDetailsFormStyles.guestsCountButton}
+              onClick={() => updateFormData({ numberOfGuests: formData.numberOfGuests + 1 })}
+              disabled={formData.numberOfGuests === 16}
+            >
               <img src={plusIcon} />
             </Button>
           </Box>
