@@ -1,14 +1,17 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Chip from '@mui/material/Chip';
+import Button from '@mui/material/Button';
 
+import minusIcon from '#/assets/minus.svg';
+import plusIcon from '#/assets/plus.svg';
 import { type AccommodationFormData } from '../../types/accommodation-form-data.interface';
 import { accommodationDetailsFormStyles } from './styles';
 import { useCategories } from '../../api/get-categories';
@@ -39,7 +42,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
         Accommodation Details
       </Typography>
       <Grid container={true} spacing={2}>
-        <Grid item={true} xs={12}>
+        <Grid size={12}>
           <TextField
             fullWidth={true}
             label="Name"
@@ -50,7 +53,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
           />
         </Grid>
 
-        <Grid item={true} xs={12}>
+        <Grid size={12}>
           <TextField
             fullWidth={true}
             label="Description"
@@ -63,7 +66,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
           />
         </Grid>
 
-        <Grid item={true} xs={12} sm={6}>
+        <Grid size={6}>
           <TextField
             fullWidth={true}
             label="Location"
@@ -74,7 +77,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
           />
         </Grid>
 
-        <Grid item={true} xs={12} sm={6}>
+        <Grid size={6}>
           <TextField
             fullWidth={true}
             label="Price per night"
@@ -89,7 +92,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
           />
         </Grid>
 
-        <Grid item={true} xs={12}>
+        <Grid size={12}>
           <FormControl fullWidth={true} sx={accommodationDetailsFormStyles.dropdown}>
             <InputLabel>Category</InputLabel>
             <Select
@@ -107,7 +110,23 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
           </FormControl>
         </Grid>
 
-        <Grid item={true} xs={12}>
+        <Box sx={accommodationDetailsFormStyles.guestCountContainer}>
+          <Typography variant="h6" gutterBottom={true}>
+            Guests
+          </Typography>
+
+          <Box sx={accommodationDetailsFormStyles.guestsCountControls}>
+            <Button disableRipple={true} sx={accommodationDetailsFormStyles.guestsCountButton}>
+              <img src={minusIcon} />
+            </Button>
+            <Typography>{formData.numberOfGuests}</Typography>
+            <Button disableRipple={true} sx={accommodationDetailsFormStyles.guestsCountButton}>
+              <img src={plusIcon} />
+            </Button>
+          </Box>
+        </Box>
+
+        <Grid size={12}>
           <Typography variant="h6" gutterBottom={true}>
             Select Amenities
           </Typography>
