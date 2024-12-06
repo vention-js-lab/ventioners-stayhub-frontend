@@ -1,13 +1,18 @@
 import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 
 export const homeRouteStyles = {
-  container: { display: 'flex', flexDirection: 'column', width: '100%' },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: '100vh',
+    overflowY: 'scroll',
+  },
   mapContainer: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     width: '100%',
-    height: '500px',
+    height: 'auto',
   },
   divider: {
     mt: { xs: 8, sm: 10, md: 12 },

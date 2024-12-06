@@ -1,5 +1,10 @@
 import { type Image } from '#/modules/home/types/image.type.ts';
 
+export interface Location {
+  lat: number;
+  lng: number;
+}
+
 type LocationCoordinates = {
   type: string;
   coordinates: number[];
