@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-leaked-render */
 import { mapContainerStyles } from './mapComponent.style';
 import { useEffect, useState } from 'react';
 import { InfoWindow, Map, Marker } from '@vis.gl/react-google-maps';
@@ -131,7 +130,6 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
         hideProgressBar: true,
       });
     }
-    setSelectedAccommodation(null);
   };
 
   return (
