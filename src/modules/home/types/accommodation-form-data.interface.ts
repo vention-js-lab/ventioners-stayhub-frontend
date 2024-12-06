@@ -4,6 +4,6 @@ export interface AccommodationFormData
   extends Omit<Accommodation, 'id' | 'createdAt' | 'updatedAt' | 'images' | 'isAddedToWishlist'> {
   categoryId: string;
   amenities: string[];
-  images?: (string | File)[];
+  images: File[];
   numberOfGuests: number;
 }
