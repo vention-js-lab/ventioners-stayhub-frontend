@@ -1,31 +1,32 @@
 import { useMutation } from '@tanstack/react-query';
 import type { AccommodationFormData } from '#/modules/home/types/accommodation-form-data.interface.ts';
-import { ENDPOINTS } from '#/modules/home/constants/endpoints.constant.ts';
+import { ENDPOINTS, ROUTES } from '#/modules/home/constants/endpoints.constant.ts';
 import { toast } from 'react-toastify';
 import { type Accommodation } from '#/modules/home/types/accommodation.type.ts';
 import { api } from '#/configs';
 import { type AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const useCreateAccommodation = () => {
+  const navigate = useNavigate();
+
   return useMutation({
     mutationFn: async (data: AccommodationFormData) => {
       const formData = new FormData();
 
-      Object.entries(data).forEach(([key, value]) => {
-        if (value instanceof File) {
-          formData.append(key, value);
-        } else if (Array.isArray(value)) {
-          value.forEach((item, index) => {
-            if (item instanceof File) {
-              formData.append(`${key}`, item);
+      for (const [key, value] of Object.entries(data)) {
+        if (Array.isArray(value)) {
+          for (let i = 0; i < value.length; ++i) {
+            if (value[i] instanceof File) {
+              formData.append(`${key}`, value[i] as File);
             } else {
-              formData.append(`${key}[${index}]`, item as string);
+              formData.append(`${key}[]`, value[i] as string);
             }
-          });
-        } else if (value !== null && value !== undefined) {
+          }
+        } else {
           formData.append(key, value as string);
         }
-      });
+      }
 
       return await api.post<Accommodation>(ENDPOINTS.accommodations, formData, {
         headers: {
@@ -35,7 +36,7 @@ export const useCreateAccommodation = () => {
     },
     onSuccess: () => {
       toast.success('Accommodation created successfully!');
-      window.location.href = ENDPOINTS.root;
+      navigate(ROUTES.root);
     },
     onError: (error: AxiosError) => {
       toast.error(`Error creating accommodation: ${error.message}`);
