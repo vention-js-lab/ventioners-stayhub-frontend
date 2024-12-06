@@ -40,7 +40,7 @@ export function HomeRoute() {
           endMessage={
             !isLoading && (
               <InfoMessageBox>
-                <Typography>No more data to load.</Typography>
+                <Typography>No additional properties to view at this time.</Typography>
               </InfoMessageBox>
             )
           }
