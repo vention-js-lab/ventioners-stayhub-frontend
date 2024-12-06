@@ -13,11 +13,18 @@ type GetPropertiesParams = {
   page?: number;
   categoryId?: string;
   search?: string;
+  limit?: number;
 };
 
-export async function getProperties({ page = 1, categoryId, search }: GetPropertiesParams): Promise<GetPropertiesResponse> {
+export async function getProperties({
+  page = 1,
+  limit = 12,
+  categoryId,
+  search,
+}: GetPropertiesParams): Promise<GetPropertiesResponse> {
   const params: GetPropertiesParams = {
     page,
+    limit,
   };
 
   if (categoryId) {
