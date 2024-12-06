@@ -41,6 +41,19 @@ export const accommodationDetailsFormStyles = {
     alignItems: 'center',
     width: '104px',
   },
+  guestsCount: {
+    '& > input': {
+      textAlign: 'center',
+    },
+    '&.Mui-disabled': {
+      color: 'rgba(0, 0, 0, 1)',
+    },
+    '& > input:disabled': {
+      textAlign: 'center',
+      color: 'rgba(0, 0, 0, 1)',
+      WebkitTextFillColor: 'rgba(0, 0, 0, 1)',
+    },
+  },
   guestsCountButton: {
     all: 'unset',
     display: 'flex',

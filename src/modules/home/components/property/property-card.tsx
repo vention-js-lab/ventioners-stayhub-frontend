@@ -13,8 +13,7 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './swiper.css';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { postWishlist } from '../../api/post-wishlist';
@@ -88,17 +87,6 @@ export function ApartmentCard({ id, name, location, pricePerNight, images, isAdd
           </Typography>
         </CardContent>
       </Card>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={true}
-        rtl={false}
-        pauseOnFocusLoss={true}
-        draggable={true}
-        pauseOnHover={true}
-      />
     </Link>
   );
 }
