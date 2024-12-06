@@ -10,7 +10,7 @@ export const homeRouteStyles = {
     height: '500px',
   },
   divider: {
-    mt: { xs: 8, sm: 10, md: 12 },
+    mt: { xs: 10, sm: 10, md: 12 },
     borderColor: '#DDDDDD',
     borderBottomWidth: 1,
     width: '100%',

@@ -24,7 +24,7 @@
   </g>
   
   <!-- Company Name - Centered -->
-  <g transform="translate(40, 0)">
+  <g transform="translate(45, 0)">
     <text x="0" y="35" 
           font-family="Arial, sans-serif" 
           font-weight="700" 
