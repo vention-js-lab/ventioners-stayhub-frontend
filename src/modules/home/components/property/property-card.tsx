@@ -7,7 +7,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { type Accommodation } from '../../types/accommodation.type';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { properyCardStyles } from './property-card.styles';
+import { propertyCardStyles } from './property-card.styles';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
@@ -22,7 +22,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useAppSelector } from '#/redux/hooks';
 import { selectAuth } from '#/redux/auth/auth-slice';
 
-export function ApartmentCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
+export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const navigate = useNavigate();
   const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
 
@@ -57,9 +57,9 @@ export function ApartmentCard({ id, name, location, pricePerNight, images, isAdd
     <Link to={`/property/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
         {isInWishlist ? (
-          <FavoriteIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} style={{ color: 'red' }} />
+          <FavoriteIcon onClick={handleFavoriteClick} sx={propertyCardStyles.favoriteIconStyle} style={{ color: 'red' }} />
         ) : (
-          <FavoriteBorderIcon onClick={handleFavoriteClick} sx={properyCardStyles.favoriteIconStyle} />
+          <FavoriteBorderIcon onClick={handleFavoriteClick} sx={propertyCardStyles.favoriteIconStyle} />
         )}
         <Swiper
           style={{ height: '240px', aspectRatio: '1/1', width: '100%', borderRadius: '12px' }}
@@ -75,7 +75,7 @@ export function ApartmentCard({ id, name, location, pricePerNight, images, isAdd
         >
           {images.map((image) => (
             <SwiperSlide key={image.id}>
-              <img src={image.url} alt="Image of Apartment" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={image.url} alt="Image of Apartment" style={propertyCardStyles.image} loading="lazy" />
             </SwiperSlide>
           ))}
         </Swiper>

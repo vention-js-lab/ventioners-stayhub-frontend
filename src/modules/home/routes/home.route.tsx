@@ -9,12 +9,22 @@ import { useSearchParamsState } from '../hooks/use-search-params-state';
 import { useProperties } from '../api/get-properties';
 import { CustomMap } from '../components/map/mapComponent';
 import { APIProvider } from '@vis.gl/react-google-maps';
+import Typography from '@mui/material/Typography';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { lat, lng } from '../constants/map.constant';
+import { useMemo } from 'react';
+import { InfoMessageBox } from '../components/info-message-box/info-message-box';
 
 export function HomeRoute() {
   const [selectedCategory, setSelectedCategory] = useSearchParamsState('category', '');
   const [searchQuery, setSearchQuery] = useSearchParamsState('search', '');
-  const { isLoading, data } = useProperties({ page: 1, categoryId: selectedCategory, search: searchQuery });
+  const { isLoading, data, fetchNextPage, hasNextPage, isFetchingNextPage } = useProperties({
+    page: 1,
+    categoryId: selectedCategory,
+    search: searchQuery,
+  });
+
+  const properties = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data]);
 
   return (
     <Box sx={homeRouteStyles.container}>
@@ -22,7 +32,21 @@ export function HomeRoute() {
       <Container maxWidth="xl">
         <Divider sx={homeRouteStyles.divider} />
         <CategoryList selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-        <PropertyList isLoading={isLoading} data={data} />
+        <InfiniteScroll
+          dataLength={properties.length}
+          next={fetchNextPage}
+          hasMore={hasNextPage}
+          loader={null}
+          endMessage={
+            !isLoading && (
+              <InfoMessageBox>
+                <Typography>No additional properties to view at this time.</Typography>
+              </InfoMessageBox>
+            )
+          }
+        >
+          <PropertyList isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} data={{ data: properties }} />
+        </InfiniteScroll>
         <Box sx={homeRouteStyles.mapContainer}>
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
             <CustomMap lat={lat} lng={lng} />

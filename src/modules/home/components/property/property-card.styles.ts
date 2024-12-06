@@ -1,6 +1,6 @@
 import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 
-export const properyCardStyles = {
+export const propertyCardStyles = {
   favoriteIconStyle: {
     position: 'absolute',
     top: 8,
@@ -11,5 +11,10 @@ export const properyCardStyles = {
     borderRadius: '50%',
     padding: '4px',
     fontSize: '32px',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
   },
 } satisfies MuiStylesObject;

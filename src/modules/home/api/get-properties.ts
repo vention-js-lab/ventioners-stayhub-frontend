@@ -1,5 +1,5 @@
 import { api } from '#/configs/axios.config';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { type Accommodation } from '../types/accommodation.type';
 import { ENDPOINTS } from '../constants/endpoints.constant';
 
@@ -8,14 +8,23 @@ type GetPropertiesResponse = {
   totalCount: number;
   totalPages: number;
 };
+
 type GetPropertiesParams = {
-  page: number;
+  page?: number;
   categoryId?: string;
   search?: string;
+  limit?: number;
 };
-export async function getProperties({ page, categoryId, search }: GetPropertiesParams): Promise<GetPropertiesResponse> {
+
+export async function getProperties({
+  page = 1,
+  limit = 12,
+  categoryId,
+  search,
+}: GetPropertiesParams): Promise<GetPropertiesResponse> {
   const params: GetPropertiesParams = {
     page,
+    limit,
   };
 
   if (categoryId) {
@@ -34,8 +43,14 @@ export async function getProperties({ page, categoryId, search }: GetPropertiesP
 }
 
 export function useProperties(params: GetPropertiesParams) {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['properties', params],
-    queryFn: () => getProperties(params),
+    queryFn: ({ pageParam = 1 }) => getProperties({ ...params, page: pageParam }),
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1;
+
+      return nextPage <= lastPage.totalPages ? nextPage : undefined;
+    },
+    initialPageParam: 1,
   });
 }
