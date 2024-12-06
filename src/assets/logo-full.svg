@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 60">
   <!-- Brand Icon -->
-  <g transform="translate(85, 5)">
+  <g transform="translate(0, 5)">
     <!-- Main Circle -->
     <circle cx="20" cy="20" r="18" 
             fill="white" 
@@ -24,7 +24,7 @@
   </g>
   
   <!-- Company Name - Centered -->
-  <g transform="translate(135, 0)">
+  <g transform="translate(45, 0)">
     <text x="0" y="35" 
           font-family="Arial, sans-serif" 
           font-weight="700" 

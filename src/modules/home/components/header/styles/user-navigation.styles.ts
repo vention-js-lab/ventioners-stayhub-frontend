@@ -1,5 +1,11 @@
 export const userNavigationStyles = {
-  container: { display: 'flex', gap: 2 },
+  container: {
+    display: 'flex',
+    gap: {
+      xs: 0,
+      sm: 2,
+    },
+  },
   stayhubYourHomeButton: {
     borderRadius: 20,
     '&:hover': { backgroundColor: '#F7F7F7' },
@@ -16,7 +22,11 @@ export const userNavigationStyles = {
     height: 20,
   },
   menuIcon: { width: 24, height: 24, color: '#717171' },
-  accountCircleIcon: { width: 32, height: 32, color: '#717171', marginRight: '5px' },
+  accountCircleIcon: {
+    width: 32,
+    height: 32,
+    color: '#717171',
+  },
   menuContainer: {
     anchorOrigin: {
       vertical: 'bottom',

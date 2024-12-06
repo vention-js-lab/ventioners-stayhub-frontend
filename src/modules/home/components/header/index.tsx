@@ -9,9 +9,9 @@ import useTheme from '@mui/material/styles/useTheme';
 import { useState } from 'react';
 import { NavButton } from '../../styles';
 import fullLogo from '#/assets/logo-full.svg';
-import logo from '#/assets/logo.svg';
 import { UserNavigationMenu } from './user-navigation.menu';
 import { SearchBar } from './search-bar';
+import HomeIcon from '@mui/icons-material/Home';
 
 interface HeaderComponentProps {
   setSelectedLocation?: (newState: string) => void;
@@ -36,33 +36,68 @@ export function HeaderComponent({ setSelectedLocation, showStaysAndExperiences, 
   return (
     <AppBar position="static" color="default" elevation={0} sx={{ backgroundColor: 'white' }}>
       <Container maxWidth="xl">
-        <Toolbar sx={{ justifyContent: 'space-between', height: 80, position: 'relative' }}>
+        <Toolbar
+          sx={{
+            justifyContent: 'space-between',
+            height: 80,
+            alignItems: 'center',
+            gap: {
+              md: 2,
+              xs: 0,
+              sm: 0,
+            },
+            px: { xs: 0, sm: 0 },
+          }}
+        >
           <Button
             sx={{
-              right: 100,
-              position: 'relative',
               '&:hover': { backgroundColor: 'white' },
-              minWidth: isMediumDown ? 60 : 'auto',
+              padding: 0,
+              margin: {
+                xs: 0,
+                sm: 1,
+              },
             }}
             disableRipple={true}
             href="/"
           >
-            <img
-              src={isMediumDown ? logo : fullLogo}
-              alt="Logo"
-              style={{
-                height: isMediumDown ? 42 : 55,
-                width: 'auto',
-              }}
-            />
+            {isMediumDown ? (
+              <HomeIcon sx={{ color: 'black', width: 'auto', margin: 0, padding: 0 }} />
+            ) : (
+              <img
+                src={fullLogo}
+                alt="Logo"
+                style={{
+                  height: 55,
+                  textAlign: 'center',
+                }}
+              />
+            )}
           </Button>
 
           {showStaysAndExperiences ? (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <NavButton active={(activeNav === 'stays').toString()} onClick={() => setActiveNav('stays')}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: {
+                  xs: 0,
+                  sm: 1,
+                },
+              }}
+            >
+              <NavButton
+                active={(activeNav === 'stays').toString()}
+                onClick={() => setActiveNav('stays')}
+                sx={{ padding: isMediumDown ? 0 : '', width: 'auto' }}
+              >
                 <Typography sx={{ fontWeight: activeNav === 'stays' ? 600 : 500 }}>Stays</Typography>
               </NavButton>
-              <NavButton active={(activeNav === 'experiences').toString()} onClick={() => setActiveNav('experiences')}>
+              <NavButton
+                active={(activeNav === 'experiences').toString()}
+                onClick={() => setActiveNav('experiences')}
+                sx={{ padding: isMediumDown ? 0 : '' }}
+              >
                 <Typography sx={{ fontWeight: activeNav === 'experiences' ? 600 : 500 }}>Experiences</Typography>
               </NavButton>
             </Box>
