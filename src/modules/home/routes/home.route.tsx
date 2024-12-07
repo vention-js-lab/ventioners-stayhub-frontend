@@ -12,15 +12,23 @@ import { useSearchParamsState } from '../hooks/use-search-params-state';
 import { useProperties } from '../api/get-properties';
 import { homeRouteStyles } from './home.route.styles';
 import MapIcon from '@mui/icons-material/Map';
-import ListIcon from '@mui/icons-material/List';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 export function HomeRoute() {
   const [selectedCategory, setSelectedCategory] = useSearchParamsState('category', '');
   const [searchQuery, setSearchQuery] = useSearchParamsState('search', '');
-  const [isMapView, setIsMapView] = useState(false); // State to toggle view
+  const [openModal, setOpenModal] = useState(false);
   const { isLoading, data } = useProperties({ page: 1, categoryId: selectedCategory, search: searchQuery });
-  const toggleView = () => {
-    setIsMapView((prev) => !prev);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
 
   return (
@@ -29,21 +37,13 @@ export function HomeRoute() {
       <Divider sx={homeRouteStyles.divider} />
       <CategoryList selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
       <Container maxWidth="xl" disableGutters={true} sx={{ padding: 0 }}>
-        {isMapView ? (
-          <Box sx={homeRouteStyles.mapContainer}>
-            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-              <CustomMap isLoading={isLoading} data={data} coordinates={{ lat: 51.15067631430282, lng: 71.44579022366129 }} />
-            </APIProvider>
-          </Box>
-        ) : (
-          <PropertyList isLoading={isLoading} data={data} />
-        )}
+        {<PropertyList isLoading={isLoading} data={data} />}
       </Container>
 
       <Button
         variant="contained"
-        onClick={toggleView}
-        endIcon={isMapView ? <ListIcon /> : <MapIcon />}
+        onClick={handleOpenModal}
+        endIcon={<MapIcon />}
         sx={{
           position: 'fixed',
           height: 40,
@@ -59,8 +59,49 @@ export function HomeRoute() {
           },
         }}
       >
-        {isMapView ? 'Show List' : 'Show Map'}
+        Show Map
       </Button>
+
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        maxWidth={false}
+        sx={{
+          '& .MuiPaper-root': {
+            width: '90%',
+            height: '90%',
+            margin: 0,
+            borderRadius: 3,
+            boxShadow: 'none',
+            overflow: 'hidden',
+          },
+        }}
+      >
+        <IconButton
+          onClick={handleCloseModal}
+          sx={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            zIndex: 1000,
+            color: 'black',
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <DialogContent
+          sx={{
+            padding: 0,
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+          }}
+        >
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+            <CustomMap isLoading={isLoading} data={data} coordinates={{ lat: 51.15067631430282, lng: 71.44579022366129 }} />
+          </APIProvider>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }

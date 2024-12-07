@@ -3,10 +3,11 @@ import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 export const mapContainerStyles = {
   container: {
     width: '100%',
-    height: '435px',
+    height: '100%',
     border: '1px solid black',
     position: 'relative',
     overflow: 'hidden',
+    borderRadius: 3,
   },
   mapStyle: {
     height: '100%',

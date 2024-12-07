@@ -8,6 +8,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Chip from '@mui/material/Chip';
+
 import { useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api';
 import { type AccommodationFormData } from '../../types/accommodation-form-data.interface';
 import { accommodationDetailsFormStyles } from './styles';
@@ -17,6 +18,7 @@ import { useMemo, useRef } from 'react';
 import { CustomMap } from '../map/mapComponent';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import { toast } from 'react-toastify';
+import { type AmenityInterface } from '#/types/amenity.types';
 
 interface AccommodationDetailsFormProps {
   formData: AccommodationFormData;
@@ -26,20 +28,19 @@ interface AccommodationDetailsFormProps {
 export function AccommodationDetailsForm({ formData, updateFormData }: AccommodationDetailsFormProps) {
   const { data: categoriesResponse, isLoading: isCategoriesLoading } = useCategories();
   const { data: amenitiesResponse } = useAmenities();
-
-  const handleAmenityToggle = (amenityId: string) => {
+  const handleAmenityToggle = (amenity: AmenityInterface) => {
     const currentAmenities = formData.amenities;
-    const updatedAmenities = currentAmenities.includes(amenityId)
-      ? currentAmenities.filter((id) => id !== amenityId)
-      : [...currentAmenities, amenityId];
-
+    const updatedAmenities = currentAmenities.some((a) => a.id === amenity.id)
+      ? currentAmenities.filter((a) => a.id !== amenity.id)
+      : [...currentAmenities, amenity];
     updateFormData({ amenities: updatedAmenities });
   };
+
   const inputRef = useRef<google.maps.places.SearchBox | null>(null);
   const loaderOptions = useMemo(
     () => ({
       googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-      libraries: ['places', 'geometry', 'drawing', 'localContext', 'visualization'] as any[],
+      libraries: ['places'] as any[],
     }),
     []
   );
@@ -169,10 +170,10 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
               <Chip
                 key={amenity.id}
                 label={amenity.name}
-                onClick={() => handleAmenityToggle(amenity.id)}
+                onClick={() => handleAmenityToggle(amenity)} // Pass the entire amenity object
                 sx={[
                   accommodationDetailsFormStyles.amenityChip,
-                  formData.amenities.includes(amenity.id) ? accommodationDetailsFormStyles.selectedAmenityChip : {},
+                  formData.amenities.some((a) => a.id === amenity.id) ? accommodationDetailsFormStyles.selectedAmenityChip : {},
                 ]}
               />
             ))}
@@ -194,8 +195,8 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
             <Typography>Loading Google Maps...</Typography>
           )}
         </Grid>
-        <Grid item={true} xs={12}>
-          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+        <Grid item={true} xs={12} sx={{ height: '500px' }}>
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
             <CustomMap
               isLoading={false}
               data={{ data: [] }}

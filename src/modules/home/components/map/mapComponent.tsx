@@ -36,7 +36,6 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
   const [markerLocation, setMarkerLocation] = useState<Location>(coordinates);
   const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
   const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
-
   useEffect(() => {
     if (data?.data) setAccommodations(data.data);
   }, [data]);
@@ -139,6 +138,7 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
         defaultZoom={12}
         defaultCenter={coordinates}
         gestureHandling="auto"
+        disableDefaultUI={true}
         onClick={(event) => {
           handleMapClick(event);
         }}
