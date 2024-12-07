@@ -195,6 +195,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
             <Typography>Loading Google Maps...</Typography>
           )}
         </Grid>
+
         <Grid item={true} xs={12} sx={{ height: '500px' }}>
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
             <CustomMap

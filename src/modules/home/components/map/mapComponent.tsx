@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Typography from '@mui/material/Typography';
 import { type Accommodation } from '../../types/accommodation.type';
 import { Link } from 'react-router-dom';
+import { getPreferredAddress } from '#/utils/get-address';
 
 interface Location {
   lat: number;
@@ -58,34 +59,6 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
 
   const handleInfoWindowClose = () => {
     setSelectedAccommodation(null);
-  };
-
-  const getPreferredAddress = (results: google.maps.GeocoderResult[]) => {
-    const preferredLanguages = ['en', 'uz', 'ru'];
-    const isPreferredLanguage = (address: string) => {
-      return preferredLanguages.some((lang) => address.toLowerCase().includes(lang.toLowerCase()));
-    };
-
-    const hasStreetNumber = (address_components: google.maps.GeocoderAddressComponent[]) => {
-      return address_components.some((component) => component.types.includes('street_number'));
-    };
-
-    const hasStreetName = (address_components: google.maps.GeocoderAddressComponent[]) => {
-      return address_components.some((component) => component.types.includes('route'));
-    };
-
-    for (const result of results) {
-      const { formatted_address, address_components } = result;
-
-      if (hasStreetNumber(address_components) && isPreferredLanguage(formatted_address)) {
-        return formatted_address;
-      }
-
-      if (hasStreetName(address_components) && isPreferredLanguage(formatted_address)) {
-        return formatted_address;
-      }
-    }
-    return results[0]?.formatted_address || 'Unknown location';
   };
 
   const handleMapClick = async (event: MapClickEvent) => {
