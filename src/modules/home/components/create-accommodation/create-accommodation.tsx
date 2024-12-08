@@ -23,10 +23,8 @@ export function CreateAccommodation() {
     categoryId: '',
     images: [],
     amenities: [],
-    locationCoordinates: {
-      type: 'Point',
-      coordinates: [69.2811179, 41.297297],
-    },
+    longitude: 69.2811179,
+    latitude: 41.297297,
     reviews: [],
     owner: {
       firstName: '',
@@ -60,7 +58,6 @@ export function CreateAccommodation() {
         ...data,
         images: imagesToUpload,
       };
-
       createAccommodation.mutate(creationPayload);
     }
   };

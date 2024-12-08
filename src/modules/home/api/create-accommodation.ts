@@ -10,7 +10,6 @@ export const useCreateAccommodation = () => {
   return useMutation({
     mutationFn: async (data: AccommodationFormData) => {
       const formData = new FormData();
-
       Object.entries(data).forEach(([key, value]) => {
         if (value instanceof File) {
           formData.append(key, value);

@@ -123,8 +123,8 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
         <Marker
           key={acc.id}
           position={{
-            lat: acc.locationCoordinates.coordinates[1],
-            lng: acc.locationCoordinates.coordinates[0],
+            lat: acc.latitude,
+            lng: acc.longitude,
           }}
           onClick={() => handleMarkerClick(acc)}
         />
@@ -133,8 +133,8 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
         <Link to={`/property/${selectedAccommodation.id}`}>
           <InfoWindow
             position={{
-              lat: selectedAccommodation.locationCoordinates.coordinates[1],
-              lng: selectedAccommodation.locationCoordinates.coordinates[0],
+              lat: selectedAccommodation.latitude,
+              lng: selectedAccommodation.longitude,
             }}
             onCloseClick={handleInfoWindowClose}
             style={{ cursor: 'pointer' }}

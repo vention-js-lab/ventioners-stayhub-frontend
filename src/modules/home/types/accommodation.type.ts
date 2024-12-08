@@ -6,10 +6,7 @@ export interface Location {
   lat: number;
   lng: number;
 }
-type LocationCoordinates = {
-  type: string;
-  coordinates: number[];
-};
+
 export type Accommodation = {
   id: string;
   name: string;
@@ -17,7 +14,8 @@ export type Accommodation = {
   images: Image[];
   amenities: AmenityInterface[];
   location: string;
-  locationCoordinates: LocationCoordinates;
+  latitude: number;
+  longitude: number;
   pricePerNight: number;
   isAddedToWishlist: boolean;
   reviews: {
