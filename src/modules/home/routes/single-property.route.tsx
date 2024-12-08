@@ -14,6 +14,7 @@ import { useParams } from 'react-router-dom';
 import { type Accommodation } from '../types/accommodation.type';
 import { type User } from '#/types';
 import { type Image } from '../types/image.type';
+import { MapModal } from '../components/map/mapModal';
 
 export function SinglePropertyRoute() {
   const isMobile = useMediaQuery('(max-width:700px)');
@@ -43,6 +44,10 @@ export function SinglePropertyRoute() {
   const images = accommodationData.images.map((image: Image) => image.url);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
 
+  const coordinates = {
+    lat: accommodationData.locationCoordinates.coordinates[1],
+    lng: accommodationData.locationCoordinates.coordinates[0],
+  };
   return (
     <>
       <HeaderComponent />
@@ -79,6 +84,8 @@ export function SinglePropertyRoute() {
           <Divider sx={{ my: 4, mx: 0 }} />
           <PropertyReview reviews={reviews} overallRating={accommodationData.overallRating} />
           <Divider sx={{ my: 4, mx: 2 }} />
+
+          <MapModal isLoading={isLoading} data={[accommodationData]} coordinates={coordinates} />
         </Box>
       </Box>
     </>
