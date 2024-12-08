@@ -75,6 +75,12 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
           });
           if (typeof onLocationChange === 'function') {
             onLocationChange({ address, lat, lng });
+          } else {
+            toast.error('No location handler provided', {
+              position: 'top-right',
+              autoClose: 3000,
+              hideProgressBar: true,
+            });
           }
         } else {
           toast.error('No address found for this location', {

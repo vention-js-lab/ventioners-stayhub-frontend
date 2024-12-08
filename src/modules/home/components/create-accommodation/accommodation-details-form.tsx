@@ -18,12 +18,13 @@ import { APIProvider } from '@vis.gl/react-google-maps';
 import { CustomMap } from '../map/mapComponent';
 import { toast } from 'react-toastify';
 import { useMemo, useRef } from 'react';
+import { latitude, longitude } from '../../constants/map.constant';
 
 interface AccommodationDetailsFormProps {
   formData: AccommodationFormData;
   updateFormData: (updates: Partial<AccommodationFormData>) => void;
 }
-
+type Library = 'places';
 export function AccommodationDetailsForm({ formData, updateFormData }: AccommodationDetailsFormProps) {
   const { data: categoriesResponse, isLoading: isCategoriesLoading } = useCategories();
 
@@ -42,7 +43,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
   const loaderOptions = useMemo(
     () => ({
       googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-      libraries: ['places'] as never[],
+      libraries: ['places'] as Library[],
     }),
     []
   );
@@ -130,18 +131,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
           />
         </Grid>
 
-        <Grid item={true} xs={12} sm={6}>
-          <TextField
-            fullWidth={true}
-            label="Location"
-            value={formData.location}
-            onChange={(e) => updateFormData({ location: e.target.value })}
-            placeholder="Where is your accommodation located?"
-            required={true}
-          />
-        </Grid>
-
-        <Grid item={true} xs={12} sm={6}>
+        <Grid item={true} xs={12}>
           <TextField
             fullWidth={true}
             label="Price per night"
@@ -211,13 +201,13 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
         </Grid>
 
         <Grid item={true} xs={12} sx={{ height: '500px' }}>
-          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
             <CustomMap
               isLoading={false}
               data={{ data: [] }}
               coordinates={{
-                lat: formData.locationCoordinates.coordinates[1],
-                lng: formData.locationCoordinates.coordinates[0],
+                lat: formData.locationCoordinates.coordinates[1] || latitude,
+                lng: formData.locationCoordinates.coordinates[0] || longitude,
               }}
               onLocationChange={({ address, lat, lng }) =>
                 updateFormData({

@@ -12,7 +12,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useMemo } from 'react';
 import { InfoMessageBox } from '../components/info-message-box/info-message-box';
 import { MapModal } from '../components/map/mapModal';
-import { lng, lat } from '../constants/map.constant';
+import { longitude, latitude } from '../constants/map.constant';
 import { useCurrentLocation } from '../hooks/useCurrentLocation';
 
 export function HomeRoute() {
@@ -25,7 +25,7 @@ export function HomeRoute() {
   });
   const { location, error } = useCurrentLocation();
   const properties = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data]);
-  const defaultCenter = location || { lat: lat, lng: lng };
+  const defaultCenter = location || { lat: latitude, lng: longitude };
   return (
     <Box sx={homeRouteStyles.container}>
       <HeaderComponent setSelectedLocation={setSearchQuery} showSearchBar={true} showStaysAndExperiences={true} />
