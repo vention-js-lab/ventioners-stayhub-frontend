@@ -2,6 +2,14 @@ import { type Image } from '#/modules/home/types/image.type.ts';
 import { type User } from '#/types';
 import { type AmenityInterface } from '#/types/amenity.types';
 
+export interface Location {
+  lat: number;
+  lng: number;
+}
+type LocationCoordinates = {
+  type: string;
+  coordinates: number[];
+};
 export type Accommodation = {
   id: string;
   name: string;
@@ -9,6 +17,7 @@ export type Accommodation = {
   images: Image[];
   amenities: AmenityInterface[];
   location: string;
+  locationCoordinates: LocationCoordinates;
   pricePerNight: number;
   isAddedToWishlist: boolean;
   reviews: {

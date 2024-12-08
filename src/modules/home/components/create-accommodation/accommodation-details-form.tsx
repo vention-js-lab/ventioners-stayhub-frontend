@@ -9,10 +9,15 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Chip from '@mui/material/Chip';
 
+import { useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api';
 import { type AccommodationFormData } from '../../types/accommodation-form-data.interface';
 import { accommodationDetailsFormStyles } from './styles';
 import { useCategories } from '../../api/get-categories';
 import { useAmenities } from '../../api/get-amenities';
+import { APIProvider } from '@vis.gl/react-google-maps';
+import { CustomMap } from '../map/mapComponent';
+import { toast } from 'react-toastify';
+import { useMemo, useRef } from 'react';
 
 interface AccommodationDetailsFormProps {
   formData: AccommodationFormData;
@@ -31,6 +36,68 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
       : [...currentAmenities, amenityId];
 
     updateFormData({ amenities: updatedAmenities });
+  };
+
+  const inputRef = useRef<google.maps.places.SearchBox | null>(null);
+  const loaderOptions = useMemo(
+    () => ({
+      googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+      libraries: ['places'] as never[],
+    }),
+    []
+  );
+
+  const { isLoaded, loadError } = useJsApiLoader(loaderOptions);
+
+  if (loadError) {
+    toast.error(`No address found for this location ${loadError}`, {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: true,
+    });
+  }
+  const handleonPlacesChanged = () => {
+    if (inputRef.current) {
+      const places = inputRef.current.getPlaces();
+      if (Array.isArray(places) && places.length > 0) {
+        const selectedPlace = places[0];
+        const location = selectedPlace.geometry?.location;
+        if (location) {
+          const newLat = location.lat();
+          const newLng = location.lng();
+          if (!isNaN(newLat) && !isNaN(newLng)) {
+            const address = selectedPlace.formatted_address || selectedPlace.name || '';
+            updateFormData({
+              location: address,
+              locationCoordinates: {
+                type: 'Point',
+                coordinates: [newLng, newLat],
+              },
+            });
+          } else {
+            toast.error('Invalid coordinates received.', {
+              position: 'top-right',
+              autoClose: 3000,
+              hideProgressBar: true,
+            });
+          }
+        } else {
+          toast.error('Location geometry is not available.', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: true,
+          });
+        }
+      } else {
+        toast.error('No places found.', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: true,
+        });
+      }
+    } else {
+      throw new Error('Error');
+    }
   };
 
   return (
@@ -124,6 +191,45 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
               />
             ))}
           </Box>
+        </Grid>
+
+        <Grid item={true} xs={12}>
+          {isLoaded ? (
+            <StandaloneSearchBox onLoad={(ref) => (inputRef.current = ref)} onPlacesChanged={handleonPlacesChanged}>
+              <TextField
+                fullWidth={true}
+                label="Address"
+                value={formData.location}
+                onChange={(e) => updateFormData({ location: e.target.value })}
+                placeholder="Input address..."
+                required={true}
+              />
+            </StandaloneSearchBox>
+          ) : (
+            <Typography>Loading Google Maps...</Typography>
+          )}
+        </Grid>
+
+        <Grid item={true} xs={12} sx={{ height: '500px' }}>
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
+            <CustomMap
+              isLoading={false}
+              data={{ data: [] }}
+              coordinates={{
+                lat: formData.locationCoordinates.coordinates[1],
+                lng: formData.locationCoordinates.coordinates[0],
+              }}
+              onLocationChange={({ address, lat, lng }) =>
+                updateFormData({
+                  location: address,
+                  locationCoordinates: {
+                    type: 'Point',
+                    coordinates: [lng, lat],
+                  },
+                })
+              }
+            />
+          </APIProvider>
         </Grid>
       </Grid>
     </Box>

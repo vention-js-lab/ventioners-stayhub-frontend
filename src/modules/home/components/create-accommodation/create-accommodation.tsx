@@ -23,6 +23,16 @@ export function CreateAccommodation() {
     categoryId: '',
     images: [],
     amenities: [],
+    locationCoordinates: {
+      type: 'Point',
+      coordinates: [69.2811179, 41.297297],
+    },
+    reviews: [],
+    owner: {
+      firstName: '',
+      lastName: '',
+    },
+    overallRating: 0,
   });
 
   const { data, updateData } = useAccommodationContext();
