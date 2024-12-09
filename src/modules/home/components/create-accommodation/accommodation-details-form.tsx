@@ -13,7 +13,7 @@ import InputBase from '@mui/material/InputBase';
 
 import minusIcon from '#/assets/minus.svg';
 import plusIcon from '#/assets/plus.svg';
-import { type AccommodationFormData } from '../../types/accommodation-form-data.interface';
+import { type AccommodationFormData } from '#/zod';
 import { accommodationDetailsFormStyles } from './styles';
 import { useCategories } from '../../api/get-categories';
 import { useAmenities } from '../../api/get-amenities';
