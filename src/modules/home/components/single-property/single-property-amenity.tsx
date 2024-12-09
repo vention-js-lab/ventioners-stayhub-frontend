@@ -18,12 +18,25 @@ interface PropertyProps {
   amenities: AmenityInterface[];
   description: string;
   pricePerNight: number;
+  checkInDate: Dayjs | null;
+  checkOutDate: Dayjs | null;
+  setCheckInDate: (date: Dayjs | null) => void;
+  setCheckOutDate: (date: Dayjs | null) => void;
+  onReserve: () => void;
 }
 
-function Property({ owner, amenities, description, pricePerNight }: PropertyProps) {
+function Property({
+  owner,
+  amenities,
+  description,
+  pricePerNight,
+  setCheckOutDate,
+  setCheckInDate,
+  checkOutDate,
+  checkInDate,
+  onReserve,
+}: PropertyProps) {
   const [showAll, setShowAll] = useState(false);
-  const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
-  const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
 
   const handleShowAll = () => {
     setShowAll(!showAll);
@@ -116,7 +129,7 @@ function Property({ owner, amenities, description, pricePerNight }: PropertyProp
             </Box>
           </Box>
         </LocalizationProvider>
-        <Button sx={PropertyAmenityStyles.reserveButton} variant="contained">
+        <Button sx={PropertyAmenityStyles.reserveButton} variant="contained" onClick={onReserve}>
           Reserve
         </Button>
         <Box sx={PropertyAmenityStyles.priceBox}>

@@ -14,10 +14,18 @@ import { useParams } from 'react-router-dom';
 import { type Accommodation } from '../types/accommodation.type';
 import { type User } from '#/types';
 import { type Image } from '../types/image.type';
+import { type Dayjs } from 'dayjs';
+import { useState } from 'react';
+import { useCreateBooking } from '#/modules/home/api/create-booking.ts';
+import { toast } from 'react-toastify';
 
 export function SinglePropertyRoute() {
   const isMobile = useMediaQuery('(max-width:700px)');
   const { id } = useParams();
+  const createBooking = useCreateBooking();
+
+  const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
+  const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
 
   const { data, error, isLoading } = useAccommodationById(id || '');
 
@@ -30,6 +38,21 @@ export function SinglePropertyRoute() {
   if (error instanceof Error) return <div>Error: {error.message}</div>;
 
   const accommodationData: Accommodation = data.data;
+
+  const handleReserve = () => {
+    if (!checkInDate || !checkOutDate) {
+      toast.error('Please select check-in and check-out dates.');
+      return;
+    }
+
+    createBooking.mutate({
+      checkInDate: checkInDate.toDate(),
+      checkOutDate: checkOutDate.toDate(),
+      accommodationId: id,
+      totalPrice: accommodationData.pricePerNight,
+      numberOfGuests: 1,
+    });
+  };
 
   const reviews = accommodationData.reviews.map(
     (review: { id: string; user: Pick<User, 'firstName' | 'lastName'>; comment: string; rating: number }) => ({
@@ -75,6 +98,11 @@ export function SinglePropertyRoute() {
             amenities={accommodationData.amenities}
             description={accommodationData.description}
             pricePerNight={accommodationData.pricePerNight}
+            checkInDate={checkInDate}
+            setCheckInDate={setCheckInDate}
+            checkOutDate={checkOutDate}
+            setCheckOutDate={setCheckOutDate}
+            onReserve={handleReserve}
           />
           <Divider sx={{ my: 4, mx: 0 }} />
           <PropertyReview reviews={reviews} overallRating={accommodationData.overallRating} />
