@@ -21,6 +21,7 @@ import { postWishlist } from '../../api/post-wishlist';
 import { useMutation } from '@tanstack/react-query';
 import { useAppSelector } from '#/redux/hooks';
 import { selectAuth } from '#/redux/auth/auth-slice';
+import { LazyImage } from '../lazy-image/lazy-image';
 
 export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const navigate = useNavigate();
@@ -75,7 +76,12 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
         >
           {images.map((image) => (
             <SwiperSlide key={image.id}>
-              <img src={image.url} alt="Image of Apartment" style={propertyCardStyles.image} loading="lazy" />
+              <LazyImage
+                src={image.thumbnailUrl}
+                blurhash={image.blurhash}
+                alt="Image of Apartment"
+                style={propertyCardStyles.image}
+              />
             </SwiperSlide>
           ))}
         </Swiper>

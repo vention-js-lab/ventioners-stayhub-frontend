@@ -18,5 +18,6 @@ export const singlePropertyStyles = {
     border: '1px solid #000',
     backgroundColor: 'white',
     padding: '5px 10px',
+    cursor: 'pointer',
   },
 } as const;
