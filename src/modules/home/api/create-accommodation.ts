@@ -10,6 +10,7 @@ export const useCreateAccommodation = () => {
   return useMutation({
     mutationFn: async (data: AccommodationFormData) => {
       const formData = new FormData();
+
       Object.entries(data).forEach(([key, value]) => {
         if (value instanceof File) {
           formData.append(key, value);
@@ -21,6 +22,10 @@ export const useCreateAccommodation = () => {
               formData.append(`${key}[${index}]`, item as string);
             }
           });
+        } else if (typeof value === 'object' && value !== null && key === 'locationCoordinates') {
+          formData.append(`${key}[type]`, (value as { type: string }).type);
+          formData.append(`${key}[coordinates][0]`, (value as { coordinates: [number, number] }).coordinates[0].toString());
+          formData.append(`${key}[coordinates][1]`, (value as { coordinates: [number, number] }).coordinates[1].toString());
         } else if (value !== null && value !== undefined) {
           formData.append(key, value as string);
         }

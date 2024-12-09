@@ -4,10 +4,11 @@ import { InfoWindow, Map, Marker } from '@vis.gl/react-google-maps';
 import Box from '@mui/material/Box';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { type Accommodations, type Location } from '../../types/accommodation.type';
+import { type Accommodation, type Location } from '../../types/accommodation.type';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { getPreferredAddress } from '#/utils/get-address';
+import { useCurrentLocation } from '../../hooks/use-current-location';
 
 interface MapClickEvent {
   detail: {
@@ -20,7 +21,7 @@ interface MapClickEvent {
 
 interface PropertyListProps {
   isLoading: boolean;
-  data?: { data: Accommodations[] };
+  data?: { data: Accommodation[] };
   coordinates: {
     lat: number;
     lng: number;
@@ -30,8 +31,9 @@ interface PropertyListProps {
 
 export function CustomMap({ isLoading, data, coordinates, onLocationChange }: PropertyListProps) {
   const [markerLocation, setMarkerLocation] = useState<Location>(coordinates);
-  const [accommodations, setAccommodations] = useState<Accommodations[]>([]);
-  const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodations | null>(null);
+  const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
+  const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
+  const { location } = useCurrentLocation();
   useEffect(() => {
     if (data?.data) setAccommodations(data.data);
   }, [data]);
@@ -47,7 +49,7 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
       </Box>
     );
   }
-  const handleMarkerClick = (accommodation: Accommodations) => {
+  const handleMarkerClick = (accommodation: Accommodation) => {
     setSelectedAccommodation(accommodation);
   };
 
@@ -74,12 +76,6 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
           });
           if (typeof onLocationChange === 'function') {
             onLocationChange({ address, lat, lng });
-          } else {
-            toast.error('No location handler provided', {
-              position: 'top-right',
-              autoClose: 3000,
-              hideProgressBar: true,
-            });
           }
         } else {
           toast.error('No address found for this location', {
@@ -103,6 +99,7 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
       });
     }
   };
+
   return (
     <Box sx={mapContainerStyles.container}>
       <Map
@@ -115,6 +112,15 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
           handleMapClick(event);
         }}
       >
+        {location ? (
+          <Marker
+            position={location}
+            icon={{
+              url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+            }}
+          />
+        ) : null}
+
         <Marker position={markerLocation} />
       </Map>
       {accommodations.map((acc) => (

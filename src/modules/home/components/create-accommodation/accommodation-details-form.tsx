@@ -70,8 +70,10 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
             const address = selectedPlace.formatted_address || selectedPlace.name || '';
             updateFormData({
               location: address,
-              latitude: newLat,
-              longitude: newLng,
+              locationCoordinates: {
+                type: 'Point',
+                coordinates: [newLat, newLng],
+              },
             });
           } else {
             toast.error('Invalid coordinates received.', {
@@ -204,14 +206,16 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
               isLoading={false}
               data={{ data: [] }}
               coordinates={{
-                lat: formData.latitude || latitude,
-                lng: formData.longitude || longitude,
+                lat: formData.locationCoordinates.coordinates[0] || latitude,
+                lng: formData.locationCoordinates.coordinates[1] || longitude,
               }}
               onLocationChange={({ address, lat, lng }) =>
                 updateFormData({
                   location: address,
-                  latitude: lat,
-                  longitude: lng,
+                  locationCoordinates: {
+                    type: 'Point',
+                    coordinates: [lat, lng],
+                  },
                 })
               }
             />

@@ -13,7 +13,7 @@ import { useMemo } from 'react';
 import { InfoMessageBox } from '../components/info-message-box/info-message-box';
 import { MapModal } from '../components/map/mapModal';
 import { longitude, latitude } from '../constants/map.constant';
-import { useCurrentLocation } from '../hooks/useCurrentLocation';
+import { useCurrentLocation } from '../hooks/use-current-location';
 
 export function HomeRoute() {
   const [selectedCategory, setSelectedCategory] = useSearchParamsState('category', '');

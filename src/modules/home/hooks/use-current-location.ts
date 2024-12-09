@@ -16,6 +16,7 @@ export function useCurrentLocation() {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
+        setError(null);
       },
       (err) => {
         setError(err.message);

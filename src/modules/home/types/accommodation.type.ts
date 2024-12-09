@@ -14,32 +14,6 @@ export type Accommodation = {
   images: Image[];
   amenities: AmenityInterface[];
   location: string;
-  latitude: number;
-  longitude: number;
-  pricePerNight: number;
-  isAddedToWishlist: boolean;
-  reviews: {
-    id: string;
-    user: Pick<User, 'firstName' | 'lastName'>;
-    comment: string;
-    rating: number;
-  }[];
-  owner: {
-    firstName: string;
-    lastName: string;
-  };
-  overallRating: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type Accommodations = {
-  id: string;
-  name: string;
-  description: string;
-  images: Image[];
-  amenities: AmenityInterface[];
-  location: string;
   locationCoordinates: {
     type: string;
     coordinates: [number, number];
