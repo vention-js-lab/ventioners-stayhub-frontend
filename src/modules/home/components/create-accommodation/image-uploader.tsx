@@ -7,7 +7,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { imageUploaderStyles } from './styles';
 import type { UseFormSetValue, UseFormGetValues, UseFormRegister, FieldValues } from 'react-hook-form';
-import { type AccommodationFormData } from '../../types/accommodation-form-data.interface';
+import { type AccommodationFormData } from '#/zod';
 
 type Props<T extends FieldValues> = {
   setValue: UseFormSetValue<T>;

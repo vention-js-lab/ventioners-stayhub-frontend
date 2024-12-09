@@ -5,14 +5,14 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Box from '@mui/material/Box';
 
-import { type AccommodationFormData } from '../../types/accommodation-form-data.interface';
+import { type AccommodationFormData } from '#/zod';
 import { createAccommodationStyles } from './styles';
 import { AccommodationDetailsForm } from './accommodation-details-form.tsx';
 import { ImageUploader } from './image-uploader.tsx';
 import { useCreateAccommodation } from '#/modules/home/api/create-accommodation.ts';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateAccomodationSchema } from '#/zod/accommodation-create.schema.ts';
+import { createAccomodationSchema } from '#/zod/accommodation-create.schema.ts';
 import { getFirstErrorMessage } from '#/utils/get-first-error-message.util.ts';
 import { toast } from 'react-toastify';
 
@@ -27,7 +27,7 @@ export function CreateAccommodation() {
     control,
   } = useForm<AccommodationFormData>({
     defaultValues: { pricePerNight: 0, numberOfGuests: 4, categoryId: '', images: [], amenities: [] },
-    resolver: zodResolver(CreateAccomodationSchema),
+    resolver: zodResolver(createAccomodationSchema),
   });
   const createAccommodation = useCreateAccommodation();
 

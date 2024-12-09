@@ -1,7 +1,6 @@
-import { z, type ZodType } from 'zod';
-import { type AccommodationFormData } from '#/modules/home/types/accommodation-form-data.interface';
+import { z } from 'zod';
 
-export const CreateAccomodationSchema: ZodType<AccommodationFormData> = z.object({
+export const createAccomodationSchema = z.object({
   name: z
     .string()
     .min(1, { message: 'Please choose a valid non-empty name' })
@@ -37,3 +36,5 @@ export const CreateAccomodationSchema: ZodType<AccommodationFormData> = z.object
     )
     .min(1, { message: 'At least one image is required' }),
 });
+
+export type AccommodationFormData = z.infer<typeof createAccomodationSchema>;
