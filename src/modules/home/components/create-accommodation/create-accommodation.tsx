@@ -89,7 +89,7 @@ export function CreateAccommodation() {
           }}
           disabled={createAccommodation.isPending}
           sx={{ ...createAccommodationStyles.button, ...(activeStep === 0 && { marginLeft: 'calc(100% - 150px)' }) }}
-          variant={activeStep === 0 ? 'contained' : 'text'}
+          variant={activeStep === 0 ? 'contained' : 'outlined'}
         >
           {activeStep === 1 ? 'Back' : 'Next'}
         </Button>

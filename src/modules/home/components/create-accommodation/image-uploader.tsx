@@ -40,11 +40,13 @@ export function ImageUploader({ setValue, getValues, register }: Props<Accommoda
           type="file"
           onChange={(e) => {
             const currentImages = getValues('images');
-            const newImage = e.target.files?.item(0);
-
-            if (newImage) {
-              setValue('images', [...currentImages, newImage], { shouldValidate: true });
+            const newImages = [];
+            const fileList = e.target.files as FileList;
+            for (let i = 0; i < fileList.length; ++i) {
+              newImages.push(fileList.item(i) as File);
             }
+
+            setValue('images', [...currentImages, ...newImages], { shouldValidate: true });
           }}
           accept="image/*"
           multiple={true}
