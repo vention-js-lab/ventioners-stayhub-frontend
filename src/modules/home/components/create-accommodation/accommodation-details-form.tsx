@@ -199,7 +199,7 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
         </Grid>
 
         <Grid item={true} xs={12} sx={{ height: '500px' }}>
-          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
             <CustomMap
               isLoading={false}
               data={{ data: [] }}
@@ -210,8 +210,8 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
               onLocationChange={({ address, lat, lng }) =>
                 updateFormData({
                   location: address,
-                  longitude: lng,
                   latitude: lat,
+                  longitude: lng,
                 })
               }
             />

@@ -23,8 +23,8 @@ export function CreateAccommodation() {
     categoryId: '',
     images: [],
     amenities: [],
-    longitude: 69.2811179,
     latitude: 41.297297,
+    longitude: 69.2811179,
     reviews: [],
     owner: {
       firstName: '',

@@ -18,7 +18,6 @@ interface MapModalProps {
 
 export function MapModal({ isLoading, data, coordinates }: MapModalProps) {
   const [openModal, setOpenModal] = useState(false);
-
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
@@ -33,7 +32,7 @@ export function MapModal({ isLoading, data, coordinates }: MapModalProps) {
           <CloseIcon />
         </IconButton>
         <DialogContent sx={mapModalStyles.DialogContent}>
-          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
             <CustomMap isLoading={isLoading} data={{ data }} coordinates={coordinates} />
           </APIProvider>
         </DialogContent>

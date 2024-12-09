@@ -4,7 +4,7 @@ import { InfoWindow, Map, Marker } from '@vis.gl/react-google-maps';
 import Box from '@mui/material/Box';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { type Accommodation, type Location } from '../../types/accommodation.type';
+import { type Accommodations, type Location } from '../../types/accommodation.type';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { getPreferredAddress } from '#/utils/get-address';
@@ -20,7 +20,7 @@ interface MapClickEvent {
 
 interface PropertyListProps {
   isLoading: boolean;
-  data?: { data: Accommodation[] };
+  data?: { data: Accommodations[] };
   coordinates: {
     lat: number;
     lng: number;
@@ -30,9 +30,8 @@ interface PropertyListProps {
 
 export function CustomMap({ isLoading, data, coordinates, onLocationChange }: PropertyListProps) {
   const [markerLocation, setMarkerLocation] = useState<Location>(coordinates);
-  const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
-  const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
-
+  const [accommodations, setAccommodations] = useState<Accommodations[]>([]);
+  const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodations | null>(null);
   useEffect(() => {
     if (data?.data) setAccommodations(data.data);
   }, [data]);
@@ -48,7 +47,7 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
       </Box>
     );
   }
-  const handleMarkerClick = (accommodation: Accommodation) => {
+  const handleMarkerClick = (accommodation: Accommodations) => {
     setSelectedAccommodation(accommodation);
   };
 
@@ -104,7 +103,6 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
       });
     }
   };
-
   return (
     <Box sx={mapContainerStyles.container}>
       <Map
@@ -123,8 +121,8 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
         <Marker
           key={acc.id}
           position={{
-            lat: acc.latitude,
-            lng: acc.longitude,
+            lat: acc.locationCoordinates.coordinates[1],
+            lng: acc.locationCoordinates.coordinates[0],
           }}
           onClick={() => handleMarkerClick(acc)}
         />
@@ -133,8 +131,8 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
         <Link to={`/property/${selectedAccommodation.id}`}>
           <InfoWindow
             position={{
-              lat: selectedAccommodation.latitude,
-              lng: selectedAccommodation.longitude,
+              lat: selectedAccommodation.locationCoordinates.coordinates[1],
+              lng: selectedAccommodation.locationCoordinates.coordinates[0],
             }}
             onCloseClick={handleInfoWindowClose}
             style={{ cursor: 'pointer' }}
