@@ -34,7 +34,8 @@ export const createAccomodationSchema = z.object({
       z.instanceof(File).refine((file) => file.type.substring(0, 5) === 'image'),
       { message: 'Invalid image file type' }
     )
-    .min(1, { message: 'At least one image is required' }),
+    .min(5, { message: 'At least 5 images are required' })
+    .max(15, { message: 'At most 15 images can be uploaded' }),
 });
 
 export type AccommodationFormData = z.infer<typeof createAccomodationSchema>;
