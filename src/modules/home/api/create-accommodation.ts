@@ -23,6 +23,11 @@ export const useCreateAccommodation = () => {
               formData.append(`${key}[]`, value[i] as string);
             }
           }
+        } else if (key === 'locationCoordinates') {
+          const location = value as unknown as { type: string; coordinates: [number, number] };
+          formData.append(`${key}[type]`, location.type);
+          formData.append(`${key}[coordinates][0]`, location.coordinates[0].toString());
+          formData.append(`${key}[coordinates][1]`, location.coordinates[1].toString());
         } else {
           formData.append(key, value as string);
         }

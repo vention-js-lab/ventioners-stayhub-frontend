@@ -15,6 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createAccomodationSchema } from '#/zod/accommodation-create.schema.ts';
 import { getFirstErrorMessage } from '#/utils/get-first-error-message.util.ts';
 import { toast } from 'react-toastify';
+import { latitude, longitude } from '../../constants/map.constant.ts';
 
 export function CreateAccommodation() {
   const [activeStep, setActiveStep] = useState<0 | 1>(0);
@@ -26,7 +27,17 @@ export function CreateAccommodation() {
     trigger,
     control,
   } = useForm<AccommodationFormData>({
-    defaultValues: { pricePerNight: 0, numberOfGuests: 4, categoryId: '', images: [], amenities: [] },
+    defaultValues: {
+      pricePerNight: 0,
+      numberOfGuests: 4,
+      categoryId: '',
+      images: [],
+      amenities: [],
+      locationCoordinates: {
+        type: 'Point',
+        coordinates: [longitude, latitude],
+      },
+    },
     resolver: zodResolver(createAccomodationSchema),
   });
   const createAccommodation = useCreateAccommodation();
@@ -45,6 +56,7 @@ export function CreateAccommodation() {
         'numberOfGuests',
         'categoryId',
         'amenities',
+        'locationCoordinates',
       ]);
 
       if (isValid) {

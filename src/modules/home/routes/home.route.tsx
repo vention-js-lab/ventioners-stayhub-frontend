@@ -7,11 +7,11 @@ import { CategoryList } from '../components/category/category-list';
 import { homeRouteStyles } from './home.route.styles';
 import { useSearchParamsState } from '../hooks/use-search-params-state';
 import { useProperties } from '../api/get-properties';
-import { CustomMap } from '../components/map/mapComponent';
-import { APIProvider } from '@vis.gl/react-google-maps';
 import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { lat, lng } from '../constants/map.constant';
+import { MapModal } from '../components/map/mapModal';
+import { longitude, latitude } from '../constants/map.constant';
+import { useCurrentLocation } from '../hooks/use-current-location';
 import { useMemo } from 'react';
 import { InfoMessageBox } from '../components/info-message-box/info-message-box';
 
@@ -23,9 +23,10 @@ export function HomeRoute() {
     categoryId: selectedCategory,
     search: searchQuery,
   });
+  const { location, error } = useCurrentLocation();
 
   const properties = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data]);
-
+  const defaultCenter = location || { lat: latitude, lng: longitude };
   return (
     <Box sx={homeRouteStyles.container}>
       <HeaderComponent setSelectedLocation={setSearchQuery} showSearchBar={true} showStaysAndExperiences={true} />
@@ -47,11 +48,12 @@ export function HomeRoute() {
         >
           <PropertyList isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} data={{ data: properties }} />
         </InfiniteScroll>
-        <Box sx={homeRouteStyles.mapContainer}>
-          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-            <CustomMap lat={lat} lng={lng} />
-          </APIProvider>
-        </Box>
+        <MapModal isLoading={isLoading} data={properties} coordinates={defaultCenter} />
+        {error ? (
+          <Typography color="error" sx={{ mt: 2 }}>
+            Error: {error}
+          </Typography>
+        ) : null}
       </Container>
     </Box>
   );
