@@ -50,7 +50,6 @@ export function userProfilePictureStyles(size: 'small' | 'large' = 'small', prof
       paddingX: '16px',
       paddingY: '6px',
       cursor: 'pointer',
-      width: '82px',
 
       color: 'rgb(34, 34, 34)',
       backgroundColor: '#FFFFFF',

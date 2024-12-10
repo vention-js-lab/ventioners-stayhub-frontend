@@ -75,6 +75,7 @@ export function SinglePropertyRoute() {
             amenities={accommodationData.amenities}
             description={accommodationData.description}
             pricePerNight={accommodationData.pricePerNight}
+            numberOfGuests={accommodationData.numberOfGuests}
           />
           <Divider sx={{ my: 4, mx: 0 }} />
           <PropertyReview reviews={reviews} overallRating={accommodationData.overallRating} />

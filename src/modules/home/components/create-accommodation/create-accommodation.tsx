@@ -1,70 +1,70 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Box from '@mui/material/Box';
-import { toast } from 'react-toastify';
 
-import { type AccommodationFormData } from '../../types/accommodation-form-data.interface';
+import { type AccommodationFormData } from '#/zod';
 import { createAccommodationStyles } from './styles';
 import { AccommodationDetailsForm } from './accommodation-details-form.tsx';
 import { ImageUploader } from './image-uploader.tsx';
 import { useCreateAccommodation } from '#/modules/home/api/create-accommodation.ts';
-import { useAccommodationContext } from '#/modules/home/contexts';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createAccomodationSchema } from '#/zod/accommodation-create.schema.ts';
+import { getFirstErrorMessage } from '#/utils/get-first-error-message.util.ts';
+import { toast } from 'react-toastify';
 
 export function CreateAccommodation() {
   const [activeStep, setActiveStep] = useState<0 | 1>(0);
-  const [formData, setFormData] = useState<AccommodationFormData>({
-    name: '',
-    description: '',
-    location: '',
-    pricePerNight: 0,
-    categoryId: '',
-    images: [],
-    amenities: [],
+  const {
+    register,
+    formState: { errors },
+    getValues,
+    setValue,
+    trigger,
+    control,
+  } = useForm<AccommodationFormData>({
+    defaultValues: { pricePerNight: 0, numberOfGuests: 4, categoryId: '', images: [], amenities: [] },
+    resolver: zodResolver(createAccomodationSchema),
   });
-
-  const { data, updateData } = useAccommodationContext();
-
   const createAccommodation = useCreateAccommodation();
 
-  const handleNext = () => {
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
+
+  async function handleNextOrBack() {
     if (activeStep === 0) {
-      const { name, description, location, pricePerNight, categoryId } = formData;
-      if (!name || !description || !location || !pricePerNight || !categoryId) {
-        toast.error('Please fill all required fields');
-        return;
-      }
+      const isValid = await trigger([
+        'name',
+        'description',
+        'location',
+        'pricePerNight',
+        'numberOfGuests',
+        'categoryId',
+        'amenities',
+      ]);
 
-      setActiveStep(1);
+      if (isValid) {
+        setActiveStep(1);
+      } else {
+        toast.error(getFirstErrorMessage<AccommodationFormData>(errors));
+      }
     } else {
-      const imagesToUpload = data.images?.filter((image) => image instanceof File);
-
-      if (imagesToUpload?.length === 0) {
-        toast.error('Please upload at least one image');
-        return;
-      }
-
-      const creationPayload = {
-        ...data,
-        images: imagesToUpload,
-      };
-
-      createAccommodation.mutate(creationPayload);
-    }
-  };
-
-  const handleBack = () => {
-    if (activeStep === 1) {
       setActiveStep(0);
     }
-  };
+  }
 
-  const updateFormData = (updates: Partial<AccommodationFormData>) => {
-    setFormData((prev) => ({ ...prev, ...updates }));
-    updateData({ ...data, ...updates });
-  };
+  async function handleCreateAccommodation() {
+    if (await trigger()) {
+      const data = getValues();
+      createAccommodation.mutate(data);
+    } else {
+      toast.error(getFirstErrorMessage<AccommodationFormData>(errors));
+    }
+  }
 
   return (
     <Box sx={createAccommodationStyles.container}>
@@ -77,23 +77,35 @@ export function CreateAccommodation() {
         </Step>
       </Stepper>
 
-      {activeStep === 0 && <AccommodationDetailsForm formData={formData} updateFormData={updateFormData} />}
-      {activeStep === 1 && <ImageUploader />}
+      {activeStep === 0 && (
+        <AccommodationDetailsForm setValue={setValue} getValues={getValues} register={register} control={control} />
+      )}
+      {activeStep === 1 && <ImageUploader setValue={setValue} getValues={getValues} register={register} />}
 
       <Box sx={createAccommodationStyles.buttonGroup}>
+        <Button
+          onClick={() => {
+            handleNextOrBack();
+          }}
+          disabled={createAccommodation.isPending}
+          sx={{ ...createAccommodationStyles.button, ...(activeStep === 0 && { marginLeft: 'calc(100% - 150px)' }) }}
+          variant={activeStep === 0 ? 'contained' : 'outlined'}
+        >
+          {activeStep === 1 ? 'Back' : 'Next'}
+        </Button>
         {activeStep > 0 && (
-          <Button onClick={handleBack} disabled={createAccommodation.isPending} sx={createAccommodationStyles.button}>
-            Back
+          <Button
+            variant="contained"
+            type="button"
+            onClick={() => {
+              handleCreateAccommodation();
+            }}
+            disabled={createAccommodation.isPending}
+            sx={{ ...createAccommodationStyles.button, display: activeStep === 1 ? 'block' : 'none' }}
+          >
+            {createAccommodation.isPending ? 'Creating...' : 'Create'}
           </Button>
         )}
-        <Button
-          variant="contained"
-          onClick={handleNext}
-          disabled={createAccommodation.isPending}
-          sx={createAccommodationStyles.button}
-        >
-          {activeStep === 1 ? (createAccommodation.isPending ? 'Creating...' : 'Create') : 'Next'}
-        </Button>
       </Box>
     </Box>
   );

@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '#/redux/hooks';
 import { ENDPOINTS as AUTH_ENDPOINTS } from '#/modules/auth/constants';
 import { api } from '#/configs';
 import { UserProfilePicture } from './user-profile-picture/user-profile-picture';
-import { removeUser, selectAuth } from '#/redux/auth/auth-slice';
+import { removeUser, selectAuth } from '#/redux/auth/auth.slice';
 import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
 

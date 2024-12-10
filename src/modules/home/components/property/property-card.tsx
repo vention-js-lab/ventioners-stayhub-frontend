@@ -13,15 +13,14 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './swiper.css';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { postWishlist } from '../../api/post-wishlist';
 import { useMutation } from '@tanstack/react-query';
 import { useAppSelector } from '#/redux/hooks';
-import { selectAuth } from '#/redux/auth/auth-slice';
 import { LazyImage } from '../lazy-image/lazy-image';
+import { selectAuth } from '#/redux/auth/auth.slice';
 
 export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const navigate = useNavigate();
@@ -94,17 +93,6 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
           </Typography>
         </CardContent>
       </Card>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={true}
-        rtl={false}
-        pauseOnFocusLoss={true}
-        draggable={true}
-        pauseOnHover={true}
-      />
     </Link>
   );
 }

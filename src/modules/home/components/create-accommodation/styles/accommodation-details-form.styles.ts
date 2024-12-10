@@ -28,4 +28,54 @@ export const accommodationDetailsFormStyles = {
     backgroundColor: 'primary.main',
     color: 'white',
   },
+  guestCountContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  guestsCountControls: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '104px',
+  },
+  guestsCount: {
+    '& > input': {
+      textAlign: 'center',
+    },
+    '&.Mui-disabled': {
+      color: 'rgba(0, 0, 0, 1)',
+    },
+    '& > input:disabled': {
+      textAlign: 'center',
+      color: 'rgba(0, 0, 0, 1)',
+      WebkitTextFillColor: 'rgba(0, 0, 0, 1)',
+    },
+  },
+  guestsCountButton: {
+    all: 'unset',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: '1px solid rgb(176, 176, 176)',
+    borderRadius: '50%',
+    textAlign: 'center',
+    cursor: 'pointer',
+    flex: '0 0 auto',
+    width: '32px',
+    height: '32px',
+    fontSize: '30px',
+    '&:hover': {
+      borderColor: 'rgb(34, 34, 34)',
+    },
+    '&:disabled': {
+      borderColor: 'rgb(235, 235, 235)',
+    },
+    '&:disabled img': {
+      opacity: '25%',
+      userSelect: 'none',
+    },
+  },
 } satisfies MuiStylesObject;
