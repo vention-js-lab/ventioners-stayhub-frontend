@@ -25,7 +25,7 @@ export function CreateAccommodation() {
     amenities: [],
     locationCoordinates: {
       type: 'Point',
-      coordinates: [41.2982199, 69.2847619],
+      coordinates: [69.2847619, 41.2982199],
     },
     reviews: [],
     owner: {

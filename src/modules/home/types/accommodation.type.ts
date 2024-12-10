@@ -3,8 +3,8 @@ import { type User } from '#/types';
 import { type AmenityInterface } from '#/types/amenity.types';
 
 export interface Location {
-  lat: number;
   lng: number;
+  lat: number;
 }
 
 export type Accommodation = {

@@ -8,7 +8,6 @@ import { type Accommodation, type Location } from '../../types/accommodation.typ
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { getPreferredAddress } from '#/utils/get-address';
-import { useCurrentLocation } from '../../hooks/use-current-location';
 
 interface MapClickEvent {
   detail: {
@@ -23,17 +22,16 @@ interface PropertyListProps {
   isLoading: boolean;
   data?: { data: Accommodation[] };
   coordinates: {
-    lat: number;
     lng: number;
+    lat: number;
   };
-  onLocationChange?: (location: { address: string; lat: number; lng: number }) => void;
+  onLocationChange?: (location: { address: string; lng: number; lat: number }) => void;
 }
 
 export function CustomMap({ isLoading, data, coordinates, onLocationChange }: PropertyListProps) {
   const [markerLocation, setMarkerLocation] = useState<Location>(coordinates);
   const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
   const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
-  const { location } = useCurrentLocation();
   useEffect(() => {
     if (data?.data) setAccommodations(data.data);
   }, [data]);
@@ -60,13 +58,13 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
   const handleMapClick = async (event: MapClickEvent) => {
     const clickedLatLng = event.detail.latLng;
     if (clickedLatLng) {
-      const { lat, lng } = clickedLatLng;
-      setMarkerLocation({ lat, lng });
+      const { lng, lat } = clickedLatLng;
+      setMarkerLocation({ lng, lat });
       setSelectedAccommodation(null);
 
       const geocoder = new google.maps.Geocoder();
       try {
-        const results = (await geocoder.geocode({ location: { lat, lng } })).results;
+        const results = (await geocoder.geocode({ location: { lng, lat } })).results;
         if (results[0]) {
           const address = getPreferredAddress(results);
           toast.success(`Address selected: ${address}`, {
@@ -75,7 +73,7 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
             hideProgressBar: true,
           });
           if (typeof onLocationChange === 'function') {
-            onLocationChange({ address, lat, lng });
+            onLocationChange({ address, lng, lat });
           }
         } else {
           toast.error('No address found for this location', {
@@ -112,23 +110,14 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
           handleMapClick(event);
         }}
       >
-        {location ? (
-          <Marker
-            position={location}
-            icon={{
-              url: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-            }}
-          />
-        ) : null}
-
         <Marker position={markerLocation} />
       </Map>
       {accommodations.map((acc) => (
         <Marker
           key={acc.id}
           position={{
-            lat: acc.locationCoordinates.coordinates[1],
             lng: acc.locationCoordinates.coordinates[0],
+            lat: acc.locationCoordinates.coordinates[1],
           }}
           onClick={() => handleMarkerClick(acc)}
         />
@@ -137,8 +126,8 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
         <Link to={`/property/${selectedAccommodation.id}`}>
           <InfoWindow
             position={{
-              lat: selectedAccommodation.locationCoordinates.coordinates[1],
               lng: selectedAccommodation.locationCoordinates.coordinates[0],
+              lat: selectedAccommodation.locationCoordinates.coordinates[1],
             }}
             onCloseClick={handleInfoWindowClose}
             style={{ cursor: 'pointer' }}

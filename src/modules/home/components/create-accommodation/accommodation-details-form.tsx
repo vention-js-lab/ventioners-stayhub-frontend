@@ -64,15 +64,15 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
         const selectedPlace = places[0];
         const location = selectedPlace.geometry?.location;
         if (location) {
-          const newLat = location.lat();
           const newLng = location.lng();
+          const newLat = location.lat();
           if (!isNaN(newLat) && !isNaN(newLng)) {
             const address = selectedPlace.formatted_address || selectedPlace.name || '';
             updateFormData({
               location: address,
               locationCoordinates: {
                 type: 'Point',
-                coordinates: [newLat, newLng],
+                coordinates: [newLng, newLat],
               },
             });
           } else {
@@ -206,15 +206,15 @@ export function AccommodationDetailsForm({ formData, updateFormData }: Accommoda
               isLoading={false}
               data={{ data: [] }}
               coordinates={{
-                lat: formData.locationCoordinates.coordinates[0] || latitude,
-                lng: formData.locationCoordinates.coordinates[1] || longitude,
+                lng: formData.locationCoordinates.coordinates[0] || longitude,
+                lat: formData.locationCoordinates.coordinates[1] || latitude,
               }}
-              onLocationChange={({ address, lat, lng }) =>
+              onLocationChange={({ address, lng, lat }) =>
                 updateFormData({
                   location: address,
                   locationCoordinates: {
                     type: 'Point',
-                    coordinates: [lat, lng],
+                    coordinates: [lng, lat],
                   },
                 })
               }
