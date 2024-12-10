@@ -36,6 +36,15 @@ export const createAccomodationSchema = z.object({
     )
     .min(5, { message: 'At least 5 images are required' })
     .max(15, { message: 'At most 15 images can be uploaded' }),
+
+  locationCoordinates: z.object({
+    type: z.literal('Point', { message: 'The location type must be "Point"' }),
+    coordinates: z
+      .tuple([z.number().min(-180).max(180), z.number().min(-90).max(90)])
+      .refine(([longitude, latitude]) => longitude >= -180 && longitude <= 180 && latitude >= -90 && latitude <= 90, {
+        message: 'Coordinates must be valid longitude and latitude values',
+      }),
+  }),
 });
 
 export type AccommodationFormData = z.infer<typeof createAccomodationSchema>;
