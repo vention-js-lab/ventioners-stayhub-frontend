@@ -16,11 +16,7 @@ export const getPreferredAddress = (results: google.maps.GeocoderResult[]): stri
   for (const result of results) {
     const { formatted_address, address_components } = result;
 
-    if (hasStreetNumber(address_components) && isPreferredLanguage(formatted_address)) {
-      return formatted_address;
-    }
-
-    if (hasStreetName(address_components) && isPreferredLanguage(formatted_address)) {
+    if ((hasStreetNumber(address_components) || hasStreetName(address_components)) && isPreferredLanguage(formatted_address)) {
       return formatted_address;
     }
   }

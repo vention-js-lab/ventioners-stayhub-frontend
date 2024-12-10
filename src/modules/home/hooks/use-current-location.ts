@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react';
-
-interface Coordinates {
-  lat: number;
-  lng: number;
-}
+import { type Location } from '../types/accommodation.type';
 
 export function useCurrentLocation() {
-  const [location, setLocation] = useState<Coordinates | null>(null);
+  const [location, setLocation] = useState<Location | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setLocation({
-          lat: position.coords.latitude,
           lng: position.coords.longitude,
+          lat: position.coords.latitude,
         });
         setError(null);
       },

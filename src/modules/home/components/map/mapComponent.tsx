@@ -2,12 +2,13 @@ import { mapContainerStyles } from './mapComponent.style';
 import { useEffect, useState } from 'react';
 import { InfoWindow, Map, Marker } from '@vis.gl/react-google-maps';
 import Box from '@mui/material/Box';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { type Accommodation, type Location } from '../../types/accommodation.type';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { getPreferredAddress } from '#/utils/get-address';
+import { showToastError, showToastSuccess } from '#/utils';
 
 interface MapClickEvent {
   detail: {
@@ -21,10 +22,7 @@ interface MapClickEvent {
 interface PropertyListProps {
   isLoading: boolean;
   data?: { data: Accommodation[] };
-  coordinates: {
-    lng: number;
-    lat: number;
-  };
+  coordinates: Location;
   onLocationChange?: (location: { address: string; lng: number; lat: number }) => void;
 }
 
@@ -67,34 +65,18 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
         const results = (await geocoder.geocode({ location: { lng, lat } })).results;
         if (results[0]) {
           const address = getPreferredAddress(results);
-          toast.success(`Address selected: ${address}`, {
-            position: 'top-right',
-            autoClose: 3000,
-            hideProgressBar: true,
-          });
+          showToastSuccess(`Address selected: ${address}`);
           if (typeof onLocationChange === 'function') {
             onLocationChange({ address, lng, lat });
           }
         } else {
-          toast.error('No address found for this location', {
-            position: 'top-right',
-            autoClose: 3000,
-            hideProgressBar: true,
-          });
+          showToastError('No address found for this location');
         }
       } catch (error: any) {
-        toast.error(`Failed to get address from location ${error}`, {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: true,
-        });
+        showToastError(`Failed to get address from location: ${error}`);
       }
     } else {
-      toast.error('Please select a specific location', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: true,
-      });
+      showToastError('Please select a specific location');
     }
   };
 
