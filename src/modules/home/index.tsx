@@ -3,6 +3,7 @@ import { type RouteObject } from 'react-router-dom';
 import { SinglePropertyRoute } from './routes/single-property.route';
 import { AuthLayout } from '#/routes/layout-protected.route';
 import { CreateAccommodationRoute } from '#/modules/home/routes/create-acccommodation.route.tsx';
+import { PaymentResult } from './components/payment';
 
 const { HomeRoute } = lazyRoute(() => import('./routes/home.route'), 'HomeRoute');
 const { WishlistRoute } = lazyRoute(() => import('./routes/wishlist.route'), 'WishlistRoute');
@@ -41,5 +42,9 @@ export const HomeRoutes: RouteObject[] = [
         element: <CreateAccommodationRoute />,
       },
     ],
+  },
+  {
+    path: '/payment',
+    element: <PaymentResult />,
   },
 ];
