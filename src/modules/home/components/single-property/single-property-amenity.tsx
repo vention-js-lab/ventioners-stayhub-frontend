@@ -18,6 +18,7 @@ interface PropertyProps {
   amenities: AmenityInterface[];
   description: string;
   pricePerNight: number;
+  numberOfGuests: number;
   checkInDate: Dayjs | null;
   checkOutDate: Dayjs | null;
   setCheckInDate: (date: Dayjs | null) => void;
@@ -30,6 +31,7 @@ function Property({
   amenities,
   description,
   pricePerNight,
+  numberOfGuests,
   setCheckOutDate,
   setCheckInDate,
   checkOutDate,
@@ -73,7 +75,12 @@ function Property({
         <Divider sx={PropertyAmenityStyles.divider} />
         <Box sx={PropertyAmenityStyles.avatarBox}>
           <Avatar sx={PropertyAmenityStyles.avatar}>{owner.charAt(0).toUpperCase()}</Avatar>
-          <Typography variant="h6">{owner}</Typography>
+          <Box>
+            <Typography variant="h6">{owner}</Typography>
+            <Typography>
+              {numberOfGuests} guest{numberOfGuests > 1 && 's'}
+            </Typography>
+          </Box>
         </Box>
 
         <Divider sx={PropertyAmenityStyles.divider} />

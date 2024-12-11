@@ -18,6 +18,7 @@ import { type Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { useCreateBooking } from '#/modules/home/api/create-booking.ts';
 import { toast } from 'react-toastify';
+import { MapModal } from '../components/map/mapModal';
 
 export function SinglePropertyRoute() {
   const isMobile = useMediaQuery('(max-width:700px)');
@@ -38,7 +39,6 @@ export function SinglePropertyRoute() {
   if (error instanceof Error) return <div>Error: {error.message}</div>;
 
   const accommodationData: Accommodation = data.data;
-
   const handleReserve = () => {
     if (!checkInDate || !checkOutDate) {
       toast.error('Please select check-in and check-out dates.');
@@ -54,6 +54,10 @@ export function SinglePropertyRoute() {
     });
   };
 
+  const coordinates = {
+    lat: accommodationData.locationCoordinates.coordinates[1],
+    lng: accommodationData.locationCoordinates.coordinates[0],
+  };
   const reviews = accommodationData.reviews.map(
     (review: { id: string; user: Pick<User, 'firstName' | 'lastName'>; comment: string; rating: number }) => ({
       id: review.id,
@@ -103,10 +107,13 @@ export function SinglePropertyRoute() {
             checkOutDate={checkOutDate}
             setCheckOutDate={setCheckOutDate}
             onReserve={handleReserve}
+            numberOfGuests={accommodationData.numberOfGuests}
           />
           <Divider sx={{ my: 4, mx: 0 }} />
           <PropertyReview reviews={reviews} overallRating={accommodationData.overallRating} />
           <Divider sx={{ my: 4, mx: 2 }} />
+
+          <MapModal isLoading={isLoading} data={[accommodationData]} coordinates={coordinates} />
         </Box>
       </Box>
     </>
