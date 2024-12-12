@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useCancelBooking } from '../../api/cancel-booking';
+import { useCancelBooking } from '../api/cancel-booking';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { cancelBookingModalStyles } from './cancel-booking.modal.style';
@@ -15,9 +15,10 @@ type CancelBookingModalProps = {
   bookingId: string;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  hasRefund: boolean;
 };
 
-export function CancelBookingModal({ bookingId, setIsModalOpen, isModalOpen }: CancelBookingModalProps) {
+export function CancelBookingModal({ bookingId, setIsModalOpen, isModalOpen, hasRefund }: CancelBookingModalProps) {
   const handleCloseModal = () => setIsModalOpen(false);
 
   const queryClient = useQueryClient();
@@ -51,12 +52,14 @@ export function CancelBookingModal({ bookingId, setIsModalOpen, isModalOpen }: C
         <DialogContentText sx={cancelBookingModalStyles.contentText}>
           You are about to cancel your upcoming booking.
         </DialogContentText>
-        <Box sx={cancelBookingModalStyles.contentTextContainer}>
-          <strong>Refund Information:</strong>
-          <Typography sx={{ mt: 1 }}>• Your refund will be processed within 2-3 business days</Typography>
-          <Typography sx={{ mt: 1 }}>• The refund will be credited to your original payment method</Typography>
-          <Typography sx={{ mt: 1 }}>• Cancellation may be subject to a small processing fee</Typography>
-        </Box>
+        {hasRefund ? (
+          <Box sx={cancelBookingModalStyles.contentTextContainer}>
+            <strong>Refund Information:</strong>
+            <Typography sx={{ mt: 1 }}>• Your refund will be processed within 2-3 business days</Typography>
+            <Typography sx={{ mt: 1 }}>• The refund will be credited to your original payment method</Typography>
+            <Typography sx={{ mt: 1 }}>• Cancellation may be subject to a small processing fee</Typography>
+          </Box>
+        ) : null}
       </DialogContent>
 
       <DialogActions sx={cancelBookingModalStyles.actions}>

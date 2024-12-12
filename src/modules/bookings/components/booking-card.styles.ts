@@ -28,6 +28,15 @@ export const bookingCardStyles = {
       cursor: 'pointer',
     },
   },
+  titleBar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  moreOptionsButton: {
+    p: 1,
+    ml: 2,
+  },
   detailsContainer: {
     display: 'flex',
     flexDirection: { xs: 'column', sm: 'row' },
