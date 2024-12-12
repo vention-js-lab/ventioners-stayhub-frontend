@@ -3,31 +3,32 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import { DayButton, WeekDayLabel } from '#/modules/home/styles';
+import dayjs, { type Dayjs } from 'dayjs';
 
 interface CalendarModalProps {
   open: boolean;
   onClose: () => void;
-  startDate?: Date;
-  endDate?: Date;
-  onDateSelect?: (startDate: Date | null, endDate: Date | null) => void;
+  startDate?: Dayjs;
+  endDate?: Dayjs;
+  onDateSelect: (startDate: Dayjs | null, endDate: Dayjs | null) => void;
 }
 
 export function CalendarModal({
   open,
   onClose,
-  startDate: propStartDate,
-  endDate: propEndDate,
+  startDate: startDateProp,
+  endDate: endDateProp,
   onDateSelect,
 }: CalendarModalProps) {
-  const [leftMonth, setLeftMonth] = useState(propStartDate || new Date());
-  const [startDate, setStartDate] = useState<Date | null>(propStartDate || null);
-  const [endDate, setEndDate] = useState<Date | null>(propEndDate || null);
+  const [leftMonth, setLeftMonth] = useState(startDateProp || dayjs());
+  const [startDate, setStartDate] = useState<Dayjs | null>(startDateProp || null);
+  const [endDate, setEndDate] = useState<Dayjs | null>(endDateProp || null);
 
   const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
   const months = [
@@ -45,27 +46,35 @@ export function CalendarModal({
     'December',
   ];
 
-  const getRightMonth = (leftDate: Date) => {
-    return new Date(leftDate.getFullYear(), leftDate.getMonth() + 1);
+  const getRightMonth = (leftDate: Dayjs) => {
+    return dayjs()
+      .set('year', leftDate.year())
+      .set('month', leftDate.month() + 1);
   };
 
-  const getDaysInMonth = (date: Date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDay = firstDay.getDay();
+  const getDaysInMonth = (date: Dayjs) => {
+    const year = date.year();
+    const month = date.month();
+    const firstDay = dayjs().set('year', year).set('month', month).set('date', 1);
+    const lastDay = dayjs()
+      .set('year', year)
+      .set('month', month + 1)
+      .set('date', 0);
+    const daysInMonth = lastDay.date();
+    const startingDay = firstDay.day();
 
-    const previousMonth = new Date(year, month, 0);
-    const daysInPreviousMonth = previousMonth.getDate();
+    const previousMonth = dayjs().set('year', year).set('month', month).set('date', 0);
+    const daysInPreviousMonth = previousMonth.date();
 
     const calendar = [];
 
     // Previous month days
     for (let i = startingDay - 1; i >= 0; i--) {
       calendar.push({
-        date: new Date(year, month - 1, daysInPreviousMonth - i),
+        date: dayjs()
+          .set('year', year)
+          .set('month', month - 1)
+          .set('date', daysInPreviousMonth - i),
         isCurrentMonth: false,
       });
     }
@@ -73,7 +82,7 @@ export function CalendarModal({
     // Current month days
     for (let i = 1; i <= daysInMonth; i++) {
       calendar.push({
-        date: new Date(year, month, i),
+        date: dayjs().set('year', year).set('month', month).set('date', i),
         isCurrentMonth: true,
       });
     }
@@ -82,7 +91,10 @@ export function CalendarModal({
     const remainingDays = 42 - calendar.length; // 6 rows × 7 days = 42
     for (let i = 1; i <= remainingDays; i++) {
       calendar.push({
-        date: new Date(year, month + 1, i),
+        date: dayjs()
+          .set('year', year)
+          .set('month', month + 1)
+          .set('date', i),
         isCurrentMonth: false,
       });
     }
@@ -90,58 +102,62 @@ export function CalendarModal({
     return calendar;
   };
 
-  const handleDateClick = (date: Date) => {
+  const handleDateClick = (date: Dayjs) => {
     if (startDate === null || endDate !== null || date < startDate) {
       setStartDate(date);
       setEndDate(null);
     } else {
       setEndDate(date);
-      onDateSelect?.(startDate, date);
+      onDateSelect(startDate, date);
     }
   };
 
   const handlePreviousMonth = () => {
-    setLeftMonth(new Date(leftMonth.getFullYear(), leftMonth.getMonth() - 1));
+    setLeftMonth(
+      dayjs()
+        .set('year', leftMonth.year())
+        .set('month', leftMonth.month() - 1)
+    );
   };
 
   const handleNextMonth = () => {
-    setLeftMonth(new Date(leftMonth.getFullYear(), leftMonth.getMonth() + 1));
-  };
-
-  const isToday = (date: Date) => {
-    const today = new Date();
-    return (
-      date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()
+    setLeftMonth(
+      dayjs()
+        .set('year', leftMonth.year())
+        .set('month', leftMonth.month() + 1)
     );
   };
 
-  const isSameDay = (date1: Date, date2: Date) => {
-    return (
-      date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth() && date1.getFullYear() === date2.getFullYear()
-    );
+  const isToday = (date: Dayjs) => {
+    const today = dayjs();
+    return date.date() === today.date() && date.month() === today.month() && date.year() === today.year();
   };
 
-  const isSelected = (date: Date) => {
+  const isSameDay = (date1: Dayjs, date2: Dayjs) => {
+    return date1.date() === date2.date() && date1.month() === date2.month() && date1.year() === date2.year();
+  };
+
+  const isSelected = (date: Dayjs) => {
     return (startDate && isSameDay(date, startDate)) || (endDate && isSameDay(date, endDate));
   };
 
-  const isInRange = (date: Date) => {
+  const isInRange = (date: Dayjs) => {
     if (!startDate || !endDate) return false;
     return date > startDate && date < endDate;
   };
 
-  const renderMonth = (monthDate: Date) => {
+  const renderMonth = (monthDate: Dayjs) => {
     const calendar = getDaysInMonth(monthDate);
 
     return (
       <Box>
         <Typography variant="h6" mb={2}>
-          {months[monthDate.getMonth()]} {monthDate.getFullYear()}
+          {months[monthDate.month()]} {monthDate.year()}
         </Typography>
 
         <Grid container={true} spacing={0} mb={1}>
           {weekDays.map((day) => (
-            <Grid item={true} key={day}>
+            <Grid key={day}>
               <WeekDayLabel>{day}</WeekDayLabel>
             </Grid>
           ))}
@@ -149,7 +165,7 @@ export function CalendarModal({
 
         <Grid container={true} spacing={0}>
           {calendar.map(({ date, isCurrentMonth }) => (
-            <Grid item={true} key={date.toISOString()}>
+            <Grid key={date.toISOString()}>
               <DayButton
                 onClick={() => handleDateClick(date)}
                 isSelected={isSelected(date) as boolean}
@@ -157,7 +173,7 @@ export function CalendarModal({
                 isCurrentMonth={isCurrentMonth}
                 isInRange={isInRange(date)}
               >
-                {date.getDate()}
+                {date.date()}
               </DayButton>
             </Grid>
           ))}
@@ -181,8 +197,8 @@ export function CalendarModal({
       <DialogContent>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography>
-            {startDate ? `${startDate.toLocaleDateString()} - ` : ''}
-            {endDate ? endDate.toLocaleDateString() : 'Select dates'}
+            {startDate ? `${startDate.format('DD/MM/YYYY')} - ` : ''}
+            {endDate ? endDate.format('DD/MM/YYYY') : 'Select dates'}
           </Typography>
           <Box>
             <IconButton onClick={handlePreviousMonth} size="small">

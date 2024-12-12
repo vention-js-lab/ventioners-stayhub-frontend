@@ -8,17 +8,19 @@ import { CalendarModal } from './modals/calendar.modal';
 import { GuestsModal } from './modals/guests.modal';
 import { searchbarStyles } from './styles';
 import { DestinationSearch } from './destination-search';
+import { type Dayjs } from 'dayjs';
+import { type GetPropertiesParams } from '../../api/get-properties';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 interface SearchBarProps {
   activeNav: 'stays' | 'experiences';
-  setSelectedLocation: (newState: string) => void;
+  setParams?: React.Dispatch<React.SetStateAction<GetPropertiesParams>>;
 }
 
 interface DateButtonProps {
   label: string;
-  date: Date | null;
+  date: Dayjs | null;
   onOpen: () => void;
 }
 
@@ -28,17 +30,17 @@ function DateButton({ label, date, onOpen }: DateButtonProps) {
       <Stack alignItems="flex-start" sx={searchbarStyles.datesSection.commonWidth} onClick={onOpen}>
         <Typography sx={searchbarStyles.commonTypography.title}>{label}</Typography>
         <Typography sx={searchbarStyles.commonTypography.subtitle}>
-          {date ? `${months[date.getMonth()]} ${date.getDate()}` : `Add ${label.toLowerCase()}`}
+          {date ? `${months[date.month()]} ${date.date()}` : `Add ${label.toLowerCase()}`}
         </Typography>
       </Stack>
     </SearchSection>
   );
 }
 
-export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
-  const [searchValue, setSearchValue] = useState('');
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+export function SearchBar({ activeNav, setParams }: SearchBarProps) {
+  const [locationSearchValue, setLocationSearchValue] = useState('');
+  const [startDate, setStartDate] = useState<Dayjs | null>(null);
+  const [endDate, setEndDate] = useState<Dayjs | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
   const [isGuestsModalOpen, setIsGuestsModalOpen] = useState(false);
   const [guestCounts, setGuestCounts] = useState({ adults: 1, children: 0, infants: 0, pets: 0 });
@@ -53,11 +55,21 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
     return parts.join(', ');
   };
 
-  const handleDateSelect = (start: Date | null, end: Date | null) => {
+  const handleDateSelect = (start: Dayjs | null, end: Dayjs | null) => {
     setStartDate(start);
     setEndDate(end);
     setIsCalendarOpen(false);
   };
+
+  function handleSearchButtonClick() {
+    setParams?.((prevParams) => ({
+      ...prevParams,
+      location: locationSearchValue,
+      fromDate: startDate?.toISOString(),
+      toDate: endDate?.toISOString(),
+      numberOfGuests: String(guestCounts.adults + guestCounts.children),
+    }));
+  }
 
   const renderDateSection = () => {
     if (activeNav === 'stays') {
@@ -84,7 +96,7 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
         divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
         sx={searchbarStyles.stack.styles}
       >
-        <DestinationSearch searchValue={searchValue} setSearchValue={setSearchValue} setSelectedLocation={setSelectedLocation} />
+        <DestinationSearch locationSearchValue={locationSearchValue} setLocationSearchValue={setLocationSearchValue} />
 
         <Box sx={searchbarStyles.datesSection.container}>{renderDateSection()}</Box>
 
@@ -95,7 +107,7 @@ export function SearchBar({ activeNav, setSelectedLocation }: SearchBarProps) {
           </Stack>
         </SearchSection>
 
-        <SearchButton onClick={() => setSelectedLocation(searchValue)} sx={searchbarStyles.searchButton}>
+        <SearchButton onClick={handleSearchButtonClick} sx={searchbarStyles.searchButton}>
           <SearchIcon sx={searchbarStyles.searchIcon} />
         </SearchButton>
       </Stack>
