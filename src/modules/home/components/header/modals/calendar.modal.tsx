@@ -47,34 +47,25 @@ export function CalendarModal({
   ];
 
   const getRightMonth = (leftDate: Dayjs) => {
-    return dayjs()
-      .set('year', leftDate.year())
-      .set('month', leftDate.month() + 1);
+    return leftDate.add(1, 'month');
   };
 
   const getDaysInMonth = (date: Dayjs) => {
-    const year = date.year();
-    const month = date.month();
-    const firstDay = dayjs().set('year', year).set('month', month).set('date', 1);
-    const lastDay = dayjs()
-      .set('year', year)
-      .set('month', month + 1)
-      .set('date', 0);
+    const firstDay = date.startOf('month');
+    const lastDay = date.endOf('month');
+
     const daysInMonth = lastDay.date();
     const startingDay = firstDay.day();
 
-    const previousMonth = dayjs().set('year', year).set('month', month).set('date', 0);
-    const daysInPreviousMonth = previousMonth.date();
+    const previousMonth = firstDay.subtract(1, 'month');
+    const daysInPreviousMonth = previousMonth.endOf('month').date();
 
     const calendar = [];
 
     // Previous month days
     for (let i = startingDay - 1; i >= 0; i--) {
       calendar.push({
-        date: dayjs()
-          .set('year', year)
-          .set('month', month - 1)
-          .set('date', daysInPreviousMonth - i),
+        date: previousMonth.date(daysInPreviousMonth - i).startOf('day'),
         isCurrentMonth: false,
       });
     }
@@ -82,7 +73,7 @@ export function CalendarModal({
     // Current month days
     for (let i = 1; i <= daysInMonth; i++) {
       calendar.push({
-        date: dayjs().set('year', year).set('month', month).set('date', i),
+        date: firstDay.date(i).startOf('day'),
         isCurrentMonth: true,
       });
     }
@@ -91,10 +82,7 @@ export function CalendarModal({
     const remainingDays = 42 - calendar.length; // 6 rows × 7 days = 42
     for (let i = 1; i <= remainingDays; i++) {
       calendar.push({
-        date: dayjs()
-          .set('year', year)
-          .set('month', month + 1)
-          .set('date', i),
+        date: lastDay.add(i, 'day').startOf('day'),
         isCurrentMonth: false,
       });
     }
@@ -103,7 +91,7 @@ export function CalendarModal({
   };
 
   const handleDateClick = (date: Dayjs) => {
-    if (startDate === null || endDate !== null || date < startDate) {
+    if (startDate === null || endDate !== null || date.isBefore(startDate)) {
       setStartDate(date);
       setEndDate(null);
     } else {
