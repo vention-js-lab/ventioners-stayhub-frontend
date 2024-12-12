@@ -38,7 +38,7 @@ export function BookingCard({ booking }: BookingCardProps) {
     if (status === BookingStatus.Pending) return 'warning';
     if (status === BookingStatus.Confirmed) return 'success';
     if (status === BookingStatus.CheckedIn || status === BookingStatus.CheckedOut) return 'info';
-    return 'warning';
+    return 'default';
   };
 
   const handleAccommodationClick = () => {
