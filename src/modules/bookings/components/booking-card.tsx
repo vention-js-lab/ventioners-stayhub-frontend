@@ -9,11 +9,11 @@ import PersonIcon from '@mui/icons-material/Person';
 import LocationIcon from '@mui/icons-material/LocationOn';
 import PriceIcon from '@mui/icons-material/AttachMoney';
 
-import { type Booking } from '../../types/bookings/booking.type';
-import { type Accommodation } from '../../types/accommodation.type';
+import { type Booking } from '../types/booking.type';
+import { type Accommodation } from '../../home/types/accommodation.type';
 import { bookingCardStyles } from './booking-card.styles';
 import { useNavigate } from 'react-router-dom';
-import { BookingStatus } from '../../types/bookings/booking-status.constant';
+import { BookingStatus } from '../types/booking-status.constant';
 
 type BookingsWithAccommodation = Booking & {
   accommodation: Accommodation;

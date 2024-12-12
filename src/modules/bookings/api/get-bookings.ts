@@ -1,7 +1,7 @@
 import { ENDPOINTS } from '#/modules/home/constants/endpoints.constant.ts';
 import { api } from '#/configs';
-import { type Accommodation } from '../types/accommodation.type';
-import { type Booking } from '../types/bookings/booking.type';
+import { type Accommodation } from '../../home/types/accommodation.type';
+import { type Booking } from '../types/booking.type';
 import { useQuery } from '@tanstack/react-query';
 
 type GetBookingsResponse = {

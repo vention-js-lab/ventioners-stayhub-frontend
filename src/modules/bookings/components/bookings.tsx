@@ -3,17 +3,17 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
-import { useGetBookings } from '../../api/get-bookings';
+import { useGetBookings } from '../api/get-bookings';
 import { toast } from 'react-toastify';
 import { BookingCard } from './booking-card';
-import { bookingsPageStyles } from './bookings-page.styles';
+import { bookingsStyles } from './bookings.styles';
 
-export function BookingsPage() {
+export function Bookings() {
   const { data, isLoading, isError } = useGetBookings();
 
   if (isLoading) {
     return (
-      <Box sx={bookingsPageStyles.loadingContainer}>
+      <Box sx={bookingsStyles.loadingContainer}>
         <CircularProgress />
       </Box>
     );
@@ -29,13 +29,13 @@ export function BookingsPage() {
   }
 
   return (
-    <Box sx={bookingsPageStyles.container}>
-      <Typography variant="h4" sx={bookingsPageStyles.header}>
+    <Box sx={bookingsStyles.container}>
+      <Typography variant="h4" sx={bookingsStyles.header}>
         My Bookings
       </Typography>
 
       {data?.data.length === 0 ? (
-        <Box sx={bookingsPageStyles.emptyState}>
+        <Box sx={bookingsStyles.emptyState}>
           <Typography variant="h6" color="text.secondary">
             No bookings found
           </Typography>

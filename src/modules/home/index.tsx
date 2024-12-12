@@ -4,7 +4,6 @@ import { SinglePropertyRoute } from './routes/single-property.route';
 import { AuthLayout } from '#/routes/layout-protected.route';
 import { CreateAccommodationRoute } from '#/modules/home/routes/create-acccommodation.route.tsx';
 import { PaymentResult } from './components/payment';
-import { BookingsPageRoute } from './routes/bookings-page.route';
 
 const { HomeRoute } = lazyRoute(() => import('./routes/home.route'), 'HomeRoute');
 const { WishlistRoute } = lazyRoute(() => import('./routes/wishlist.route'), 'WishlistRoute');
@@ -47,15 +46,5 @@ export const HomeRoutes: RouteObject[] = [
   {
     path: '/payment',
     element: <PaymentResult />,
-  },
-  {
-    path: '/bookings',
-    element: <AuthLayout protectedRoute={true} />,
-    children: [
-      {
-        path: '',
-        element: <BookingsPageRoute />,
-      },
-    ],
   },
 ];

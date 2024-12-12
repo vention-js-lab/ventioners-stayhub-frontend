@@ -1,6 +1,6 @@
 import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 
-export const bookingsPageStyles = {
+export const bookingsStyles = {
   container: {
     py: 4,
     px: { xs: 2, md: 4 },

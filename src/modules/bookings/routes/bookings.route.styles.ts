@@ -1,6 +1,6 @@
 import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 
-export const bookingsPageRouteStyles = {
+export const bookingsRouteStyles = {
   container: {
     border: '1px solid #ddd',
     borderRadius: 2,

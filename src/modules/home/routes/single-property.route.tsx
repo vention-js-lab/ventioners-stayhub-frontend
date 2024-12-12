@@ -16,7 +16,7 @@ import { type User } from '#/types';
 import { type Image } from '../types/image.type';
 import { type Dayjs } from 'dayjs';
 import { useState } from 'react';
-import { useCreateBooking } from '#/modules/home/api/create-booking.ts';
+import { useCreateBooking } from '#/modules/bookings/api/create-booking';
 import { toast } from 'react-toastify';
 import { MapModal } from '../components/map/mapModal';
 
