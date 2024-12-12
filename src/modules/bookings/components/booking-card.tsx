@@ -14,6 +14,7 @@ import { type Accommodation } from '../../home/types/accommodation.type';
 import { bookingCardStyles } from './booking-card.styles';
 import { useNavigate } from 'react-router-dom';
 import { BookingStatus } from '../types/booking-status.constant';
+import dayjs from 'dayjs';
 
 type BookingsWithAccommodation = Booking & {
   accommodation: Accommodation;
@@ -27,11 +28,7 @@ export function BookingCard({ booking }: BookingCardProps) {
   const navigate = useNavigate();
 
   const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString('uz-UZ', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+    return dayjs(date).format('MMMM D [year] YYYY');
   };
 
   const getStatusColor = (status: BookingStatus) => {
