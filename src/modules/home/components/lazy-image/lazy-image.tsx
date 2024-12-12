@@ -4,11 +4,11 @@ import Box from '@mui/material/Box';
 
 export function LazyImage({
   src,
-  blurhash,
+  blurhash = 'LBPs*Lxv~pjC?a-;NH0K~pM_IUxv',
   ...otherProps
 }: {
   src: string;
-  blurhash: string;
+  blurhash?: string;
 } & React.ImgHTMLAttributes<HTMLImageElement>) {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
 
