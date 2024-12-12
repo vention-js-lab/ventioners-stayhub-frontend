@@ -4,7 +4,6 @@ export const ENDPOINTS = {
   categories: '/categories',
   wishlist: '/users/wishlist',
   amenities: '/amenities',
-  bookings: '/bookings',
   payments: '/payments',
 } as const;
 
