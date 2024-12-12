@@ -14,6 +14,11 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { lazyRoute } from './utils/router.util';
+import Box from '@mui/material/Box';
+import { contentWrapperStyles } from './styles';
+
+const { Footer } = lazyRoute(() => import('./shared/components/footer'), 'Footer');
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -28,9 +33,14 @@ createRoot(rootElement).render(
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={appTheme}>
-            <RouterProvider router={router} />
             <CssBaseline />
             <ToastContainer />
+            <Box sx={contentWrapperStyles.main}>
+              <Box sx={contentWrapperStyles.content}>
+                <RouterProvider router={router} />
+              </Box>
+              <Footer />
+            </Box>
           </ThemeProvider>
           <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
         </QueryClientProvider>
