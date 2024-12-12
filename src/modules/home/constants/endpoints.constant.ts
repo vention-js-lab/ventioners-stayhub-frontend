@@ -5,6 +5,7 @@ export const ENDPOINTS = {
   wishlist: '/users/wishlist',
   amenities: '/amenities',
   payments: '/payments',
+  reviews: '/reviews',
 } as const;
 
 export const ROUTES = {
