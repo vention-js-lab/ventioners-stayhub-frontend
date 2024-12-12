@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useCreateReview } from '../../api/create-review';
+import { showToastError } from '#/utils';
 
 interface ReviewFormProps {
   accommodationId: string;
@@ -13,16 +14,14 @@ interface ReviewFormProps {
 export function ReviewForm({ accommodationId }: ReviewFormProps) {
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState<string>('');
-  const [error, setError] = useState<string>('');
 
   const { mutate: createReview, status } = useCreateReview();
   const isLoading = status === 'pending';
   const handleSubmit = () => {
     if (rating === null || comment.trim() === '') {
-      setError('Both rating and comment are required.');
+      showToastError('Both rating and comment are required.');
       return;
     }
-    setError('');
     createReview({ rating, comment, accommodationId });
     setRating(null);
     setComment('');
@@ -48,12 +47,6 @@ export function ReviewForm({ accommodationId }: ReviewFormProps) {
             sx={{ mb: 2 }}
             disabled={isLoading}
           />
-
-          {error ? (
-            <Typography color="error" sx={{ mb: 2 }}>
-              {error}
-            </Typography>
-          ) : null}
 
           <Button variant="contained" onClick={handleSubmit} disabled={isLoading}>
             {isLoading ? 'Submitting...' : 'Submit'}
