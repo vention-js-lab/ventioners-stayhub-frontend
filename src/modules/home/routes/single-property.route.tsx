@@ -19,6 +19,8 @@ import { useState } from 'react';
 import { useCreateBooking } from '#/modules/home/api/create-booking.ts';
 import { toast } from 'react-toastify';
 import { MapModal } from '../components/map/mapModal';
+import { useUserBookings } from '../api/get-booking-record';
+import { ReviewForm } from '../components/single-property/single-property-rating';
 
 export function SinglePropertyRoute() {
   const isMobile = useMediaQuery('(max-width:700px)');
@@ -27,7 +29,7 @@ export function SinglePropertyRoute() {
 
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
-
+  const { data: bookings } = useUserBookings();
   const { data, error, isLoading } = useAccommodationById(id || '');
 
   if (!id) {
@@ -69,7 +71,7 @@ export function SinglePropertyRoute() {
 
   const images = accommodationData.images.map((image: Image) => image.url);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
-
+  const userHasBooking = bookings.data.length > 0;
   return (
     <>
       <HeaderComponent />
@@ -110,8 +112,14 @@ export function SinglePropertyRoute() {
             numberOfGuests={accommodationData.numberOfGuests}
           />
           <Divider sx={{ my: 4, mx: 0 }} />
+          {userHasBooking ? (
+            <>
+              <ReviewForm accommodationId={id} />
+              <Divider sx={{ my: 4, mx: 0 }} />
+            </>
+          ) : null}
+
           <PropertyReview reviews={reviews} overallRating={accommodationData.overallRating} />
-          <Divider sx={{ my: 4, mx: 2 }} />
 
           <MapModal isLoading={isLoading} data={[accommodationData]} coordinates={coordinates} />
         </Box>
