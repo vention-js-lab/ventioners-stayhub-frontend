@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CircularProgress from '@mui/material/CircularProgress';
-import Alert from '@mui/material/Alert';
 import { useGetBookings } from '../api/get-bookings';
 import { toast } from 'react-toastify';
 import { BookingCard } from './booking-card';
@@ -23,7 +22,7 @@ export function Bookings() {
     toast.error('Error fetching bookings');
     return (
       <Container maxWidth="md">
-        <Alert severity="error">Unable to load bookings. Please try again later.</Alert>
+        <Typography variant="h5">Unable to load bookings. Please try again later.</Typography>
       </Container>
     );
   }
