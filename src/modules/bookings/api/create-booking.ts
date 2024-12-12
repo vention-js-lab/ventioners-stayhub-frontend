@@ -3,9 +3,7 @@ import { ENDPOINTS } from '#/modules/home/constants/endpoints.constant.ts';
 import { toast } from 'react-toastify';
 import { api } from '#/configs';
 import { type AxiosError } from 'axios';
-import { type CreateBooking } from '#/modules/bookings/types/create-booking.type';
-import { type CreateBookingAxiosResponse } from '#/modules/bookings/types';
-import { type Booking } from '#/modules/bookings/types/booking.type';
+import { type Booking, type CreateBookingAxiosResponse, type CreateBooking } from '#/modules/bookings/types';
 import { useCreatePaymentStripeCheckout } from '#/modules/home/api/create-payment-stripe-checkout.ts';
 
 export const useCreateBooking = () => {
