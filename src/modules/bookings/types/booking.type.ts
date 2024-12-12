@@ -1,5 +1,5 @@
 import { type Accommodation } from '#/modules/home/types/accommodation.type.ts';
-import { type BookingStatus } from '#/modules/home/types/bookings/booking-status.constant.ts';
+import { type BookingStatus } from '#/modules/bookings/types/booking-status.constant';
 
 export type Booking = {
   id: string;
