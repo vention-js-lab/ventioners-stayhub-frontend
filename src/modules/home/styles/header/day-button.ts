@@ -1,7 +1,9 @@
 import Box from '@mui/material/Box';
 import styled from '@mui/material/styles/styled';
 
-export const DayButton = styled(Box)<{
+export const DayButton = styled(Box, {
+  shouldForwardProp: (prop) => !['isSelected', 'isToday', 'isCurrentMonth', 'isInRange'].includes(prop as string),
+})<{
   isSelected?: boolean;
   isToday?: boolean;
   isCurrentMonth?: boolean;

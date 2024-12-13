@@ -5,20 +5,21 @@ import { useEffect, useRef, useState } from 'react';
 import { categoryListStyles } from './category-list.styles';
 import { useCategories } from '../../api/get-categories';
 import { categoryToIconMap } from '../../constants/category-icon-map.constant';
+import { type GetPropertiesParams } from '../../api/get-properties';
 
 type CategoryListProps = {
   selectedCategory: string;
-  setSelectedCategory: (newState: string) => void;
+  setParams: React.Dispatch<React.SetStateAction<GetPropertiesParams>>;
 };
 
-export function CategoryList({ selectedCategory, setSelectedCategory }: CategoryListProps) {
+export function CategoryList({ selectedCategory, setParams }: CategoryListProps) {
   const { data, isLoading } = useCategories();
   const scrollContainerRef = useRef<HTMLElement | null>(null);
   const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
   const [showRightArrow, setShowRightArrow] = useState<boolean>(false);
 
   const handleCategoryClick = (category: string) => {
-    setSelectedCategory(category === selectedCategory ? '' : category);
+    setParams((prevParams) => ({ ...prevParams, categoryId: category === selectedCategory ? '' : category }));
   };
 
   const handleScroll = (direction: 'left' | 'right') => {

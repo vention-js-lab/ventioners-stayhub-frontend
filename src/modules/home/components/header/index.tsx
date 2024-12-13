@@ -12,14 +12,15 @@ import fullLogo from '#/assets/logo-full.svg';
 import { UserNavigationMenu } from './user-navigation.menu';
 import { SearchBar } from './search-bar';
 import HomeIcon from '@mui/icons-material/Home';
+import { type GetPropertiesParams } from '../../api/get-properties';
 
 interface HeaderComponentProps {
-  setSelectedLocation?: (newState: string) => void;
   showStaysAndExperiences?: boolean;
   showSearchBar?: boolean;
+  setParams?: React.Dispatch<React.SetStateAction<GetPropertiesParams>>;
 }
 
-export function HeaderComponent({ setSelectedLocation, showStaysAndExperiences, showSearchBar }: HeaderComponentProps) {
+export function HeaderComponent({ showStaysAndExperiences, showSearchBar, ...rest }: HeaderComponentProps) {
   const theme = useTheme();
   const isMediumDown = useMediaQuery(theme.breakpoints.down('md'));
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -105,9 +106,7 @@ export function HeaderComponent({ setSelectedLocation, showStaysAndExperiences, 
 
           <UserNavigationMenu anchorEl={anchorEl} handleMenuClose={handleMenuClose} handleMenuOpen={handleMenuOpen} />
 
-          {showSearchBar && setSelectedLocation ? (
-            <SearchBar setSelectedLocation={setSelectedLocation} activeNav={activeNav} />
-          ) : null}
+          {showSearchBar ? <SearchBar activeNav={activeNav} {...rest} /> : null}
         </Toolbar>
       </Container>
     </AppBar>

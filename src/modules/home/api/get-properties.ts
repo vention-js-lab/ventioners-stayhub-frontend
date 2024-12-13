@@ -9,10 +9,13 @@ type GetPropertiesResponse = {
   totalPages: number;
 };
 
-type GetPropertiesParams = {
+export type GetPropertiesParams = {
   page?: number;
   categoryId?: string;
-  search?: string;
+  location?: string;
+  fromDate?: string;
+  toDate?: string;
+  numberOfGuests?: string;
   limit?: number;
 };
 
@@ -20,7 +23,10 @@ export async function getProperties({
   page = 1,
   limit = 12,
   categoryId,
-  search,
+  location,
+  fromDate,
+  toDate,
+  numberOfGuests,
 }: GetPropertiesParams): Promise<GetPropertiesResponse> {
   const params: GetPropertiesParams = {
     page,
@@ -31,8 +37,20 @@ export async function getProperties({
     params.categoryId = categoryId;
   }
 
-  if (search) {
-    params.search = search;
+  if (location) {
+    params.location = location;
+  }
+
+  if (fromDate) {
+    params.fromDate = fromDate;
+  }
+
+  if (toDate) {
+    params.toDate = toDate;
+  }
+
+  if (numberOfGuests) {
+    params.numberOfGuests = numberOfGuests;
   }
 
   const response = await api.get<GetPropertiesResponse>(ENDPOINTS.accommodations, {
@@ -45,7 +63,9 @@ export async function getProperties({
 export function useProperties(params: GetPropertiesParams) {
   return useInfiniteQuery({
     queryKey: ['properties', params],
-    queryFn: ({ pageParam = 1 }) => getProperties({ ...params, page: pageParam }),
+    queryFn: ({ pageParam = 1 }) => {
+      return getProperties({ ...params, page: pageParam });
+    },
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1;
 
