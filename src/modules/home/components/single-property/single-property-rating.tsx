@@ -6,16 +6,18 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { showToastError } from '#/utils';
 import { useCreateReview } from '../../api/create-review';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ReviewFormProps {
   accommodationId: string;
 }
 
 export function ReviewForm({ accommodationId }: ReviewFormProps) {
+  const queryClient = useQueryClient();
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState<string>('');
 
-  const { mutate: createReview, status } = useCreateReview();
+  const { mutate: createReview, status } = useCreateReview(queryClient, accommodationId);
   const isLoading = status === 'pending';
   const handleSubmit = () => {
     if (rating === null || comment.trim() === '') {

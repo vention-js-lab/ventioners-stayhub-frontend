@@ -1,4 +1,4 @@
-import { useMutation, type UseMutationResult } from '@tanstack/react-query';
+import { type QueryClient, useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { api } from '#/configs';
 import { ENDPOINTS } from '#/modules/home/constants/endpoints.constant.ts';
@@ -10,12 +10,16 @@ interface ReviewFormData {
   accommodationId: string;
 }
 
-export const useCreateReview = (): UseMutationResult<AxiosResponse, AxiosError, ReviewFormData> => {
+export const useCreateReview = (
+  queryClient: QueryClient,
+  accommodationId: string
+): UseMutationResult<AxiosResponse, AxiosError, ReviewFormData> => {
   return useMutation({
     mutationFn: async (data: ReviewFormData) => {
       return await api.post(ENDPOINTS.reviews, data);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['accommodation', accommodationId] });
       toast.success('Review submitted successfully!');
     },
     onError: (error: AxiosError) => {
