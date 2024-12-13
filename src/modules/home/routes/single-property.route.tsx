@@ -20,13 +20,14 @@ import { useCreateBooking } from '#/modules/bookings/api/create-booking';
 import { toast } from 'react-toastify';
 import { MapModal } from '../components/map/mapModal';
 import { ReviewForm } from '../components/single-property/single-property-rating';
-import { useUserBookings } from '#/modules/bookings/api/get-booking-record';
+import { useGetBookings } from '#/modules/bookings/api';
 
+// eslint-disable-next-line complexity
 export function SinglePropertyRoute() {
   const isMobile = useMediaQuery('(max-width:700px)');
   const { id } = useParams();
   const createBooking = useCreateBooking();
-  const { data: bookings } = useUserBookings();
+  const { data: bookings, isLoading: bookingLoading } = useGetBookings();
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
 
@@ -36,7 +37,7 @@ export function SinglePropertyRoute() {
     return <div>Error: Property ID is not provided.</div>;
   }
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading || bookingLoading) return <div>Loading...</div>;
   if (!data) return <div>No data found</div>;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
 
