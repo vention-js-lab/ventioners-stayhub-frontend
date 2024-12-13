@@ -13,7 +13,6 @@ import { useAccommodationById } from '../api/get-accommodation';
 import { useParams } from 'react-router-dom';
 import { type Accommodation } from '../types/accommodation.type';
 import { type User } from '#/types';
-import { type Image } from '../types/image.type';
 import { type Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { useCreateBooking } from '#/modules/bookings/api/create-booking';
@@ -69,7 +68,7 @@ export function SinglePropertyRoute() {
       rating: review.rating,
     })
   );
-  const images = accommodationData.images.map((image: Image) => image.url);
+  const images = accommodationData.images.sort((a, b) => a.order - b.order);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
   const userHasBooking = bookings && bookings.data.length > 0;
 

@@ -4,9 +4,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { type Image } from '../../types/image.type';
 
 interface SinglePropertyImagesProps {
-  images: string[];
+  images: Image[];
   onClose: () => void;
 }
 
@@ -32,9 +33,9 @@ export function SinglePropertyImages({ images, onClose }: SinglePropertyImagesPr
       >
         {images.map((image) => (
           <CardMedia
-            key={image}
+            key={image.id}
             component="img"
-            image={image}
+            image={image.url}
             alt={`Property Image`}
             sx={{
               width: '100%',
