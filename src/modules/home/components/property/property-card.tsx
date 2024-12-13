@@ -23,6 +23,7 @@ import { LazyImage } from '../lazy-image/lazy-image';
 import { selectAuth } from '#/redux/auth/auth.slice';
 
 export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
+  const sortedImages = images.sort((a, b) => a.order - b.order);
   const navigate = useNavigate();
   const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
 
@@ -73,7 +74,7 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
           modules={[EffectFade, Navigation, Pagination]}
           className="mySwiper"
         >
-          {images.map((image) => (
+          {sortedImages.map((image) => (
             <SwiperSlide key={image.id}>
               <LazyImage
                 src={image.thumbnailUrl}
