@@ -81,7 +81,6 @@ export function HeaderComponent({ showStaysAndExperiences, showSearchBar, ...res
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                marginRight: 2,
                 gap: {
                   xs: 0,
                   sm: 1,
