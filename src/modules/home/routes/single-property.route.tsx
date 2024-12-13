@@ -21,6 +21,7 @@ import { toast } from 'react-toastify';
 import { MapModal } from '../components/map/mapModal';
 import { ReviewForm } from '../components/single-property/single-property-rating';
 import { useUserBookings } from '#/modules/bookings/api/get-booking-record';
+import { type Booking } from '#/modules/bookings/types';
 
 export function SinglePropertyRoute() {
   const isMobile = useMediaQuery('(max-width:700px)');
@@ -68,11 +69,9 @@ export function SinglePropertyRoute() {
       rating: review.rating,
     })
   );
-
   const images = accommodationData.images.map((image: Image) => image.url);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
-  const userHasBooking = bookings && bookings.length > 0;
-
+  const userHasBooking = (bookings?.data as Booking[]).length > 0;
   return (
     <>
       <HeaderComponent />
