@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { ENDPOINTS } from '#/modules/home/constants/endpoints.constant.ts';
+import { ENDPOINTS } from '#/modules/bookings/constants/endpoints.constant.ts';
 import { toast } from 'react-toastify';
 import { api } from '#/configs';
 import { type AxiosError } from 'axios';
