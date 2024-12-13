@@ -77,7 +77,7 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
             <SwiperSlide key={image.id}>
               <LazyImage
                 src={image.thumbnailUrl}
-                blurhash={image.blurhash}
+                blurhash={image.blurhash || 'LBPs*Lxv~pjC?a-;NH0K~pM_IUxv'}
                 alt="Image of Apartment"
                 style={propertyCardStyles.image}
               />
