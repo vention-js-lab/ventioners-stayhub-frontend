@@ -11,7 +11,11 @@ export function OwnerPropertiesList() {
   }
 
   if (!data || data.data.length === 0) {
-    return <div>No properties found</div>;
+    return (
+      <Box sx={ownerPropertiesListStyles.container}>
+        <div>No properties found</div>
+      </Box>
+    );
   }
 
   const properties = data.data;

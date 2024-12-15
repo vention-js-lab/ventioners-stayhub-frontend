@@ -62,7 +62,6 @@ export function CalendarModal({
 
     const calendar = [];
 
-    // Previous month days
     for (let i = startingDay - 1; i >= 0; i--) {
       calendar.push({
         date: previousMonth.date(daysInPreviousMonth - i).startOf('day'),
@@ -70,7 +69,6 @@ export function CalendarModal({
       });
     }
 
-    // Current month days
     for (let i = 1; i <= daysInMonth; i++) {
       calendar.push({
         date: firstDay.date(i).startOf('day'),
@@ -78,8 +76,7 @@ export function CalendarModal({
       });
     }
 
-    // Next month days
-    const remainingDays = 42 - calendar.length; // 6 rows × 7 days = 42
+    const remainingDays = 42 - calendar.length;
     for (let i = 1; i <= remainingDays; i++) {
       calendar.push({
         date: lastDay.add(i, 'day').startOf('day'),
