@@ -1,10 +1,10 @@
 import { api } from '#/configs/axios.config';
 import { useQuery } from '@tanstack/react-query';
 import { ENDPOINTS } from '../constants/endpoints.constant';
-import { type AmenityInterface } from '#/types/amenity.types.ts';
+import { type Amenity } from '#/types/amenity.types.ts';
 
 type GetAmenitiesResponse = {
-  data: AmenityInterface[];
+  data: Amenity[];
 };
 
 export async function getAmenities(): Promise<GetAmenitiesResponse> {

@@ -9,13 +9,13 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { type Dayjs } from 'dayjs';
 import { PropertyAmenityStyles } from './single-property-amenity.styles';
-import { type AmenityInterface } from '#/types/amenity.types';
+import { type Amenity } from '#/types/amenity.types';
 import { ServiceFeePortion } from '../../constants/price.constant';
 import { DefaulStayingDays } from '../../constants/staying-days.constant';
 
 interface PropertyProps {
   owner: string;
-  amenities: AmenityInterface[];
+  amenities: Amenity[];
   description: string;
   pricePerNight: number;
   numberOfGuests: number;

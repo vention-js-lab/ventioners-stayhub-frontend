@@ -105,6 +105,9 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
             <MenuItemLink onClick={handleMenuClose} to="/host/homes">
               StayHub your home
             </MenuItemLink>
+            <MenuItemLink onClick={handleMenuClose} to="/owner/properties">
+              My properties
+            </MenuItemLink>
             <MenuItemLink onClick={handleMenuClose} to="/bookings">
               Bookings
             </MenuItemLink>
