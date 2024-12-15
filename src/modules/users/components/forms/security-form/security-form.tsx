@@ -17,8 +17,11 @@ import { HeaderComponent } from '#/modules/home/components/header';
 import { UpdatePasswordSchema } from '#/zod';
 import { securityFormStyles as styles } from './security-form.styles';
 import { useUpdateUserPassword } from '#/modules/users/api';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { useTranslation } from 'react-i18next';
 
 export function SecurityForm() {
+  const { t } = useTranslation('account-settings');
   const {
     register,
     handleSubmit,
@@ -52,14 +55,14 @@ export function SecurityForm() {
       <Box sx={styles.container}>
         <Breadcrumbs separator=">">
           <Link underline="hover" key="1" onClick={redirectToSettings} sx={styles.breadcrumbs}>
-            Account
+            {t(TRANSLATION_KEYS.account_settings.account)}
           </Link>
           <Typography key="2" sx={styles.breadcrumbs}>
-            Login & security
+            {t(TRANSLATION_KEYS.account_settings.login_security.title)}
           </Typography>
         </Breadcrumbs>
 
-        <Typography sx={styles.heading}>Login & security</Typography>
+        <Typography sx={styles.heading}>{t(TRANSLATION_KEYS.account_settings.login_security.title)}</Typography>
 
         <ErrorMessage message={getFirstErrorMessage<ProfileFormData>(errors)} />
 
@@ -68,7 +71,7 @@ export function SecurityForm() {
             handleSubmit(handleUpdateUserPassword)(e);
           }}
         >
-          <Typography sx={styles.label}>Update Your Password</Typography>
+          <Typography sx={styles.label}>{t(TRANSLATION_KEYS.account_settings.login_security.update_password)}</Typography>
           <Box sx={styles.inputContainer}>
             <OldPasswordInput register={register} focusedField={focusedField} handleFocus={handleFocus} handleBlur={handleBlur} />
             <PasswordInput register={register} focusedField={focusedField} handleFocus={handleFocus} handleBlur={handleBlur} />
@@ -81,12 +84,12 @@ export function SecurityForm() {
           </Box>
 
           <Button type="submit" disableRipple={true} sx={styles.button}>
-            Save
+            {t(TRANSLATION_KEYS.account_settings.save)}
           </Button>
         </form>
 
         <Box sx={styles.deleteAccountContainer}>
-          <Typography sx={styles.label}>Deactivate your account</Typography>
+          <Typography sx={styles.label}>{t(TRANSLATION_KEYS.account_settings.login_security.deactivate_account)}</Typography>
 
           <DeleteAccountModal />
         </Box>

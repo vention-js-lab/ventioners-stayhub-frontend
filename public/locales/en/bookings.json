@@ -1,0 +1,25 @@
+{
+  "my-bookings": "My bookings",
+  "no-bookings": "No bookings found",
+  "you-have-no-bookings": "You have not made any bookings yet",
+  "unable-to-load": "Unable to load bookings. Please try again later.",
+  "card": {
+    "cancel": "Cancel Booking",
+    "booked-on": "Booked on",
+    "total-price": "Total Price:",
+    "guests": "Guests:",
+    "check-in": "Check-in:",
+    "check-out": "Check-out:"
+  },
+  "cancel": {
+    "button": "Cancel Booking",
+    "are-you-sure": "Are you absolutely sure?",
+    "content": "You are about to cancel your upcoming booking.",
+    "keep-booking": "Keep Booking",
+    "confirm": "Confirm",
+    "refund-info": "Refund Information:",
+    "refund-1": "Your refund will be processed within 2-3 business days",
+    "refund-2": "The refund will be credited to your original payment method",
+    "refund-3": "Cancellation may be subject to a small processing fee"
+  }
+}

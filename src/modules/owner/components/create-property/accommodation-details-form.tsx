@@ -30,6 +30,8 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import { useCategories } from '#/modules/home/api/get-categories';
 import { useAmenities } from '#/modules/owner/api/get-amenities';
 import { CustomMap } from '#/modules/home/components/map/mapComponent';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { useTranslation } from 'react-i18next';
 
 type Props<T extends FieldValues> = {
   setValue: UseFormSetValue<T>;
@@ -41,6 +43,7 @@ type Props<T extends FieldValues> = {
 type Library = 'places';
 
 export function AccommodationDetailsForm({ setValue, getValues, register, control }: Props<AccommodationFormData>) {
+  const { t } = useTranslation('create-accommodation');
   const { data: categoriesResponse, isLoading: isCategoriesLoading } = useCategories();
   const { data: amenitiesResponse } = useAmenities();
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>(getValues('amenities'));
@@ -110,15 +113,15 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
   return (
     <Box sx={accommodationDetailsFormStyles.container}>
       <Typography variant="h4" gutterBottom={true}>
-        Accommodation Details
+        {t(TRANSLATION_KEYS.create_accommodation.accommodation_details)}
       </Typography>
       <Grid container={true} spacing={2}>
         <Grid size={12}>
           <TextField
             {...register('name')}
             fullWidth={true}
-            label="Name"
-            placeholder="Give your place a catchy name"
+            label={t(TRANSLATION_KEYS.create_accommodation.name)}
+            placeholder={t(TRANSLATION_KEYS.create_accommodation.give_your_place_catchy_name)}
             required={true}
           />
         </Grid>
@@ -127,10 +130,10 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
           <TextField
             {...register('description')}
             fullWidth={true}
-            label="Description"
+            label={t(TRANSLATION_KEYS.create_accommodation.description)}
             multiline={true}
             rows={4}
-            placeholder="Describe what makes your place special"
+            placeholder={t(TRANSLATION_KEYS.create_accommodation.describe_what_makes_your_place_special)}
             required={true}
           />
         </Grid>
@@ -146,7 +149,7 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
               },
             })}
             fullWidth={true}
-            label="Price per night"
+            label={t(TRANSLATION_KEYS.create_accommodation.price_per_night)}
             type="number"
             slotProps={{
               input: {
@@ -160,7 +163,7 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
 
         <Grid size={12}>
           <FormControl fullWidth={true} sx={accommodationDetailsFormStyles.dropdown}>
-            <InputLabel>Category</InputLabel>
+            <InputLabel>{t(TRANSLATION_KEYS.create_accommodation.category)}</InputLabel>
 
             <Controller
               name="categoryId"
@@ -180,7 +183,7 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
 
         <Box sx={accommodationDetailsFormStyles.guestCountContainer}>
           <Typography variant="h6" gutterBottom={true}>
-            Guests
+            {t(TRANSLATION_KEYS.create_accommodation.guests)}
           </Typography>
 
           <Box sx={accommodationDetailsFormStyles.guestsCountControls}>
@@ -206,7 +209,7 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
 
         <Grid size={12}>
           <Typography variant="h6" gutterBottom={true}>
-            Select Amenities
+            {t(TRANSLATION_KEYS.create_accommodation.select_amenities)}
           </Typography>
           <InputBase {...register('amenities')} type="hidden" />
           <Box sx={accommodationDetailsFormStyles.amenitiesContainer}>
@@ -229,10 +232,10 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
             <StandaloneSearchBox onLoad={(ref) => (inputRef.current = ref)} onPlacesChanged={handleonPlacesChanged}>
               <TextField
                 fullWidth={true}
-                label="Address"
+                label={t(TRANSLATION_KEYS.create_accommodation.address)}
                 value={address}
                 onChange={handleAddressChange}
-                placeholder="Input address..."
+                placeholder={t(TRANSLATION_KEYS.create_accommodation.input_address)}
                 required={true}
                 inputRef={register('location').ref}
               />

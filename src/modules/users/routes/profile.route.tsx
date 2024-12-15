@@ -5,13 +5,15 @@ import Box from '@mui/material/Box';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import personalInfoIcon from '#/assets/info-card.svg';
 import securityShieldIcon from '#/assets/security-shield.svg';
-import togglesIcon from '#/assets/toggles.svg';
 import { settingsPageStyles as styles } from '../styles/settings-page.styles';
 import { useAppSelector } from '#/redux/hooks';
 import { selectAuth } from '#/redux/auth/auth.slice';
 import { UserProfilePicture } from '#/modules/home/components/header/user-profile-picture/user-profile-picture';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 export function ProfileRoute() {
+  const { t } = useTranslation('account-settings');
   const auth = useAppSelector(selectAuth);
 
   return (
@@ -27,7 +29,7 @@ export function ProfileRoute() {
             )}
           </Box>
           <Box>
-            <Box sx={styles.heading}>Your Profile</Box>
+            <Box sx={styles.heading}>{t(TRANSLATION_KEYS.account_settings.your_profile)}</Box>
             <Box sx={styles.headingDetails}>
               <Box sx={styles.firstName}>
                 {auth.user?.firstName} {auth.user?.lastName}
@@ -40,15 +42,14 @@ export function ProfileRoute() {
         <Box sx={styles.grid}>
           <SettingsCard
             icon={personalInfoIcon}
-            title="Personal info"
-            description="Provide personal details and how we can reach you"
+            title={t(TRANSLATION_KEYS.account_settings.personal_info.title) as 'Personal info'}
+            description={t(TRANSLATION_KEYS.account_settings.personal_info.description)}
           />
           <SettingsCard
             icon={securityShieldIcon}
-            title="Login & security"
-            description="Update your password and secure your account"
+            title={t(TRANSLATION_KEYS.account_settings.login_security.title) as 'Login & security'}
+            description={t(TRANSLATION_KEYS.account_settings.login_security.description)}
           />
-          <SettingsCard icon={togglesIcon} title="Global preferences" description="Set your default language" />
         </Box>
       </Box>
     </Fragment>

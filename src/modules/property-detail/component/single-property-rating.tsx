@@ -7,12 +7,15 @@ import Button from '@mui/material/Button';
 import { showToastError } from '#/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCreateReview } from '../api/create-review';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 interface ReviewFormProps {
   accommodationId: string;
 }
 
 export function ReviewForm({ accommodationId }: ReviewFormProps) {
+  const { t } = useTranslation('accommodation-details');
   const queryClient = useQueryClient();
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState<string>('');
@@ -32,7 +35,7 @@ export function ReviewForm({ accommodationId }: ReviewFormProps) {
   return (
     <Box sx={{ mt: 4 }}>
       <Typography variant="h6" gutterBottom={true}>
-        Leave a Review
+        {t(TRANSLATION_KEYS.accommodation_details.leave_a_review)}
       </Typography>
 
       <Rating value={rating} onChange={(event, newValue) => setRating(newValue)} precision={1} sx={{ mb: 2, fontSize: '3rem' }} />

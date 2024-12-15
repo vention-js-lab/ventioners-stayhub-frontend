@@ -1,0 +1,22 @@
+{
+  "guests": "{{count}} guest",
+  "guests_other": "{{count}} guests",
+  "leave-a-review": "Leave a Review",
+  "comment": "Comment",
+  "submit": "Submit",
+  "review": "{{count}} review",
+  "review_other": "{{count}} reviews",
+  "total": "Total",
+  "stayhub-service-fee": "StayHub Service Fee",
+  "nights": "{{count}} night",
+  "night_other": "{{count}} nights",
+  "check-in": "Check-in",
+  "check-out": "Check-out",
+  "reserve": "Reserve",
+  "view-all-photos": "View All Photos",
+  "property-images": "Property Images",
+  "show-more": "Show More",
+  "show-all": "Show All",
+  "show-less": "Show Less",
+  "review-success": "Review submitted successfully!"
+}

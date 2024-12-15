@@ -21,9 +21,12 @@ import { useAppSelector } from '#/redux/hooks';
 import { LazyImage } from '../lazy-image/lazy-image';
 import { selectAuth } from '#/redux/auth/auth.slice';
 import { postWishlist } from '#/modules/wishlist/api/post-wishlist';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const sortedImages = images.sort((a, b) => a.order - b.order);
+  const { t } = useTranslation('home');
   const navigate = useNavigate();
   const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
 
@@ -90,7 +93,7 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
           <Typography variant="h6">{name}</Typography>
           <Typography sx={{ opacity: '.7' }}>{location}</Typography>
           <Typography>
-            <strong>${pricePerNight}</strong> night
+            <strong>${pricePerNight}</strong> {t(TRANSLATION_KEYS.home.property.night)}
           </Typography>
         </CardContent>
       </Card>

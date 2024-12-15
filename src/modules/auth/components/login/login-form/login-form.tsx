@@ -12,10 +12,13 @@ import { AuthRedirectButton, ErrorMessage, GoogleAuthButton, SubmitButton } from
 import { getFirstErrorMessage } from '#/utils';
 import { ENDPOINTS, ROUTES } from '#/modules/auth/constants';
 import { loginFormStyles as styles } from './login-form.styles';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 const maps = [{ Component: EmailInput }, { Component: PasswordInput }];
 
 export function LoginForm() {
+  const { t } = useTranslation('auth');
   const {
     register,
     handleSubmit,
@@ -72,12 +75,12 @@ export function LoginForm() {
       </form>
 
       <Box sx={styles.dividerContainer}>
-        <Box sx={styles.divider}>or</Box>
+        <Box sx={styles.divider}>{t(TRANSLATION_KEYS.auth.or)}</Box>
       </Box>
 
       <GoogleAuthButton />
 
-      <AuthRedirectButton link={ROUTES.signup} message="Create an account" />
+      <AuthRedirectButton link={ROUTES.signup} message={t(TRANSLATION_KEYS.auth.create_account)} />
     </>
   );
 }

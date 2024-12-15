@@ -10,6 +10,8 @@ import { useCancelBooking } from '../api/cancel-booking';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { cancelBookingModalStyles } from './cancel-booking.modal.style';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 type CancelBookingModalProps = {
   bookingId: string;
@@ -19,6 +21,7 @@ type CancelBookingModalProps = {
 };
 
 export function CancelBookingModal({ bookingId, setIsModalOpen, isModalOpen, hasRefund }: CancelBookingModalProps) {
+  const { t } = useTranslation('bookings');
   const handleCloseModal = () => setIsModalOpen(false);
 
   const queryClient = useQueryClient();
@@ -46,28 +49,28 @@ export function CancelBookingModal({ bookingId, setIsModalOpen, isModalOpen, has
       maxWidth="sm"
       fullWidth={true}
     >
-      <DialogTitle sx={cancelBookingModalStyles.title}>Are you absolutely sure?</DialogTitle>
+      <DialogTitle sx={cancelBookingModalStyles.title}>{t(TRANSLATION_KEYS.bookings.cancel.are_you_sure)}</DialogTitle>
 
       <DialogContent sx={cancelBookingModalStyles.content}>
         <DialogContentText sx={cancelBookingModalStyles.contentText}>
-          You are about to cancel your upcoming booking.
+          {t(TRANSLATION_KEYS.bookings.cancel.content)}
         </DialogContentText>
         {hasRefund ? (
           <Box sx={cancelBookingModalStyles.contentTextContainer}>
-            <strong>Refund Information:</strong>
-            <Typography sx={{ mt: 1 }}>• Your refund will be processed within 2-3 business days</Typography>
-            <Typography sx={{ mt: 1 }}>• The refund will be credited to your original payment method</Typography>
-            <Typography sx={{ mt: 1 }}>• Cancellation may be subject to a small processing fee</Typography>
+            <strong>{t(TRANSLATION_KEYS.bookings.cancel.refund_info)}</strong>
+            <Typography sx={{ mt: 1 }}>• {t(TRANSLATION_KEYS.bookings.cancel.refund_1)}</Typography>
+            <Typography sx={{ mt: 1 }}>• {t(TRANSLATION_KEYS.bookings.cancel.refund_2)}</Typography>
+            <Typography sx={{ mt: 1 }}>• {t(TRANSLATION_KEYS.bookings.cancel.refund_3)}</Typography>
           </Box>
         ) : null}
       </DialogContent>
 
       <DialogActions sx={cancelBookingModalStyles.actions}>
         <Button onClick={handleCloseModal} color="primary" variant="outlined">
-          Keep Booking
+          {t(TRANSLATION_KEYS.bookings.cancel.keep_booking)}
         </Button>
         <Button onClick={handleCancelBooking} color="error" variant="contained" disabled={isPending}>
-          Confirm
+          {t(TRANSLATION_KEYS.bookings.cancel.confirm)}
         </Button>
       </DialogActions>
     </Dialog>

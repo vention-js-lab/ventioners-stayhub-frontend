@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { SinglePropertyImages } from './single-property-images.route';
 import Dialog from '@mui/material/Dialog';
 import { type Image } from '../../home/types/image.type';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 interface LargeViewProps {
   images: Image[];
@@ -15,6 +17,8 @@ interface LargeViewProps {
 }
 
 function LargeView({ images, onImageClick }: LargeViewProps) {
+  const { t } = useTranslation('accommodation-details');
+
   return (
     <Box sx={singlePropertyStyles.mainBox}>
       <Box sx={{ width: { xs: '100%', md: '50%' } }}>
@@ -36,7 +40,7 @@ function LargeView({ images, onImageClick }: LargeViewProps) {
         </Box>
       </Box>
       <Box onClick={onImageClick} style={singlePropertyStyles.viewMoreLink}>
-        View All Photos
+        {t(TRANSLATION_KEYS.accommodation_details.view_all_photos)}
       </Box>
     </Box>
   );

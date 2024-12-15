@@ -42,7 +42,7 @@ export function OwnerPropertyCard({
   amenities,
 }: OwnerPropertyCardProps) {
   return (
-    <Link to={`/property/${id}`} style={{ textDecoration: 'none' }}>
+    <Link to={`/property/${id}`} style={{ textDecoration: 'none', marginBottom: '20px' }}>
       <Card sx={ownerPropertyCardStyles.card}>
         <Box sx={ownerPropertyCardStyles.swiperContainer}>
           <Swiper

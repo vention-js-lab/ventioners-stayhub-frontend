@@ -1,8 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import IosShareIcon from '@mui/icons-material/IosShare';
 import { singlePropertyStyles } from './single-property.route.styles';
 import Divider from '@mui/material/Divider';
 import { useParams } from 'react-router-dom';
@@ -83,16 +81,6 @@ export function SinglePropertyRoute() {
             <Typography variant="h3" sx={singlePropertyStyles.titleText}>
               {accommodationData.name}
             </Typography>
-            <Box sx={singlePropertyStyles.titleActionBox}>
-              <Box sx={singlePropertyStyles.titleActionItem}>
-                <IosShareIcon sx={{ fontSize: '16px' }} />
-                <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>Share</Typography>
-              </Box>
-              <Box sx={singlePropertyStyles.titleActionItem}>
-                <FavoriteBorderIcon sx={{ fontSize: '16px' }} />
-                <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>Save</Typography>
-              </Box>
-            </Box>
           </Box>
 
           <PropertyImagesWrapper images={images} />

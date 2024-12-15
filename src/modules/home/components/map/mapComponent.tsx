@@ -8,6 +8,8 @@ import { type Accommodation, type Location } from '../../types/accommodation.typ
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { getPreferredAddress, showToastError, showToastSuccess } from '#/utils';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { useTranslation } from 'react-i18next';
 
 interface MapClickEvent {
   detail: {
@@ -26,6 +28,7 @@ interface PropertyListProps {
 }
 
 export function CustomMap({ isLoading, data, coordinates, onLocationChange }: PropertyListProps) {
+  const { t } = useTranslation('home');
   const [markerLocation, setMarkerLocation] = useState<Location>(coordinates);
   const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
   const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodation | null>(null);
@@ -64,12 +67,12 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
         const results = (await geocoder.geocode({ location: { lng, lat } })).results;
         if (results[0]) {
           const addressInfo = getPreferredAddress(results);
-          showToastSuccess(`Address selected: ${addressInfo}`);
+          showToastSuccess(`${t(TRANSLATION_KEYS.home.map.address_selected)}: ${addressInfo}`);
           if (typeof onLocationChange === 'function') {
             onLocationChange({ addressInfo, lng, lat });
           }
         } else {
-          showToastError('No address found for this location');
+          showToastError(t(TRANSLATION_KEYS.home.map.no_address_found));
         }
       } catch (error: any) {
         showToastError(`Failed to get address from location: ${error}`);

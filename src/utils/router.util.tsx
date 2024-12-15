@@ -1,3 +1,4 @@
+import CircularProgress from '@mui/material/CircularProgress';
 import { lazy, Suspense } from 'react';
 import { type RouteObject } from 'react-router-dom';
 
@@ -23,7 +24,7 @@ export const composeModuleRoutes = (...routes: RouteObject[][]): RouteObject[] =
     const routesWithLazyComponents = moduleRoutes.map((route) => {
       return {
         ...route,
-        element: <Suspense fallback={null}>{route.element}</Suspense>,
+        element: <Suspense fallback={<CircularProgress sx={{ color: 'black' }} />}>{route.element}</Suspense>,
       };
     });
 

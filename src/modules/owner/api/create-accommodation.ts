@@ -6,8 +6,11 @@ import { api } from '#/configs';
 import { type AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ENDPOINTS, ROUTES } from '../constants/endpoints.constant';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { useTranslation } from 'react-i18next';
 
 export const useCreateAccommodation = () => {
+  const { t } = useTranslation('create-accommodation');
   const navigate = useNavigate();
 
   return useMutation({
@@ -40,7 +43,7 @@ export const useCreateAccommodation = () => {
       });
     },
     onSuccess: () => {
-      toast.success('Accommodation created successfully!');
+      toast.success(t(TRANSLATION_KEYS.create_accommodation.accommodation_created_success));
       navigate(ROUTES.root);
     },
     onError: (error: AxiosError) => {

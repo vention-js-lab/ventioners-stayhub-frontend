@@ -1,7 +1,10 @@
 import React, { useRef, useState } from 'react';
 import styles from './submit-button.module.css';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 export function SubmitButton() {
+  const { t } = useTranslation('auth');
   const [isPressed, setIsPressed] = useState(false);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -39,7 +42,7 @@ export function SubmitButton() {
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
     >
-      Continue
+      {t(TRANSLATION_KEYS.auth.continue)}
     </button>
   );
 }

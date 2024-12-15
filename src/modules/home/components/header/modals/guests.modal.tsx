@@ -9,6 +9,8 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { CounterButton, CounterText } from '#/modules/home/styles';
 import { guestTypes } from '../constants';
 import { guestModalStyles } from '../styles';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 export interface GuestCounts {
   adults: number;
@@ -25,6 +27,7 @@ interface GuestsModalProps {
 }
 
 export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }: GuestsModalProps) {
+  const { t } = useTranslation('home');
   const handleCountChange = (type: keyof GuestCounts, increment: boolean) => {
     const guestType = guestTypes.find((g) => g.type === type);
     if (!guestType) return;
@@ -39,8 +42,19 @@ export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }:
     }
   };
 
-  const getTotalGuests = () => {
-    return guestCounts.adults + guestCounts.children;
+  const formatGuestCount = () => {
+    const totalGuests = guestCounts.adults + guestCounts.children;
+    const guestText = t(TRANSLATION_KEYS.home.header.search.guests.total, { count: totalGuests });
+    const parts = [guestText];
+
+    if (guestCounts.infants > 0) {
+      parts.push(t(TRANSLATION_KEYS.home.header.search.infants.total, { count: guestCounts.infants }));
+    }
+    if (guestCounts.pets > 0) {
+      parts.push(t(TRANSLATION_KEYS.home.header.search.pets.total, { count: guestCounts.pets }));
+    }
+
+    return parts.join(', ');
   };
 
   return (
@@ -53,12 +67,14 @@ export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }:
     >
       <DialogContent>
         <Stack spacing={3}>
-          {guestTypes.map(({ type, title, description, max, min }) => (
+          {guestTypes.map(({ type, max, min }) => (
             <Box key={type} sx={guestModalStyles.dialogContainer}>
               <Box>
-                <Typography fontWeight={guestModalStyles.dialogTitle.fontWeight}>{title}</Typography>
+                <Typography fontWeight={guestModalStyles.dialogTitle.fontWeight}>
+                  {t(TRANSLATION_KEYS.home.header.search[type].title)}
+                </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {description}
+                  {t(TRANSLATION_KEYS.home.header.search[type].description)}
                 </Typography>
               </Box>
 
@@ -85,13 +101,11 @@ export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }:
               onClick={() => onGuestCountsChange({ adults: 0, children: 0, infants: 0, pets: 0 })}
               sx={guestModalStyles.clearButton}
             >
-              Clear all
+              {t(TRANSLATION_KEYS.home.header.search.clear_all)}
             </Button>
 
             <Button variant="contained" onClick={onClose} sx={guestModalStyles.submitButton}>
-              {getTotalGuests()} guests
-              {guestCounts.infants > 0 ? `, ${guestCounts.infants} infants` : ''}
-              {guestCounts.pets > 0 ? `, ${guestCounts.pets} pets` : ''}
+              {formatGuestCount()}
             </Button>
           </Box>
         </Stack>

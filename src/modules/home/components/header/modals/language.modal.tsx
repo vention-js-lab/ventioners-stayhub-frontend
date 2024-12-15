@@ -11,16 +11,19 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { languages } from '../constants';
 import { languageModalStyles } from '../styles';
-import { type Language } from '#/modules/home/types/enums';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 interface LanguageModalProps {
   open: boolean;
   onClose: () => void;
-  selectedLanguage: Language;
-  onLanguageSelect: (language: Language) => void;
+  selectedLanguage: string;
+  onLanguageSelect: (lng: string) => void;
 }
 
 export function LanguageModal({ open, onClose, selectedLanguage, onLanguageSelect }: LanguageModalProps) {
+  const { t } = useTranslation('home');
+
   return (
     <Dialog
       open={open}
@@ -32,7 +35,7 @@ export function LanguageModal({ open, onClose, selectedLanguage, onLanguageSelec
     >
       <DialogTitle sx={languageModalStyles.dialogTitle}>
         <Typography variant="h6" component="div" sx={languageModalStyles.dialogText}>
-          Choose a language
+          {t(TRANSLATION_KEYS.home.header.language.choose)}
         </Typography>
         <IconButton onClick={onClose} size="small" sx={languageModalStyles.closeButton}>
           <CloseIcon />
@@ -44,18 +47,18 @@ export function LanguageModal({ open, onClose, selectedLanguage, onLanguageSelec
             <ListItem key={lang.code} disablePadding={true}>
               <ListItemButton
                 onClick={() => {
-                  onLanguageSelect(lang.code as Language);
+                  onLanguageSelect(lang.code);
                   onClose();
                 }}
                 sx={languageModalStyles.listItemButton}
               >
-                <Radio checked={selectedLanguage === (lang.code as Language)} sx={languageModalStyles.checkbox} />
+                <Radio checked={selectedLanguage === lang.code} sx={languageModalStyles.checkbox} />
                 <ListItemText
                   primary={lang.name}
                   secondary={lang.region}
                   primaryTypographyProps={{
                     fontWeight:
-                      selectedLanguage === (lang.code as Language)
+                      selectedLanguage === lang.code
                         ? languageModalStyles.listItemText.chosen
                         : languageModalStyles.listItemText.default,
                   }}

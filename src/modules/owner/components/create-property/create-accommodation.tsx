@@ -5,6 +5,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Box from '@mui/material/Box';
 
+import { useTranslation } from 'react-i18next';
 import { type AccommodationFormData } from '#/zod';
 import { createAccommodationStyles } from './styles';
 import { AccommodationDetailsForm } from './accommodation-details-form.tsx';
@@ -16,8 +17,10 @@ import { createAccomodationSchema } from '#/zod/accommodation-create.schema.ts';
 import { getFirstErrorMessage } from '#/utils/get-first-error-message.util.ts';
 import { toast } from 'react-toastify';
 import { latitude, longitude } from '#/modules/home/constants/map.constant.ts';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant.ts';
 
 export function CreateAccommodation() {
+  const { t } = useTranslation('create-accommodation');
   const [activeStep, setActiveStep] = useState<0 | 1>(0);
   const {
     register,
@@ -82,10 +85,10 @@ export function CreateAccommodation() {
     <Box sx={createAccommodationStyles.container}>
       <Stepper activeStep={activeStep} sx={createAccommodationStyles.stepper}>
         <Step>
-          <StepLabel>Accommodation Details</StepLabel>
+          <StepLabel>{t(TRANSLATION_KEYS.create_accommodation.accommodation_details)}</StepLabel>
         </Step>
         <Step>
-          <StepLabel>Upload Images</StepLabel>
+          <StepLabel>{t(TRANSLATION_KEYS.create_accommodation.upload_images)}</StepLabel>
         </Step>
       </Stepper>
 
@@ -103,7 +106,7 @@ export function CreateAccommodation() {
           sx={{ ...createAccommodationStyles.button, ...(activeStep === 0 && { marginLeft: 'calc(100% - 150px)' }) }}
           variant={activeStep === 0 ? 'contained' : 'outlined'}
         >
-          {activeStep === 1 ? 'Back' : 'Next'}
+          {activeStep === 1 ? t(TRANSLATION_KEYS.create_accommodation.back) : t(TRANSLATION_KEYS.create_accommodation.next)}
         </Button>
         {activeStep > 0 && (
           <Button
@@ -115,7 +118,9 @@ export function CreateAccommodation() {
             disabled={createAccommodation.isPending}
             sx={{ ...createAccommodationStyles.button, display: activeStep === 1 ? 'block' : 'none' }}
           >
-            {createAccommodation.isPending ? 'Creating...' : 'Create'}
+            {createAccommodation.isPending
+              ? t(TRANSLATION_KEYS.create_accommodation.creating)
+              : t(TRANSLATION_KEYS.create_accommodation.create)}
           </Button>
         )}
       </Box>

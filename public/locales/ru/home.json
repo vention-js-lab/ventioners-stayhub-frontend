@@ -1,0 +1,69 @@
+{
+  "header": {
+    "nav": {
+      "sign-up": "Зарегистрироваться",
+      "login": "Войти",
+      "stayhub-home": "StayHub — ваш уютный дом",
+      "bookings": "Мои бронирования",
+      "wishlist": "Избранное",
+      "account": "Личный кабинет",
+      "logout": "Выйти",
+      "my-properties": "Мои объявления",
+      "logout-success": "Вы успешно вышли"
+    },
+    "language": {
+      "choose": "Выбрать язык"
+    },
+    "search": {
+      "who": "Кто едет",
+      "where": "Куда",
+      "destination": "Искать направление",
+      "destination-placeholder": "Город, район или адрес",
+      "add": "Добавить",
+      "check-in": "Заезд",
+      "check-out": "Отъезд",
+      "select-date": "Выберите даты",
+      "date": "Дата",
+      "guests": {
+        "total": "{{count}} гость",
+        "total_few": "{{count}} гостя",
+        "total_many": "{{count}} гостей"
+      },
+      "infants": {
+        "title": "Младенцы",
+        "description": "До 2 лет",
+        "total": "{{count}} младенец",
+        "total_few": "{{count}} младенца",
+        "total_many": "{{count}} младенцев"
+      },
+      "pets": {
+        "title": "Питомцы",
+        "description": "Можно с животными",
+        "total": "{{count}} питомец",
+        "total_few": "{{count}} питомца",
+        "total_many": "{{count}} питомцев"
+      },
+      "adults": {
+        "title": "Взрослые",
+        "description": "13 лет и старше"
+      },
+      "children": {
+        "title": "Дети",
+        "description": "От 2 до 12 лет"
+      },
+      "clear-all": "Сбросить всё"
+    }
+  },
+  "map": {
+    "address-selected": "Адрес выбран",
+    "no-address-found": "Адрес для данного местоположения не найден"
+  },
+  "property": {
+    "no-properties": "Объявлений не найдено",
+    "no-additional-properties": "На данный момент нет дополнительных предложений.",
+    "night": "за ночь"
+  },
+  "footer": {
+    "rights": "Все права защищены."
+  }
+}
