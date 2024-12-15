@@ -86,10 +86,10 @@ export function OwnerPropertyCard({
               </Typography>
             </Box>
 
-            <Box sx={ownerPropertyCardStyles.amenities}>
+            <Box sx={ownerPropertyCardStyles.amenitiesContainer}>
               {amenities.length > 0 &&
                 amenities.slice(0, window.innerWidth < 600 ? 2 : 4).map((amenity) => (
-                  <Typography key={amenity.id} sx={{ color: 'primary.main', fontWeight: 500 }}>
+                  <Typography key={amenity.id} sx={ownerPropertyCardStyles.amenity}>
                     {amenity.name}
                   </Typography>
                 ))}

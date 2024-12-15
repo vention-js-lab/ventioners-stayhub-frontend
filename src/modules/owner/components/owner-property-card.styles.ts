@@ -101,7 +101,7 @@ export const ownerPropertyCardStyles = {
     fontSize: '0.9rem',
   },
 
-  amenities: {
+  amenitiesContainer: {
     display: 'flex',
     flexWrap: 'wrap',
     gap: '8px',
@@ -109,6 +109,16 @@ export const ownerPropertyCardStyles = {
     color: '#555',
     fontSize: '0.875rem',
     marginBottom: '8px',
+  },
+
+  amenity: {
+    fontWeight: 500,
+    backgroundColor: 'primary.light',
+    border: '1px solid',
+    borderRadius: '8px',
+    padding: '4px 8px',
+    fontSize: '0.875rem',
+    color: 'white',
   },
 
   price: {
