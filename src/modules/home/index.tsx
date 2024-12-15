@@ -1,12 +1,12 @@
 import { lazyRoute } from '#/utils/router.util';
 import { type RouteObject } from 'react-router-dom';
-import { SinglePropertyRoute } from './routes/single-property.route';
 import { AuthLayout } from '#/routes/layout-protected.route';
 import { CreateAccommodationRoute } from '#/modules/home/routes/create-acccommodation.route.tsx';
 import { PaymentResult } from './components/payment';
 
 const { HomeRoute } = lazyRoute(() => import('./routes/home.route'), 'HomeRoute');
 const { WishlistRoute } = lazyRoute(() => import('./routes/wishlist.route'), 'WishlistRoute');
+const { SinglePropertyRoute } = lazyRoute(() => import('./routes/single-property.route'), 'SinglePropertyRoute');
 
 export const HomeRoutes: RouteObject[] = [
   {
@@ -31,7 +31,13 @@ export const HomeRoutes: RouteObject[] = [
   },
   {
     path: '/property/:id',
-    element: <SinglePropertyRoute />,
+    element: <AuthLayout protectedRoute={false} />,
+    children: [
+      {
+        path: '',
+        element: <SinglePropertyRoute />,
+      },
+    ],
   },
   {
     path: '/host/homes',

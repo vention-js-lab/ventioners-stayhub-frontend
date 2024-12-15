@@ -1,6 +1,6 @@
 import { type Image } from '#/modules/home/types/image.type.ts';
 import { type User } from '#/types';
-import { type AmenityInterface } from '#/types/amenity.types';
+import { type Amenity } from '#/types/amenity.types';
 
 export interface Location {
   lng: number;
@@ -12,7 +12,7 @@ export type Accommodation = {
   name: string;
   description: string;
   images: Image[];
-  amenities: AmenityInterface[];
+  amenities: Amenity[];
   location: string;
   pricePerNight: number;
   locationCoordinates: {
