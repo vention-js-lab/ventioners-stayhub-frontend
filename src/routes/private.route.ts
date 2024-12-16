@@ -10,7 +10,6 @@ export const privateRoutes = composeModuleRoutes(
   BookingsRoutes,
   OwnerPropertiesRoutes,
   SinglePropertyRoutes,
-
   WishlistRoutes,
   CreateAccommodationRoutes
 );

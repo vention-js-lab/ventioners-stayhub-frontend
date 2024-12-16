@@ -14,7 +14,6 @@ import { type GetPropertiesParams } from '../../api/get-properties';
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 interface SearchBarProps {
-  activeNav: 'stays' | 'experiences';
   setParams?: React.Dispatch<React.SetStateAction<GetPropertiesParams>>;
 }
 
@@ -37,7 +36,7 @@ function DateButton({ label, date, onOpen }: DateButtonProps) {
   );
 }
 
-export function SearchBar({ activeNav, setParams }: SearchBarProps) {
+export function SearchBar({ setParams }: SearchBarProps) {
   const [locationSearchValue, setLocationSearchValue] = useState('');
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
@@ -71,23 +70,6 @@ export function SearchBar({ activeNav, setParams }: SearchBarProps) {
     }));
   }
 
-  const renderDateSection = () => {
-    if (activeNav === 'stays') {
-      return (
-        <Stack
-          direction="row"
-          spacing={searchbarStyles.datesSection.checkInOutStack.spacing}
-          divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
-          sx={searchbarStyles.datesSection.checkInOutStack.styles}
-        >
-          <DateButton label="Check in" date={startDate} onOpen={() => setIsCalendarOpen(true)} />
-          <DateButton label="Check out" date={endDate} onOpen={() => setIsCalendarOpen(true)} />
-        </Stack>
-      );
-    }
-    return <DateButton label="Date" date={startDate} onOpen={() => setIsCalendarOpen(true)} />;
-  };
-
   return (
     <SearchbarContainer elevation={searchbarStyles.searchbarContainer.elevation} sx={searchbarStyles.searchbarContainer.styles}>
       <Stack
@@ -98,7 +80,17 @@ export function SearchBar({ activeNav, setParams }: SearchBarProps) {
       >
         <DestinationSearch locationSearchValue={locationSearchValue} setLocationSearchValue={setLocationSearchValue} />
 
-        <Box sx={searchbarStyles.datesSection.container}>{renderDateSection()}</Box>
+        <Box sx={searchbarStyles.datesSection.container}>
+          <Stack
+            direction="row"
+            spacing={searchbarStyles.datesSection.checkInOutStack.spacing}
+            divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
+            sx={searchbarStyles.datesSection.checkInOutStack.styles}
+          >
+            <DateButton label="Check in" date={startDate} onOpen={() => setIsCalendarOpen(true)} />
+            <DateButton label="Check out" date={endDate} onOpen={() => setIsCalendarOpen(true)} />
+          </Stack>
+        </Box>
 
         <SearchSection sx={searchbarStyles.datesSection.commonDisplay}>
           <Stack alignItems="flex-start" sx={searchbarStyles.datesSection.commonWidth} onClick={() => setIsGuestsModalOpen(true)}>
