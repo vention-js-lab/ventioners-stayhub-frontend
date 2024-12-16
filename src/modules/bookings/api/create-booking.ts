@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { api } from '#/configs';
 import { type AxiosError } from 'axios';
 import { type Booking, type CreateBookingAxiosResponse, type CreateBooking } from '#/modules/bookings/types';
-import { useCreatePaymentStripeCheckout } from '#/modules/home/api/create-payment-stripe-checkout.ts';
+import { useCreatePaymentStripeCheckout } from '#/modules/bookings/api/create-payment-stripe-checkout';
 
 export const useCreateBooking = () => {
   const createPaymentStripeCheckout = useCreatePaymentStripeCheckout();
