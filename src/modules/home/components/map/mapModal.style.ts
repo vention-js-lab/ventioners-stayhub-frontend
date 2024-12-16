@@ -3,9 +3,10 @@ import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 export const mapModalStyles = {
   Button: {
     position: 'fixed',
-    height: 40,
-    borderRadius: 5,
-    bottom: 40,
+    height: 35,
+    width: 70,
+    borderRadius: 10,
+    bottom: 57,
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 1000,
@@ -14,6 +15,13 @@ export const mapModalStyles = {
     '&:hover': {
       backgroundColor: '#333',
     },
+    '& .MuiButton-endIcon': {
+      marginLeft: 0,
+      marginRight: 0,
+    },
+  },
+  MapIcon: {
+    fontSize: 25,
   },
   Dialog: {
     '& .MuiPaper-root': {
