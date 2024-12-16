@@ -41,8 +41,9 @@ export function CategoryList({ selectedCategory, setParams }: CategoryListProps)
 
     if (!container) return;
 
+    const scrollThreshold = 20;
     const isAtStart = container.scrollLeft === 0;
-    const isAtEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth;
+    const isAtEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - scrollThreshold;
 
     setShowLeftArrow(!isAtStart);
     setShowRightArrow(!isAtEnd);
