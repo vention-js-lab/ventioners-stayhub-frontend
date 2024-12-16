@@ -21,7 +21,11 @@ export const useCreateBooking = () => {
       return booking;
     },
     onError: (error: AxiosError) => {
-      toast.error(`Error creating booking: ${error.message}`);
+      if (error.response?.status === 400) {
+        toast.error(`Error happened in creating booking`);
+        return;
+      }
+      toast.error(`This property has been already booken in this date`);
     },
   });
 };
