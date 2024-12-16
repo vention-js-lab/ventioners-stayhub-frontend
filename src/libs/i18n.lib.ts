@@ -19,7 +19,7 @@ i18n
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
     },
-    ns: ['home', 'auth', 'property-details', 'create-property', 'wishlist', 'account-settings', 'bookings', 'owner-properties'],
+    ns: ['home', 'auth', 'accommodation-details', 'create-accommodation', 'wishlist', 'account-settings', 'bookings'],
 
     interpolation: {
       escapeValue: false,
