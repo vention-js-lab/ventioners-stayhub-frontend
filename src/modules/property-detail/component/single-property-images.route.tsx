@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { type Image } from '../../types/image.type';
+import { type Image } from '../../home/types/image.type';
 
 interface SinglePropertyImagesProps {
   images: Image[];

@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { showToastError } from '#/utils';
-import { useCreateReview } from '../../api/create-review';
 import { useQueryClient } from '@tanstack/react-query';
+import { useCreateReview } from '../api/create-review';
 
 interface ReviewFormProps {
   accommodationId: string;

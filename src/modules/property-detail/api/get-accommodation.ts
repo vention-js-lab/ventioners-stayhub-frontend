@@ -1,7 +1,7 @@
 import { api } from '#/configs/axios.config';
 import { useQuery } from '@tanstack/react-query';
 import { ENDPOINTS } from '../constants/endpoints.constant';
-import { type Accommodation } from '../types/accommodation.type';
+import { type Accommodation } from '#/modules/home/types/accommodation.type';
 
 type GetAccommodationByIdResponse = {
   data: Accommodation;

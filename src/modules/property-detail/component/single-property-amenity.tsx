@@ -10,8 +10,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { type Dayjs } from 'dayjs';
 import { PropertyAmenityStyles } from './single-property-amenity.styles';
 import { type Amenity } from '#/types/amenity.types';
-import { ServiceFeePortion } from '../../constants/price.constant';
-import { DefaulStayingDays } from '../../constants/staying-days.constant';
+import { ServiceFeePortion } from '../constants/price.constant';
+import { DefaulStayingDays } from '../constants/staying-days.constant';
 
 interface PropertyProps {
   owner: string;

@@ -1,25 +1,22 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { HeaderComponent } from '../components/header';
-import { PropertyImagesWrapper } from '../components/single-property/single-property-wrapper';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import { singlePropertyStyles } from './single-property.route.styles';
-import { Property } from '../components/single-property/single-property-amenity';
-import { PropertyReview } from '../components/single-property/single-property-review';
 import Divider from '@mui/material/Divider';
-import { useAccommodationById } from '../api/get-accommodation';
 import { useParams } from 'react-router-dom';
-import { type Accommodation } from '../types/accommodation.type';
 import { type User } from '#/types';
 import { type Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { useCreateBooking } from '#/modules/bookings/api/create-booking';
 import { toast } from 'react-toastify';
-import { MapModal } from '../components/map/mapModal';
-import { ReviewForm } from '../components/single-property/single-property-rating';
 import { useGetBookings } from '#/modules/bookings/api';
+import { useAccommodationById } from '../api/get-accommodation';
+import { type Accommodation } from '#/modules/home/types/accommodation.type';
+import { HeaderComponent } from '#/modules/home/components/header';
+import { MapModal } from '#/modules/home/components/map/mapModal';
+import { Property, PropertyImagesWrapper, PropertyReview, ReviewForm } from '../component';
 
 // eslint-disable-next-line complexity
 export function SinglePropertyRoute() {

@@ -3,9 +3,9 @@ import { PropertyCard } from '#/modules/home/components/property/property-card';
 import Typography from '@mui/material/Typography';
 import { type Accommodation } from '../../types/accommodation.type';
 import { propertyListStyles } from './property-list.styles';
-import { useWishlistedProperties } from '../../api/get-wishlisted-properties';
 import { PropertyListSkeleton } from '../../skeletons/property-list.skeleton';
 import { InfoMessageBox } from '../info-message-box/info-message-box';
+import { useWishlistedProperties } from '#/modules/wishlist/api/get-wishlisted-properties';
 
 interface PropertyListProps {
   isLoading?: boolean;
