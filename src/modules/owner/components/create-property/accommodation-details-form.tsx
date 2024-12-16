@@ -28,7 +28,7 @@ import {
 } from 'react-hook-form';
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useCategories } from '#/modules/home/api/get-categories';
-import { useAmenities } from '#/modules/property-host/api/get-amenities';
+import { useAmenities } from '#/modules/owner/api/get-amenities';
 import { CustomMap } from '#/modules/home/components/map/mapComponent';
 
 type Props<T extends FieldValues> = {

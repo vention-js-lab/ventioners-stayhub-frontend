@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { useOwnerProperties } from '../api/get-owner-properties';
+import { useOwnerProperties } from '../../api/get-owner-properties';
 import { OwnerPropertyCard } from './owner-property-card';
 import { ownerPropertiesListStyles } from './owner-properties-list.styles';
 

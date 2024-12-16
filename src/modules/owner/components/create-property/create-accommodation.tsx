@@ -9,7 +9,7 @@ import { type AccommodationFormData } from '#/zod';
 import { createAccommodationStyles } from './styles';
 import { AccommodationDetailsForm } from './accommodation-details-form.tsx';
 import { ImageUploader } from './image-uploader.tsx';
-import { useCreateAccommodation } from '#/modules/property-host/api/create-accommodation.ts';
+import { useCreateAccommodation } from '#/modules/owner/api/create-accommodation.ts';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createAccomodationSchema } from '#/zod/accommodation-create.schema.ts';

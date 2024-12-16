@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { createAccommodationRouteStyles } from './create-accommodation.route.styles';
-import { CreateAccommodation } from '../components/create-accommodation';
+import { CreateAccommodation } from '../components/create-property/create-accommodation';
 import { HeaderComponent } from '#/modules/home/components/header';
 
 export function CreateAccommodationRoute() {
