@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { ENDPOINTS } from '#/modules/auth/constants';
 import axios from 'axios';
+import i18n from '#/libs/i18n.lib';
 
 const URL = import.meta.env.VITE_API_URL;
 
@@ -9,6 +10,7 @@ export const api = axios.create({
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
+    'Accept-Language': localStorage.getItem('i18nextLng') || i18n.language || 'en',
   },
 });
 
