@@ -1,5 +1,6 @@
 export const ENDPOINTS = {
   root: '/',
+  accommodations: '/accommodations',
   categories: '/categories',
   amenities: '/amenities',
   payments: '/payments',
