@@ -7,7 +7,7 @@ import 'swiper/css';
 import { useState } from 'react';
 import { SinglePropertyImages } from './single-property-images.route';
 import Dialog from '@mui/material/Dialog';
-import { type Image } from '../../types/image.type';
+import { type Image } from '../../home/types/image.type';
 
 interface LargeViewProps {
   images: Image[];

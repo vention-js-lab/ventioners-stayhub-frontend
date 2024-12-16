@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import type { AccommodationFormData } from '#/zod';
-import { ENDPOINTS, ROUTES } from '#/modules/home/constants/endpoints.constant.ts';
 import { toast } from 'react-toastify';
 import { type Accommodation } from '#/modules/home/types/accommodation.type.ts';
 import { api } from '#/configs';
 import { type AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ENDPOINTS, ROUTES } from '../constants/endpoints.constant';
 
 export const useCreateAccommodation = () => {
   const navigate = useNavigate();

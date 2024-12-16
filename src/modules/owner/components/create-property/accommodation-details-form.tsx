@@ -16,10 +16,7 @@ import minusIcon from '#/assets/minus.svg';
 import plusIcon from '#/assets/plus.svg';
 import { type AccommodationFormData } from '#/zod';
 import { accommodationDetailsFormStyles } from './styles';
-import { useCategories } from '../../api/get-categories';
-import { useAmenities } from '../../api/get-amenities';
 import { APIProvider } from '@vis.gl/react-google-maps';
-import { CustomMap } from '../map/mapComponent';
 import { showToastError } from '#/utils';
 import {
   Controller,
@@ -30,6 +27,9 @@ import {
   type UseFormSetValue,
 } from 'react-hook-form';
 import { useState, useMemo, useRef, useEffect } from 'react';
+import { useCategories } from '#/modules/home/api/get-categories';
+import { useAmenities } from '#/modules/owner/api/get-amenities';
+import { CustomMap } from '#/modules/home/components/map/mapComponent';
 
 type Props<T extends FieldValues> = {
   setValue: UseFormSetValue<T>;

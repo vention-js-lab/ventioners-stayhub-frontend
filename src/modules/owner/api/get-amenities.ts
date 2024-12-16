@@ -1,6 +1,6 @@
 import { api } from '#/configs/axios.config';
 import { useQuery } from '@tanstack/react-query';
-import { ENDPOINTS } from '../constants/endpoints.constant';
+import { ENDPOINTS } from '../../home/constants/endpoints.constant';
 import { type Amenity } from '#/types/amenity.types.ts';
 
 type GetAmenitiesResponse = {

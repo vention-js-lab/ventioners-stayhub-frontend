@@ -36,7 +36,7 @@ export function HomeRoute() {
   const defaultCenter = location || { lat: latitude, lng: longitude };
   return (
     <Box sx={homeRouteStyles.container}>
-      <HeaderComponent showSearchBar={true} showStaysAndExperiences={true} setParams={setSearchParams} />
+      <HeaderComponent showSearchBar={true} setParams={setSearchParams} />
       <Container maxWidth="xl">
         <Divider sx={homeRouteStyles.divider} />
         <CategoryList selectedCategory={searchParams.categoryId ?? ''} setParams={setSearchParams} />

@@ -20,6 +20,7 @@ export const ownerPropertyCardStyles = {
       md: 'row',
       lg: 'row',
     },
+    marginBottom: 3,
   },
 
   image: {

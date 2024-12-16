@@ -16,11 +16,11 @@ import './swiper.css';
 import { toast } from 'react-toastify';
 
 import { EffectFade, Navigation, Pagination } from 'swiper/modules';
-import { postWishlist } from '../../api/post-wishlist';
 import { useMutation } from '@tanstack/react-query';
 import { useAppSelector } from '#/redux/hooks';
 import { LazyImage } from '../lazy-image/lazy-image';
 import { selectAuth } from '#/redux/auth/auth.slice';
+import { postWishlist } from '#/modules/wishlist/api/post-wishlist';
 
 export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const sortedImages = images.sort((a, b) => a.order - b.order);

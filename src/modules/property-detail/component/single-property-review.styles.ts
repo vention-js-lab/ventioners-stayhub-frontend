@@ -1,5 +1,5 @@
 export const PropertyReviewStyles = {
-  mainContainerBox: { px: { md: 0, xs: 1 }, mt: { md: 0, xs: 4 } },
+  mainContainerBox: { px: { md: 0, xs: 1 }, mt: { md: 0, xs: 4 }, mb: { md: 2, xs: 1 } },
   reviewTitle: { mb: 3, display: 'flex', alignItems: 'center', ml: { md: 0, xs: 2 } },
   reviewTitleIcon: { fontSize: '30px', mr: 1 },
   reviewContainerBox: {

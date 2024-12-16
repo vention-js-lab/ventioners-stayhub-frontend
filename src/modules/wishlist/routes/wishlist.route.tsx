@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box';
-import { HeaderComponent } from '../components/header';
-import { PropertyList } from '../components/property/property-list';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { wishlistRouteStyles } from './wishlist.route.styles';
+import { wishlistRouteStyles } from '../../wishlist/routes/wishlist.route.styles';
+import { HeaderComponent } from '#/modules/home/components/header';
+import { PropertyList } from '#/modules/home/components/property/property-list';
 import { useWishlistedProperties } from '../api/get-wishlisted-properties';
 
 export function WishlistRoute() {

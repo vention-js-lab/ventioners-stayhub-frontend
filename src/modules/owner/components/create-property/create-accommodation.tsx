@@ -9,13 +9,13 @@ import { type AccommodationFormData } from '#/zod';
 import { createAccommodationStyles } from './styles';
 import { AccommodationDetailsForm } from './accommodation-details-form.tsx';
 import { ImageUploader } from './image-uploader.tsx';
-import { useCreateAccommodation } from '#/modules/home/api/create-accommodation.ts';
+import { useCreateAccommodation } from '#/modules/owner/api/create-accommodation.ts';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createAccomodationSchema } from '#/zod/accommodation-create.schema.ts';
 import { getFirstErrorMessage } from '#/utils/get-first-error-message.util.ts';
 import { toast } from 'react-toastify';
-import { latitude, longitude } from '../../constants/map.constant.ts';
+import { latitude, longitude } from '#/modules/home/constants/map.constant.ts';
 
 export function CreateAccommodation() {
   const [activeStep, setActiveStep] = useState<0 | 1>(0);
