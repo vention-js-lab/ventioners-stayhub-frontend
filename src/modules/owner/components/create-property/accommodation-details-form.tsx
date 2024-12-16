@@ -32,6 +32,7 @@ import { useAmenities } from '#/modules/owner/api/get-amenities';
 import { CustomMap } from '#/modules/home/components/map/mapComponent';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '#/contexts/language.context';
 
 type Props<T extends FieldValues> = {
   setValue: UseFormSetValue<T>;
@@ -43,6 +44,7 @@ type Props<T extends FieldValues> = {
 type Library = 'places';
 
 export function AccommodationDetailsForm({ setValue, getValues, register, control }: Props<AccommodationFormData>) {
+  const { language } = useLanguage();
   const { t } = useTranslation('create-accommodation');
   const { data: categoriesResponse, isLoading: isCategoriesLoading } = useCategories();
   const { data: amenitiesResponse } = useAmenities();
@@ -172,7 +174,7 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
                 <Select {...field} label="Category" disabled={isCategoriesLoading}>
                   {categoriesResponse?.data.map((category) => (
                     <MenuItem key={category.id} value={category.id}>
-                      {category.name}
+                      {language === 'en' ? category.name : category.name_ru}
                     </MenuItem>
                   ))}
                 </Select>

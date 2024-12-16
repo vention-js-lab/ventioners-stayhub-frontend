@@ -77,6 +77,7 @@ export function CategoryList({ selectedCategory, setParams }: CategoryListProps)
             key={category.id}
             icon={categoryToIconMap[category.name]}
             name={category.name}
+            name_ru={category.name_ru}
             onClick={() => handleCategoryClick(category.id)}
             isActive={category.id === selectedCategory}
           />

@@ -17,6 +17,7 @@ import { LazyImage } from '#/modules/home/components/lazy-image/lazy-image';
 import { type Image } from '#/modules/home/types/image.type';
 import { type Category } from '#/modules/home/types/category.type';
 import { type Amenity } from '#/types/amenity.types';
+import { useLanguage } from '#/contexts/language.context';
 
 type OwnerPropertyCardProps = {
   id: string;
@@ -41,6 +42,8 @@ export function OwnerPropertyCard({
   category,
   amenities,
 }: OwnerPropertyCardProps) {
+  const { language } = useLanguage();
+
   return (
     <Link to={`/property/${id}`} style={{ textDecoration: 'none', marginBottom: '20px' }}>
       <Card sx={ownerPropertyCardStyles.card}>
@@ -69,7 +72,7 @@ export function OwnerPropertyCard({
 
         <Box sx={ownerPropertyCardStyles.content}>
           <Box>
-            <Typography sx={ownerPropertyCardStyles.category}>{category.name}</Typography>
+            <Typography sx={ownerPropertyCardStyles.category}>{language === 'ru' ? category.name_ru : category.name}</Typography>
             <Typography sx={ownerPropertyCardStyles.name}>{name}</Typography>
             <Typography sx={ownerPropertyCardStyles.description}>{description}</Typography>
 
