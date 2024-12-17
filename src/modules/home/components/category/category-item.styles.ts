@@ -7,10 +7,14 @@ export const categoryStyles = {
     flexDirection: 'column',
     justifyContent: 'start',
     alignItems: 'center',
-    paddingX: 3,
+    paddingX: {
+      md: 3,
+      xs: 1.5,
+    },
     color: 'gray',
     paddingY: 2,
     textAlign: 'center',
+    borderBottom: '2px solid transparent',
     '&:hover': {
       backgroundColor: GRAY_OVERLAY_COLOR,
       color: 'black',
@@ -22,8 +26,7 @@ export const categoryStyles = {
     mb: 1,
   },
   activeItem: {
-    borderBottom: '2px solid black',
-    pb: 1,
+    borderBottomColor: 'black',
     color: 'black',
   },
 } satisfies MuiStylesObject;
