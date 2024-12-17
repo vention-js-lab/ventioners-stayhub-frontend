@@ -12,7 +12,7 @@ import { type Dayjs } from 'dayjs';
 import { type GetPropertiesParams } from '../../api/get-properties';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
-import { type TFunction } from 'i18next';
+import { type TFunction, type i18n as I18n } from 'i18next';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -25,9 +25,10 @@ interface DateButtonProps {
   date: Dayjs | (Dayjs | null)[] | null;
   onOpen: () => void;
   t: TFunction<'home'>;
+  i18n: I18n;
 }
 
-function DateButton({ label, date, onOpen, t }: DateButtonProps) {
+function DateButton({ label, date, onOpen, t, i18n }: DateButtonProps) {
   return (
     <SearchSection sx={searchbarStyles.datesSection.commonDisplay}>
       <Stack alignItems="flex-start" sx={searchbarStyles.datesSection.commonWidth} onClick={onOpen}>
@@ -36,10 +37,10 @@ function DateButton({ label, date, onOpen, t }: DateButtonProps) {
           {Array.isArray(date)
             ? date.every((d) => d !== null)
               ? `${months[date[0].month()]} ${date[0].date()} - ${months[date[1].month()]} ${date[1].date()}`
-              : `${t(TRANSLATION_KEYS.home.header.search.add)} ${label.toLowerCase()}`
+              : `${t(TRANSLATION_KEYS.home.header.search.add)} ${i18n.language === 'en' ? label.toLowerCase() : ''}`
             : date
               ? `${months[date.month()]} ${date.date()}`
-              : `${t(TRANSLATION_KEYS.home.header.search.add)} ${label.toLowerCase()}`}
+              : `${t(TRANSLATION_KEYS.home.header.search.add)} ${i18n.language === 'en' ? label.toLowerCase() : ''}`}
         </Typography>
       </Stack>
     </SearchSection>
@@ -47,7 +48,7 @@ function DateButton({ label, date, onOpen, t }: DateButtonProps) {
 }
 
 export function SearchBar({ setParams }: SearchBarProps) {
-  const { t } = useTranslation('home');
+  const { t, i18n } = useTranslation('home');
   const [locationSearchValue, setLocationSearchValue] = useState('');
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
@@ -108,12 +109,14 @@ export function SearchBar({ setParams }: SearchBarProps) {
                 date={startDate}
                 onOpen={() => setIsCalendarOpen(true)}
                 t={t}
+                i18n={i18n}
               />
               <DateButton
                 label={t(TRANSLATION_KEYS.home.header.search.check_out)}
                 date={endDate}
                 onOpen={() => setIsCalendarOpen(true)}
                 t={t}
+                i18n={i18n}
               />
             </Box>
             <Box sx={searchbarStyles.datesSection.mobileDates}>
@@ -122,6 +125,7 @@ export function SearchBar({ setParams }: SearchBarProps) {
                 date={[startDate, endDate]}
                 onOpen={() => setIsCalendarOpen(true)}
                 t={t}
+                i18n={i18n}
               />
             </Box>
           </Stack>
