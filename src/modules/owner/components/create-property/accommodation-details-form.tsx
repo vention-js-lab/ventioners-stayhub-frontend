@@ -33,6 +33,7 @@ import { CustomMap } from '#/modules/home/components/map/mapComponent';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '#/contexts/language.context';
+import MapHandler from '#/modules/home/components/map/mapHandler';
 
 type Props<T extends FieldValues> = {
   setValue: UseFormSetValue<T>;
@@ -50,6 +51,7 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
   const { data: amenitiesResponse } = useAmenities();
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>(getValues('amenities'));
   const [address, setAddress] = useState(getValues('location') || '');
+  const [selectedLocation, setSelectedLocation] = useState<google.maps.places.PlaceResult | null>(null);
 
   const handleAmenityToggle = (amenityId: string) => {
     const currentAmenities = getValues('amenities');
@@ -96,6 +98,7 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
               type: 'Point',
               coordinates: [newLng, newLat],
             });
+            setSelectedLocation(selectedPlace);
           } else {
             showToastError('Invalid coordinates received.');
           }
@@ -265,6 +268,7 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
                 });
               }}
             />
+            <MapHandler place={selectedLocation} />
           </APIProvider>
         </Grid>
       </Grid>
