@@ -33,7 +33,7 @@ export function HomeRoute() {
     toDate: searchParams.toDate,
     numberOfGuests: searchParams.numberOfGuests,
   });
-  const { location, error } = useCurrentLocation();
+  const { location } = useCurrentLocation();
 
   const properties = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data]);
   const defaultCenter = location || { lat: latitude, lng: longitude };
@@ -59,11 +59,6 @@ export function HomeRoute() {
           <PropertyList isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} data={{ data: properties }} />
         </InfiniteScroll>
         <MapModal isLoading={isLoading} data={properties} coordinates={defaultCenter} />
-        {error ? (
-          <Typography color="error" sx={{ mt: 2 }}>
-            Error: {error}
-          </Typography>
-        ) : null}
       </Container>
     </Box>
   );

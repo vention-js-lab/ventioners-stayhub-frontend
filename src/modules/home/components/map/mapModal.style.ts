@@ -4,7 +4,7 @@ export const mapModalStyles = {
   Button: {
     position: 'fixed',
     height: 35,
-    width: 70,
+    width: 'auto',
     borderRadius: 10,
     bottom: 57,
     left: '50%',

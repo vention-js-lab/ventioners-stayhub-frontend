@@ -23,8 +23,9 @@ export function MapModal({ isLoading, data, coordinates }: MapModalProps) {
 
   return (
     <>
-      <Button onClick={handleOpenModal} endIcon={<MapIcon style={mapModalStyles.MapIcon} />} sx={mapModalStyles.Button} />
-
+      <Button onClick={handleOpenModal} endIcon={<MapIcon style={mapModalStyles.MapIcon} />} sx={mapModalStyles.Button}>
+        Show Map
+      </Button>
       <Dialog open={openModal} onClose={handleCloseModal} maxWidth={false} sx={mapModalStyles.Dialog}>
         <IconButton onClick={handleCloseModal} sx={mapModalStyles.IconButton}>
           <CloseIcon />

@@ -8,8 +8,13 @@ import { BookingCard } from './booking-card';
 import { bookingsStyles } from './bookings.styles';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { BookingStatus } from '../types/booking-status.constant';
 
-export function Bookings() {
+interface BookingsProps {
+  selectedCategory: BookingStatus;
+}
+
+export function Bookings({ selectedCategory }: BookingsProps) {
   const { t } = useTranslation('bookings');
   const { data, isLoading, isError } = useGetBookings();
 
@@ -30,23 +35,24 @@ export function Bookings() {
     );
   }
 
+  const filteredBookings =
+    selectedCategory === BookingStatus.All
+      ? data?.data || []
+      : data?.data.filter((booking) => booking.status === selectedCategory) || [];
+
   return (
     <Box sx={bookingsStyles.container}>
-      <Typography variant="h4" sx={bookingsStyles.header}>
-        {t(TRANSLATION_KEYS.bookings.my_bookings)}
-      </Typography>
-
-      {data?.data.length === 0 ? (
+      {filteredBookings.length === 0 ? (
         <Box sx={bookingsStyles.emptyState}>
           <Typography variant="h6" color="text.secondary">
-            {t(TRANSLATION_KEYS.bookings.no_bookings)}
+            No bookings found for {selectedCategory}
           </Typography>
           <Typography variant="body2" color="text.disabled">
-            {t(TRANSLATION_KEYS.bookings.you_have_no_bookings)}
+            You have no bookings with this status.
           </Typography>
         </Box>
       ) : (
-        data?.data.map((booking) => <BookingCard key={booking.id} booking={booking} />)
+        filteredBookings.map((booking) => <BookingCard key={booking.id} booking={booking} />)
       )}
     </Box>
   );
