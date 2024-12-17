@@ -2,7 +2,7 @@ export const searchbarStyles = {
   searchbarContainer: {
     elevation: 2,
     styles: {
-      width: { xs: '90%', sm: '80%', md: '80%', lg: '70%' },
+      width: { xs: '98%', sm: '95%', md: '90%', lg: '70%' },
       height: '4.5rem',
       maxWidth: '850px',
       transition: 'all 0.3s ease',
@@ -71,6 +71,21 @@ export const searchbarStyles = {
   },
 
   datesSection: {
+    desktopDates: {
+      textAlign: 'center',
+      minWidth: '275px',
+      '@media (max-width: 786px)': {
+        display: 'none',
+      },
+    },
+    mobileDates: {
+      display: 'none',
+      '@media (max-width: 786px)': {
+        display: 'flex',
+        width: '100%',
+        height: '100%',
+      },
+    },
     container: {
       display: 'flex',
       flex: { xs: 1, sm: 2 },
@@ -85,6 +100,7 @@ export const searchbarStyles = {
         width: '100%',
         height: '100%',
         alignItems: 'center',
+        justifyContent: 'center',
       },
     },
     commonDisplay: {

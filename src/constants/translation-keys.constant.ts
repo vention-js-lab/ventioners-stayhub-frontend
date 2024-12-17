@@ -30,6 +30,7 @@ export const TRANSLATION_KEYS = {
         check_out: 'header.search.check-out',
         select_date: 'header.search.select-date',
         date: 'header.search.date',
+        dates: 'header.search.dates',
         guests: {
           total: 'header.search.guests.total',
           total_other: 'header.search.guests.total_other',

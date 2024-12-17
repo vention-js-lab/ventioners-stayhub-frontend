@@ -23,6 +23,6 @@ export const SearchSection = styled(Button)(({ theme }) => ({
     padding: '8px 16px',
   },
   [theme.breakpoints.down('sm')]: {
-    padding: '8px 12px',
+    padding: '0px 4px',
   },
 }));
