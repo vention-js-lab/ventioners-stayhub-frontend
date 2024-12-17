@@ -53,7 +53,8 @@
   },
   "map": {
     "address-selected": "Address selected",
-    "no-address-found": "No address found for this location"
+    "no-address-found": "No address found for this location",
+    "show-map": "Show Map"
   },
   "property": {
     "no-properties": "No properties found",
