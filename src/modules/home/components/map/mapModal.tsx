@@ -9,6 +9,8 @@ import { APIProvider } from '@vis.gl/react-google-maps';
 import { CustomMap } from './mapComponent';
 import { type Accommodation } from '../../types/accommodation.type';
 import { mapModalStyles } from './mapModal.style';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 interface MapModalProps {
   isLoading: boolean;
@@ -17,6 +19,7 @@ interface MapModalProps {
 }
 
 export function MapModal({ isLoading, data, coordinates }: MapModalProps) {
+  const { t } = useTranslation('home');
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -24,7 +27,7 @@ export function MapModal({ isLoading, data, coordinates }: MapModalProps) {
   return (
     <>
       <Button onClick={handleOpenModal} endIcon={<MapIcon style={mapModalStyles.MapIcon} />} sx={mapModalStyles.Button}>
-        Show Map
+        {t(TRANSLATION_KEYS.home.map.show_map)}
       </Button>
       <Dialog open={openModal} onClose={handleCloseModal} maxWidth={false} sx={mapModalStyles.Dialog}>
         <IconButton onClick={handleCloseModal} sx={mapModalStyles.IconButton}>

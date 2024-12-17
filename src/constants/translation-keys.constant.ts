@@ -3,6 +3,7 @@ export const TRANSLATION_KEYS = {
     map: {
       address_selected: 'map.address-selected',
       no_address_found: 'map.no-address-found',
+      show_map: 'map.show-map',
     },
     header: {
       nav: {

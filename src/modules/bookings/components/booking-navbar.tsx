@@ -3,6 +3,8 @@ import { navStyles } from './booking-navbar.style';
 import { BookingStatus } from '../types/booking-status.constant';
 import Box from '@mui/material/Box';
 import { formatStatusText } from '#/utils';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { useTranslation } from 'react-i18next';
 
 interface BookingsNavbarProps {
   selectedCategory: BookingStatus;
@@ -10,10 +12,11 @@ interface BookingsNavbarProps {
 }
 
 export function BookingsNavbar({ selectedCategory, onCategoryChange }: BookingsNavbarProps) {
+  const { t } = useTranslation('bookings');
   return (
     <Box>
       <Typography variant="h4" sx={navStyles.header}>
-        My Bookings
+        {t(TRANSLATION_KEYS.bookings.my_bookings)}
       </Typography>
       <Box sx={navStyles.container}>
         {Object.values(BookingStatus).map((status) => {

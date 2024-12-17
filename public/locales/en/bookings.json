@@ -1,7 +1,7 @@
 {
   "my-bookings": "My bookings",
-  "no-bookings": "No bookings found",
-  "you-have-no-bookings": "You have not made any bookings yet",
+  "no-bookings": "No bookings found for ",
+  "you-have-no-bookings": "You have no bookings with this status.",
   "unable-to-load": "Unable to load bookings. Please try again later.",
   "card": {
     "cancel": "Cancel Booking",

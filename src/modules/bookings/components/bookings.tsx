@@ -39,16 +39,15 @@ export function Bookings({ selectedCategory }: BookingsProps) {
     selectedCategory === BookingStatus.All
       ? data?.data || []
       : data?.data.filter((booking) => booking.status === selectedCategory) || [];
-
   return (
     <Box sx={bookingsStyles.container}>
       {filteredBookings.length === 0 ? (
         <Box sx={bookingsStyles.emptyState}>
           <Typography variant="h6" color="text.secondary">
-            No bookings found for {selectedCategory}
+            {`${t(TRANSLATION_KEYS.bookings.no_bookings) + selectedCategory}.`}
           </Typography>
           <Typography variant="body2" color="text.disabled">
-            You have no bookings with this status.
+            {t(TRANSLATION_KEYS.bookings.you_have_no_bookings)}
           </Typography>
         </Box>
       ) : (
