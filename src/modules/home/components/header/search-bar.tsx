@@ -22,7 +22,7 @@ interface SearchBarProps {
 
 interface DateButtonProps {
   label: string;
-  date: Dayjs | null;
+  date: Dayjs | (Dayjs | null)[] | null;
   onOpen: () => void;
   t: TFunction<'home'>;
 }
@@ -33,9 +33,13 @@ function DateButton({ label, date, onOpen, t }: DateButtonProps) {
       <Stack alignItems="flex-start" sx={searchbarStyles.datesSection.commonWidth} onClick={onOpen}>
         <Typography sx={searchbarStyles.commonTypography.title}>{label}</Typography>
         <Typography sx={searchbarStyles.commonTypography.subtitle}>
-          {date
-            ? `${months[date.month()]} ${date.date()}`
-            : `${t(TRANSLATION_KEYS.home.header.search.add)} ${label.toLowerCase()}`}
+          {Array.isArray(date)
+            ? date.every((d) => d !== null)
+              ? `${months[date[0].month()]} ${date[0].date()} - ${months[date[1].month()]} ${date[1].date()}`
+              : `${t(TRANSLATION_KEYS.home.header.search.add)} ${label.toLowerCase()}`
+            : date
+              ? `${months[date.month()]} ${date.date()}`
+              : `${t(TRANSLATION_KEYS.home.header.search.add)} ${label.toLowerCase()}`}
         </Typography>
       </Stack>
     </SearchSection>
@@ -96,21 +100,30 @@ export function SearchBar({ setParams }: SearchBarProps) {
           <Stack
             direction="row"
             spacing={searchbarStyles.datesSection.checkInOutStack.spacing}
-            divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
             sx={searchbarStyles.datesSection.checkInOutStack.styles}
           >
-            <DateButton
-              label={t(TRANSLATION_KEYS.home.header.search.check_in)}
-              date={startDate}
-              onOpen={() => setIsCalendarOpen(true)}
-              t={t}
-            />
-            <DateButton
-              label={t(TRANSLATION_KEYS.home.header.search.check_out)}
-              date={endDate}
-              onOpen={() => setIsCalendarOpen(true)}
-              t={t}
-            />
+            <Box sx={searchbarStyles.datesSection.desktopDates}>
+              <DateButton
+                label={t(TRANSLATION_KEYS.home.header.search.check_in)}
+                date={startDate}
+                onOpen={() => setIsCalendarOpen(true)}
+                t={t}
+              />
+              <DateButton
+                label={t(TRANSLATION_KEYS.home.header.search.check_out)}
+                date={endDate}
+                onOpen={() => setIsCalendarOpen(true)}
+                t={t}
+              />
+            </Box>
+            <Box sx={searchbarStyles.datesSection.mobileDates}>
+              <DateButton
+                label={t(TRANSLATION_KEYS.home.header.search.dates)}
+                date={[startDate, endDate]}
+                onOpen={() => setIsCalendarOpen(true)}
+                t={t}
+              />
+            </Box>
           </Stack>
         </Box>
 

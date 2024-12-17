@@ -17,7 +17,6 @@ export const SearchbarContainer = styled(Paper)(({ theme }) => ({
   },
   [theme.breakpoints.down('md')]: {
     width: '80%',
-    maxWidth: '600px',
   },
   [theme.breakpoints.up('md')]: {
     width: 'auto',
