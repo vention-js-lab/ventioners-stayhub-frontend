@@ -42,6 +42,7 @@ export function OwnerPropertyCard({
   category,
   amenities,
 }: OwnerPropertyCardProps) {
+  const sortedImages = images.sort((a, b) => a.order - b.order);
   const { language } = useLanguage();
 
   return (
@@ -57,7 +58,7 @@ export function OwnerPropertyCard({
             pagination={{ clickable: true }}
             modules={[EffectFade, Navigation, Pagination]}
           >
-            {images.map((image) => (
+            {sortedImages.map((image) => (
               <SwiperSlide key={image.id}>
                 <LazyImage
                   src={image.url}
