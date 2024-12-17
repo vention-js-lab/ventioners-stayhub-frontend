@@ -2,19 +2,43 @@ import Box from '@mui/material/Box';
 import { useOwnerProperties } from '../../api/get-owner-properties';
 import { OwnerPropertyCard } from './owner-property-card';
 import { ownerPropertiesListStyles } from './owner-properties-list.styles';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { toast } from 'react-toastify';
+import Container from '@mui/material/Container';
 
 export function OwnerPropertiesList() {
-  const { data, isLoading } = useOwnerProperties();
+  const { t } = useTranslation('owner-properties');
+  const { data, isLoading, isError } = useOwnerProperties();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Box sx={ownerPropertiesListStyles.spinnerContainer}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (!data || data.data.length === 0) {
     return (
       <Box sx={ownerPropertiesListStyles.container}>
-        <div>No properties found</div>
+        <Box sx={ownerPropertiesListStyles.emptyState}>
+          <Typography variant="h6" color="text.secondary">
+            {t(TRANSLATION_KEYS.owner_properties.no_properties)}
+          </Typography>
+        </Box>
       </Box>
+    );
+  }
+
+  if (isError) {
+    toast.error('Error fetching properties');
+    return (
+      <Container maxWidth="md">
+        <Typography variant="h5">{t(TRANSLATION_KEYS.owner_properties.unable_to_load)}</Typography>
+      </Container>
     );
   }
 

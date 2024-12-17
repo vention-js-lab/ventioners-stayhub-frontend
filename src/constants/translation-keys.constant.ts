@@ -182,4 +182,8 @@ export const TRANSLATION_KEYS = {
     show_all: 'show-all',
     review_success: 'review-success',
   },
+  owner_properties: {
+    no_properties: 'no-properties',
+    unable_to_load: 'unable-to-load',
+  },
 } as const;
