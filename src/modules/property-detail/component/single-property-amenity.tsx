@@ -11,7 +11,9 @@ import dayjs, { type Dayjs } from 'dayjs';
 import { PropertyAmenityStyles } from './single-property-amenity.styles';
 import { type Amenity } from '#/types/amenity.types';
 import { ServiceFeePortion } from '../constants/price.constant';
-import { DefaulStayingDays } from '../constants/staying-days.constant';
+import { DefaultStayingDays } from '../constants/staying-days.constant';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 interface PropertyProps {
   owner: string;
@@ -38,6 +40,7 @@ function Property({
   checkInDate,
   onReserve,
 }: PropertyProps) {
+  const { t } = useTranslation('accommodation-details');
   const [showAll, setShowAll] = useState(false);
 
   const handleShowAll = () => {
@@ -60,9 +63,9 @@ function Property({
       return { basePrice, serviceFee, diffInDays };
     }
     return {
-      basePrice: DefaulStayingDays * pricePerNight,
-      serviceFee: DefaulStayingDays * pricePerNight * ServiceFeePortion,
-      diffInDays: DefaulStayingDays,
+      basePrice: DefaultStayingDays * pricePerNight,
+      serviceFee: DefaultStayingDays * pricePerNight * ServiceFeePortion,
+      diffInDays: DefaultStayingDays,
     };
   }, [checkInDate, checkOutDate, pricePerNight]);
 
@@ -77,9 +80,7 @@ function Property({
           <Avatar sx={PropertyAmenityStyles.avatar}>{owner.charAt(0).toUpperCase()}</Avatar>
           <Box>
             <Typography variant="h6">{owner}</Typography>
-            <Typography>
-              {numberOfGuests} guest{numberOfGuests > 1 && 's'}
-            </Typography>
+            <Typography>{t(TRANSLATION_KEYS.accommodation_details.guests, { count: numberOfGuests })}</Typography>
           </Box>
         </Box>
 
@@ -102,7 +103,7 @@ function Property({
 
         {amenities.length > 10 && (
           <Button onClick={handleShowAll} sx={{ mt: 2 }} variant="outlined" color="primary">
-            {showAll ? 'Show Less' : 'Show All'}
+            {showAll ? t(TRANSLATION_KEYS.accommodation_details.show_less) : t(TRANSLATION_KEYS.accommodation_details.show_all)}
           </Button>
         )}
 
@@ -119,7 +120,7 @@ function Property({
           <Box sx={PropertyAmenityStyles.datePickBox}>
             <Box sx={PropertyAmenityStyles.datePick}>
               <DatePicker
-                label="Check-in"
+                label={t(TRANSLATION_KEYS.accommodation_details.check_in)}
                 value={checkInDate}
                 onChange={(newDate) => setCheckInDate(newDate)}
                 minDate={dayjs()}
@@ -127,7 +128,7 @@ function Property({
             </Box>
             <Box sx={PropertyAmenityStyles.datePick}>
               <DatePicker
-                label="Check-out"
+                label={t(TRANSLATION_KEYS.accommodation_details.check_out)}
                 value={checkOutDate}
                 onChange={(newDate) => setCheckOutDate(newDate)}
                 minDate={checkInDate ? checkInDate.add(1, 'day') : dayjs()}
@@ -137,23 +138,26 @@ function Property({
           </Box>
         </LocalizationProvider>
         <Button sx={PropertyAmenityStyles.reserveButton} variant="contained" onClick={onReserve}>
-          Reserve
+          {t(TRANSLATION_KEYS.accommodation_details.reserve)}
         </Button>
         <Box sx={PropertyAmenityStyles.priceBox}>
           <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxTypography1}>
             <Typography variant="body1">
-              ${pricePerNight} x {isDatePicked ? calculatePrice.diffInDays : DefaulStayingDays} nights
+              ${pricePerNight} x{' '}
+              {isDatePicked
+                ? t(TRANSLATION_KEYS.accommodation_details.nights, { count: calculatePrice.diffInDays })
+                : t(TRANSLATION_KEYS.accommodation_details.nights, { count: DefaultStayingDays })}
             </Typography>
             <Typography variant="body1">${calculatePrice.basePrice}</Typography>
           </Typography>
           <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxTypography2}>
-            <Typography variant="body1">StayHub Service Fee</Typography>{' '}
+            <Typography variant="body1">{t(TRANSLATION_KEYS.accommodation_details.stayhub_service_fee)}</Typography>{' '}
             <Typography variant="body1">${calculatePrice.serviceFee}</Typography>
           </Typography>
           <Divider sx={PropertyAmenityStyles.priceBoxDivider} />
           <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxTypography3}>
             <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxBoldTypography}>
-              Total
+              {t(TRANSLATION_KEYS.accommodation_details.total)}
             </Typography>
             <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxBoldTypography}>
               ${totalPrice}

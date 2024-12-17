@@ -1,0 +1,23 @@
+{
+  "accommodation-details": "Accommodation Details",
+  "give-your-place-catchy-name": "Give your place a catchy name",
+  "describe-what-makes-your-place-special": "Describe what makes your place special",
+  "upload-images": "Upload Images",
+  "name": "Name",
+  "description": "Description",
+  "price-per-night": "Price per night",
+  "category": "Category",
+  "guests": "Guests",
+  "select-ammenities": "Select Amenities",
+  "address": "Address",
+  "input-address": "Input address...",
+  "next": "Next",
+  "back": "Back",
+  "create": "Create",
+  "creating": "Creating...",
+  "select-images": "Select Images",
+  "images-selected": "{{ count }} image selected",
+  "images-selected_other": "{{ count }} images selected",
+  "drag-and-drop": "Drag and drop or click to upload",
+  "accommodation-created-success": "Accommodation created successfully!"
+}

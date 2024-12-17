@@ -6,6 +6,8 @@ import { propertyListStyles } from './property-list.styles';
 import { PropertyListSkeleton } from '../../skeletons/property-list.skeleton';
 import { InfoMessageBox } from '../info-message-box/info-message-box';
 import { useWishlistedProperties } from '#/modules/wishlist/api/get-wishlisted-properties';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 interface PropertyListProps {
   isLoading?: boolean;
@@ -14,7 +16,8 @@ interface PropertyListProps {
   emptyMessage?: string;
 }
 
-export function PropertyList({ emptyMessage = 'No properties found', isLoading, isFetchingNextPage, data }: PropertyListProps) {
+export function PropertyList({ isLoading, isFetchingNextPage, data }: PropertyListProps) {
+  const { t } = useTranslation('home');
   const { data: wishlistedData } = useWishlistedProperties();
 
   if (isLoading) {
@@ -31,7 +34,7 @@ export function PropertyList({ emptyMessage = 'No properties found', isLoading, 
   if (propertiesData.length === 0) {
     return (
       <InfoMessageBox>
-        <Typography>{emptyMessage}</Typography>
+        <Typography>{t(TRANSLATION_KEYS.home.property.no_properties)}</Typography>
       </InfoMessageBox>
     );
   }

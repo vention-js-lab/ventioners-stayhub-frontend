@@ -13,8 +13,11 @@ import { longitude, latitude } from '../constants/map.constant';
 import { useCurrentLocation } from '../hooks/use-current-location';
 import { useState, useMemo } from 'react';
 import { InfoMessageBox } from '../components/info-message-box/info-message-box';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 export function HomeRoute() {
+  const { t } = useTranslation('home');
   const [searchParams, setSearchParams] = useState<GetPropertiesParams>({
     categoryId: '',
     location: '',
@@ -48,7 +51,7 @@ export function HomeRoute() {
           endMessage={
             !isLoading && (
               <InfoMessageBox>
-                <Typography>No additional properties to view at this time.</Typography>
+                <Typography>{t(TRANSLATION_KEYS.home.property.no_additional_properties)}</Typography>
               </InfoMessageBox>
             )
           }

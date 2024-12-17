@@ -13,14 +13,21 @@ type Props = {
 const maps = {
   'Personal info': ROUTES.personalInfo,
   'Login & security': ROUTES.loginAndSecurity,
-  'Global preferences': ROUTES.preferences,
+};
+
+const langMap: Record<string, keyof typeof maps> = {
+  'Личные данные': 'Personal info',
+  'Вход и безопасность': 'Login & security',
 };
 
 export function SettingsCard({ icon, title, description }: Props) {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate(maps[title]);
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const navigateTo = langMap[title] || title;
+
+    navigate(maps[navigateTo]);
   }
 
   return (

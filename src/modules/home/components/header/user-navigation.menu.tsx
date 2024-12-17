@@ -7,7 +7,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { UserMenu } from '../../styles';
 import { LanguageModal } from './modals';
-import { Language } from '../../types/enums';
 import { userNavigationStyles } from './styles';
 import { MenuItemLink } from './menu-item-link';
 import { useAppDispatch, useAppSelector } from '#/redux/hooks';
@@ -17,6 +16,9 @@ import { UserProfilePicture } from './user-profile-picture/user-profile-picture'
 import { removeUser, selectAuth } from '#/redux/auth/auth.slice';
 import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
+import { useLanguage } from '#/contexts/language.context';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 interface MenuProps {
   anchorEl: HTMLElement | null;
@@ -25,8 +27,9 @@ interface MenuProps {
 }
 
 export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuClose, handleMenuOpen }: T) {
+  const { t } = useTranslation('home');
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>(Language.UZ);
+  const { language, changeLanguage } = useLanguage();
   const auth = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
@@ -39,8 +42,9 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
     setIsLanguageModalOpen(false);
   };
 
-  const handleLanguageSelect = (language: Language) => {
-    setSelectedLanguage(language);
+  const handleLanguageSelect = (lng: string) => {
+    changeLanguage(lng);
+    window.location.reload();
   };
 
   async function handleLogout() {
@@ -49,7 +53,7 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
       queryClient.invalidateQueries({ queryKey: ['auth-user'] });
       dispatch(removeUser());
 
-      toast('Logged out successfully');
+      toast(t(TRANSLATION_KEYS.home.header.nav.logout_success));
 
       window.location.href = '/';
     } catch {
@@ -67,7 +71,7 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
       <LanguageModal
         open={isLanguageModalOpen}
         onClose={handleLanguageModalClose}
-        selectedLanguage={selectedLanguage}
+        selectedLanguage={language}
         onLanguageSelect={handleLanguageSelect}
       />
       <UserMenu
@@ -93,29 +97,29 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
         {!auth.loggedIn && (
           <Box>
             <MenuItemLink onClick={handleMenuClose} to="/signup">
-              Sign up
+              {t(TRANSLATION_KEYS.home.header.nav.sign_up)}
             </MenuItemLink>
             <MenuItemLink onClick={handleMenuClose} to="/login">
-              Log in
+              {t(TRANSLATION_KEYS.home.header.nav.login)}
             </MenuItemLink>
           </Box>
         )}
         {auth.loggedIn ? (
           <Box>
             <MenuItemLink onClick={handleMenuClose} to="/host/homes">
-              StayHub your home
+              {t(TRANSLATION_KEYS.home.header.nav.stayhub_home)}
             </MenuItemLink>
             <MenuItemLink onClick={handleMenuClose} to="/owner/properties">
-              My properties
+              {t(TRANSLATION_KEYS.home.header.nav.my_properties)}
             </MenuItemLink>
             <MenuItemLink onClick={handleMenuClose} to="/bookings">
-              Bookings
+              {t(TRANSLATION_KEYS.home.header.nav.bookings)}
             </MenuItemLink>
             <MenuItemLink to="/wishlist" onClick={handleMenuClose}>
-              Wishlist
+              {t(TRANSLATION_KEYS.home.header.nav.wishlist)}
             </MenuItemLink>
             <MenuItemLink onClick={handleMenuClose} to="/account-settings">
-              Account
+              {t(TRANSLATION_KEYS.home.header.nav.account)}
             </MenuItemLink>
             <MenuItemLink
               to="/"
@@ -123,7 +127,7 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
                 handleLogout();
               }}
             >
-              Logout
+              {t(TRANSLATION_KEYS.home.header.nav.logout)}
             </MenuItemLink>
           </Box>
         ) : null}

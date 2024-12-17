@@ -11,6 +11,8 @@ import { useAppDispatch } from '#/redux/hooks';
 import { createUser } from '#/redux/auth/auth.slice';
 import { toast } from 'react-toastify';
 import { type AxiosAuthResponse } from '#/modules/auth/types';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 type Props = {
   user: User;
@@ -18,6 +20,7 @@ type Props = {
 };
 
 export function UserProfilePicture({ user, size }: Props) {
+  const { t } = useTranslation('account-settings');
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
@@ -55,7 +58,7 @@ export function UserProfilePicture({ user, size }: Props) {
         {size === 'large' && (
           <Button disableRipple={true} sx={styles().button} onClick={() => imageInputRef.current?.click()}>
             <img src={cameraIcon} />
-            &nbsp;Edit
+            &nbsp;{t(TRANSLATION_KEYS.account_settings.edit)}
             <input type="file" ref={imageInputRef} style={{ display: 'none' }} onChange={handleSubmit} accept="image/*" />
           </Button>
         )}

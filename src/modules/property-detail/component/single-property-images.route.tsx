@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { type Image } from '../../home/types/image.type';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 interface SinglePropertyImagesProps {
   images: Image[];
@@ -12,6 +14,7 @@ interface SinglePropertyImagesProps {
 }
 
 export function SinglePropertyImages({ images, onClose }: SinglePropertyImagesProps) {
+  const { t } = useTranslation('accommodation-details');
   const isMobile = useMediaQuery('(max-width:700px)');
 
   return (
@@ -20,7 +23,7 @@ export function SinglePropertyImages({ images, onClose }: SinglePropertyImagesPr
         <ArrowBackIcon />
       </IconButton>
       <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: 2 }}>
-        Property Images
+        {t(TRANSLATION_KEYS.accommodation_details.property_images)}
       </Typography>
 
       <Box

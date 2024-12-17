@@ -10,6 +10,8 @@ import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import ChevronRight from '@mui/icons-material/ChevronRight';
 import { DayButton, WeekDayLabel } from '#/modules/home/styles';
 import dayjs, { type Dayjs } from 'dayjs';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { useTranslation } from 'react-i18next';
 
 interface CalendarModalProps {
   open: boolean;
@@ -26,6 +28,7 @@ export function CalendarModal({
   endDate: endDateProp,
   onDateSelect,
 }: CalendarModalProps) {
+  const { t } = useTranslation('home');
   const [leftMonth, setLeftMonth] = useState(startDateProp || dayjs());
   const [startDate, setStartDate] = useState<Dayjs | null>(startDateProp || null);
   const [endDate, setEndDate] = useState<Dayjs | null>(endDateProp || null);
@@ -183,7 +186,7 @@ export function CalendarModal({
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Typography>
             {startDate ? `${startDate.format('DD/MM/YYYY')} - ` : ''}
-            {endDate ? endDate.format('DD/MM/YYYY') : 'Select dates'}
+            {endDate ? endDate.format('DD/MM/YYYY') : t(TRANSLATION_KEYS.home.header.search.select_date)}
           </Typography>
           <Box>
             <IconButton onClick={handlePreviousMonth} size="small">

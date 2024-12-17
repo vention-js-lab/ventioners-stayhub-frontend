@@ -1,1 +1,1 @@
-export const DefaulStayingDays = 4;
+export const DefaultStayingDays = 4;

@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { appTheme } from '#/styles/theme';
 import '#/styles/root.css';
+import './libs/i18n.lib';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { QueryClientConfig } from './configs';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -17,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { lazyRoute } from './utils/router.util';
 import Box from '@mui/material/Box';
 import { contentWrapperStyles } from './styles';
+import { LanguageProvider } from './contexts/language.context';
 
 const { Footer } = lazyRoute(() => import('./shared/components/footer'), 'Footer');
 
@@ -32,16 +34,18 @@ createRoot(rootElement).render(
     <Provider store={store}>
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={appTheme}>
-            <CssBaseline />
-            <ToastContainer />
-            <Box sx={contentWrapperStyles.main}>
-              <Box sx={contentWrapperStyles.content}>
-                <RouterProvider router={router} />
+          <LanguageProvider>
+            <ThemeProvider theme={appTheme}>
+              <CssBaseline />
+              <ToastContainer />
+              <Box sx={contentWrapperStyles.main}>
+                <Box sx={contentWrapperStyles.content}>
+                  <RouterProvider router={router} />
+                </Box>
+                <Footer />
               </Box>
-              <Footer />
-            </Box>
-          </ThemeProvider>
+            </ThemeProvider>
+          </LanguageProvider>
           <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
         </QueryClientProvider>
       </HelmetProvider>

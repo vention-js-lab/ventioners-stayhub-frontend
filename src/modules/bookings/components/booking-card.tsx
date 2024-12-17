@@ -21,6 +21,8 @@ import { BookingStatus } from '../types/booking-status.constant';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { CancelBookingModal } from './cancel-booking-modal';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 type BookingsWithAccommodation = Booking & {
   accommodation: Accommodation;
@@ -31,6 +33,7 @@ type BookingCardProps = {
 };
 
 export function BookingCard({ booking }: BookingCardProps) {
+  const { t } = useTranslation('bookings');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
@@ -81,22 +84,30 @@ export function BookingCard({ booking }: BookingCardProps) {
             <Box sx={bookingCardStyles.dateContainer}>
               <Box sx={bookingCardStyles.detailBox}>
                 <CalendarIcon color="action" />
-                <Typography variant="body2">Check-in: {formatDate(booking.checkInDate)}</Typography>
+                <Typography variant="body2">
+                  {t(TRANSLATION_KEYS.bookings.card.check_in)} {formatDate(booking.checkInDate)}
+                </Typography>
               </Box>
               <Box sx={bookingCardStyles.detailBox}>
                 <CalendarIcon color="action" />
-                <Typography variant="body2">Check-out: {formatDate(booking.checkOutDate)}</Typography>
+                <Typography variant="body2">
+                  {t(TRANSLATION_KEYS.bookings.card.check_out)} {formatDate(booking.checkOutDate)}
+                </Typography>
               </Box>
             </Box>
 
             <Box sx={bookingCardStyles.detailContainer}>
               <Box sx={bookingCardStyles.detailBox}>
                 <PersonIcon color="action" />
-                <Typography variant="body2">Guests: {booking.numberOfGuests}</Typography>
+                <Typography variant="body2">
+                  {t(TRANSLATION_KEYS.bookings.card.guests)} {booking.numberOfGuests}
+                </Typography>
               </Box>
               <Box sx={bookingCardStyles.detailBox}>
                 <PriceIcon color="action" />
-                <Typography variant="body2">Total Price: ${booking.totalPrice}</Typography>
+                <Typography variant="body2">
+                  {t(TRANSLATION_KEYS.bookings.card.total_price)} ${booking.totalPrice}
+                </Typography>
               </Box>
             </Box>
           </Box>
@@ -106,7 +117,7 @@ export function BookingCard({ booking }: BookingCardProps) {
             <Box sx={bookingCardStyles.statusContainer}>
               <Chip label={booking.status} color={getStatusColor(booking.status)} variant="outlined" />
               <Typography variant="caption" color="text.secondary">
-                Booked on: {formatDate(booking.createdAt)}
+                {t(TRANSLATION_KEYS.bookings.card.booked_on)} {formatDate(booking.createdAt)}
               </Typography>
             </Box>
           </Box>
@@ -126,7 +137,7 @@ export function BookingCard({ booking }: BookingCardProps) {
                 horizontal: 'right',
               }}
             >
-              <MenuItem onClick={() => setIsModalOpen(true)}>Cancel Booking</MenuItem>
+              <MenuItem onClick={() => setIsModalOpen(true)}>{t(TRANSLATION_KEYS.bookings.cancel.button)}</MenuItem>
             </Menu>
             <CancelBookingModal
               bookingId={booking.id}

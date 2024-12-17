@@ -18,8 +18,11 @@ import { useAppSelector } from '#/redux/hooks';
 import { HeaderComponent } from '#/modules/home/components/header';
 import { personalInfoFormStyles as styles } from './personal-info-form.styles';
 import { useUpdateUserInfo } from '#/modules/users/api';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 export function PersonalInfoForm() {
+  const { t } = useTranslation('account-settings');
   const {
     register,
     handleSubmit,
@@ -54,14 +57,14 @@ export function PersonalInfoForm() {
       <Box sx={styles.container}>
         <Breadcrumbs separator=">">
           <Link underline="hover" key="1" onClick={redirectToSettings} sx={styles.breadcrumbs}>
-            Account
+            {t(TRANSLATION_KEYS.account_settings.account)}
           </Link>
           <Typography key="2" sx={styles.breadcrumbs}>
-            Personal info
+            {t(TRANSLATION_KEYS.account_settings.personal_info.title)}
           </Typography>
         </Breadcrumbs>
 
-        <Typography sx={styles.heading}>Personal info</Typography>
+        <Typography sx={styles.heading}>{t(TRANSLATION_KEYS.account_settings.personal_info.title)}</Typography>
 
         <ErrorMessage message={getFirstErrorMessage<ProfileFormData>(errors)} />
 
@@ -71,7 +74,7 @@ export function PersonalInfoForm() {
           }}
         >
           <Box sx={styles.nameContainer}>
-            <Typography sx={styles.label}>Legal Name</Typography>
+            <Typography sx={styles.label}>{t(TRANSLATION_KEYS.account_settings.personal_info.legal_name)}</Typography>
             <Box sx={styles.nameInput}>
               <FirstNameInput
                 register={register}
@@ -90,7 +93,7 @@ export function PersonalInfoForm() {
             </Box>
           </Box>
 
-          <Typography sx={styles.label}>Email</Typography>
+          <Typography sx={styles.label}>{t(TRANSLATION_KEYS.account_settings.personal_info.email)}</Typography>
           <EmailInput
             register={register}
             focusedField={focusedField}
@@ -100,7 +103,7 @@ export function PersonalInfoForm() {
           />
 
           <Button type="submit" disableRipple={true} sx={styles.button}>
-            Save
+            {t(TRANSLATION_KEYS.account_settings.save)}
           </Button>
         </form>
       </Box>

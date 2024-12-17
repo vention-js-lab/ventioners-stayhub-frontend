@@ -5,8 +5,11 @@ import { wishlistRouteStyles } from '../../wishlist/routes/wishlist.route.styles
 import { HeaderComponent } from '#/modules/home/components/header';
 import { PropertyList } from '#/modules/home/components/property/property-list';
 import { useWishlistedProperties } from '../api/get-wishlisted-properties';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 export function WishlistRoute() {
+  const { t } = useTranslation('wishlist');
   const { isLoading, data } = useWishlistedProperties();
 
   return (
@@ -14,9 +17,9 @@ export function WishlistRoute() {
       <HeaderComponent />
       <Container maxWidth="xl">
         <Typography variant="h3" sx={wishlistRouteStyles.headerText}>
-          Your wishlist
+          {t(TRANSLATION_KEYS.wishlist.header.title)}
         </Typography>
-        <PropertyList isLoading={isLoading} data={data} emptyMessage="No Wishlisted properties found" />
+        <PropertyList isLoading={isLoading} data={data} />
       </Container>
     </Box>
   );

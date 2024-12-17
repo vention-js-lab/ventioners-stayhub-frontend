@@ -1,0 +1,28 @@
+{
+  "your-profile": "Your Profile",
+  "edit": "Edit",
+  "account": "Account",
+  "save": "Save",
+  "personal-info": {
+    "title": "Personal info",
+    "description": "Provide personal details and how we can reach you",
+    "legal-name": "Legal Name",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "email": "Email"
+  },
+  "login-security": {
+    "title": "Login & security",
+    "description": "Update your password and secure your account",
+    "update-password": "Update Your Password",
+    "old-password": "Old Password",
+    "new-password": "New Password",
+    "confirm-password": "Confirm New Password",
+    "deactivate-account": "Deactivate your account",
+    "deactivate": "Deactivate",
+    "warning-1": "The profile and listings associated with this account will disappear",
+    "warning-2": "Your won't be able to access the account info or past reservations",
+    "account-deleted-success": "Account deleted successfully",
+    "failed-to-delete-account": "Failed to delete your account"
+  }
+}

@@ -10,6 +10,9 @@ import { searchbarStyles } from './styles';
 import { DestinationSearch } from './destination-search';
 import { type Dayjs } from 'dayjs';
 import { type GetPropertiesParams } from '../../api/get-properties';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { type TFunction } from 'i18next';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -21,15 +24,18 @@ interface DateButtonProps {
   label: string;
   date: Dayjs | null;
   onOpen: () => void;
+  t: TFunction<'home'>;
 }
 
-function DateButton({ label, date, onOpen }: DateButtonProps) {
+function DateButton({ label, date, onOpen, t }: DateButtonProps) {
   return (
     <SearchSection sx={searchbarStyles.datesSection.commonDisplay}>
       <Stack alignItems="flex-start" sx={searchbarStyles.datesSection.commonWidth} onClick={onOpen}>
         <Typography sx={searchbarStyles.commonTypography.title}>{label}</Typography>
         <Typography sx={searchbarStyles.commonTypography.subtitle}>
-          {date ? `${months[date.month()]} ${date.date()}` : `Add ${label.toLowerCase()}`}
+          {date
+            ? `${months[date.month()]} ${date.date()}`
+            : `${t(TRANSLATION_KEYS.home.header.search.add)} ${label.toLowerCase()}`}
         </Typography>
       </Stack>
     </SearchSection>
@@ -37,6 +43,7 @@ function DateButton({ label, date, onOpen }: DateButtonProps) {
 }
 
 export function SearchBar({ setParams }: SearchBarProps) {
+  const { t } = useTranslation('home');
   const [locationSearchValue, setLocationSearchValue] = useState('');
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
@@ -45,11 +52,16 @@ export function SearchBar({ setParams }: SearchBarProps) {
   const [guestCounts, setGuestCounts] = useState({ adults: 1, children: 0, infants: 0, pets: 0 });
 
   const formatGuestCount = () => {
-    const total = guestCounts.adults + guestCounts.children;
-    const parts = [`${total} guest${total !== 1 ? 's' : ''}`];
+    const totalGuests = guestCounts.adults + guestCounts.children;
+    const guestText = t(TRANSLATION_KEYS.home.header.search.guests.total, { count: totalGuests });
+    const parts = [guestText];
 
-    if (guestCounts.infants > 0) parts.push(`${guestCounts.infants} infant${guestCounts.infants !== 1 ? 's' : ''}`);
-    if (guestCounts.pets > 0) parts.push(`${guestCounts.pets} pet${guestCounts.pets !== 1 ? 's' : ''}`);
+    if (guestCounts.infants > 0) {
+      parts.push(t(TRANSLATION_KEYS.home.header.search.infants.total, { count: guestCounts.infants }));
+    }
+    if (guestCounts.pets > 0) {
+      parts.push(t(TRANSLATION_KEYS.home.header.search.pets.total, { count: guestCounts.pets }));
+    }
 
     return parts.join(', ');
   };
@@ -87,15 +99,25 @@ export function SearchBar({ setParams }: SearchBarProps) {
             divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
             sx={searchbarStyles.datesSection.checkInOutStack.styles}
           >
-            <DateButton label="Check in" date={startDate} onOpen={() => setIsCalendarOpen(true)} />
-            <DateButton label="Check out" date={endDate} onOpen={() => setIsCalendarOpen(true)} />
+            <DateButton
+              label={t(TRANSLATION_KEYS.home.header.search.check_in)}
+              date={startDate}
+              onOpen={() => setIsCalendarOpen(true)}
+              t={t}
+            />
+            <DateButton
+              label={t(TRANSLATION_KEYS.home.header.search.check_out)}
+              date={endDate}
+              onOpen={() => setIsCalendarOpen(true)}
+              t={t}
+            />
           </Stack>
         </Box>
 
         <SearchSection sx={searchbarStyles.datesSection.commonDisplay}>
           <Stack alignItems="flex-start" sx={searchbarStyles.datesSection.commonWidth} onClick={() => setIsGuestsModalOpen(true)}>
-            <Typography sx={searchbarStyles.commonTypography.title}>Who</Typography>
-            <Typography sx={searchbarStyles.commonTypography.subtitle}>{formatGuestCount() || 'Add guests'}</Typography>
+            <Typography sx={searchbarStyles.commonTypography.title}>{t(TRANSLATION_KEYS.home.header.search.who)}</Typography>
+            <Typography sx={searchbarStyles.commonTypography.subtitle}>{formatGuestCount()}</Typography>
           </Stack>
         </SearchSection>
 

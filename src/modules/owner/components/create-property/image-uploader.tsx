@@ -8,6 +8,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { imageUploaderStyles } from './styles';
 import type { UseFormSetValue, UseFormGetValues, UseFormRegister, FieldValues } from 'react-hook-form';
 import { type AccommodationFormData } from '#/zod';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 type Props<T extends FieldValues> = {
   setValue: UseFormSetValue<T>;
@@ -16,6 +18,7 @@ type Props<T extends FieldValues> = {
 };
 
 export function ImageUploader({ setValue, getValues, register }: Props<AccommodationFormData>) {
+  const { t } = useTranslation('create-accommodation');
   const fileInputRef = useRef<HTMLInputElement>();
   const { ref, ...rest } = register('images');
 
@@ -31,7 +34,7 @@ export function ImageUploader({ setValue, getValues, register }: Props<Accommoda
   return (
     <Box sx={imageUploaderStyles.container}>
       <Typography variant="h4" gutterBottom={true}>
-        Upload Images
+        {t(TRANSLATION_KEYS.create_accommodation.upload_images)}
       </Typography>
 
       <Box sx={imageUploaderStyles.uploadContainer}>
@@ -59,14 +62,14 @@ export function ImageUploader({ setValue, getValues, register }: Props<Accommoda
 
         <CloudUploadIcon color="primary" sx={{ fontSize: 64 }} />
 
-        <Typography variant="h6">Drag and drop or click to upload</Typography>
+        <Typography variant="h6">{t(TRANSLATION_KEYS.create_accommodation.drag_and_drop)}</Typography>
 
         <Typography variant="body2" color="text.secondary">
-          {getValues('images').length} images selected
+          {t(TRANSLATION_KEYS.create_accommodation.images_selected, { count: getValues('images').length })}
         </Typography>
 
         <Button variant="contained" onClick={handleUploadClick} sx={imageUploaderStyles.uploadButton}>
-          Select Images
+          {t(TRANSLATION_KEYS.create_accommodation.select_images)}
         </Button>
       </Box>
 
