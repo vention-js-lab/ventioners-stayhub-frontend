@@ -23,6 +23,11 @@ export const useCreateBooking = () => {
     onError: (error: AxiosError) => {
       if (error.response?.status === 400) {
         toast.error(`Error happened in creating booking`);
+
+        return;
+      } else if (error.response?.status === 401) {
+        toast.error(`You should be logged in to create a booking`);
+
         return;
       }
       toast.error(`This property has been already booken in this date`);
