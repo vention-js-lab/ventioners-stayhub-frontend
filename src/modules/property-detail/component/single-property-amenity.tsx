@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, Fragment } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -109,7 +109,14 @@ function Property({
 
         <Divider sx={PropertyAmenityStyles.divider} />
 
-        <Typography variant="body1">{description}</Typography>
+        <Typography variant="body1">
+          {description.split('\n').map((line, idx) => (
+            <Fragment key={idx}>
+              {line}
+              <br />
+            </Fragment>
+          ))}
+        </Typography>
 
         <Divider sx={PropertyAmenityStyles.customDivider} />
       </Box>
