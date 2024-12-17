@@ -134,7 +134,7 @@ export function AccommodationDetailsForm({ setValue, getValues, register, contro
             fullWidth={true}
             label={t(TRANSLATION_KEYS.create_accommodation.description)}
             multiline={true}
-            rows={4}
+            rows={8}
             placeholder={t(TRANSLATION_KEYS.create_accommodation.describe_what_makes_your_place_special)}
             required={true}
           />
