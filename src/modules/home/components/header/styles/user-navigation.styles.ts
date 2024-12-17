@@ -6,13 +6,6 @@ export const userNavigationStyles = {
       sm: 2,
     },
   },
-  stayhubYourHomeButton: {
-    borderRadius: 20,
-    '&:hover': { backgroundColor: '#F7F7F7' },
-    fontFamily: 'sans-serif',
-    textTransform: 'none',
-    fontSize: '',
-  },
   languageIconButton: {
     '&:hover': { backgroundColor: '#F7F7F7' },
     transition: 'all 0.2s',
