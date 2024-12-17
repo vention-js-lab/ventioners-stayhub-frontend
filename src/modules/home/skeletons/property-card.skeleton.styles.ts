@@ -2,8 +2,6 @@ import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 
 export const propertyCardSkeletonStyles = {
   container: {
-    width: 335,
-    height: 360,
     border: '1px solid #ddd',
     borderRadius: 2,
     overflow: 'hidden',
