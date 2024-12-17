@@ -15,6 +15,7 @@ import { useState, useMemo } from 'react';
 import { InfoMessageBox } from '../components/info-message-box/info-message-box';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { useGeocodeLocation } from '#/utils/use-geocode.util';
 
 export function HomeRoute() {
   const { t } = useTranslation('home');
@@ -34,7 +35,7 @@ export function HomeRoute() {
     numberOfGuests: searchParams.numberOfGuests,
   });
   const { location } = useCurrentLocation();
-
+  const placeResult = useGeocodeLocation(searchParams.location || '');
   const properties = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data]);
   const defaultCenter = location || { lat: latitude, lng: longitude };
   return (
@@ -58,7 +59,7 @@ export function HomeRoute() {
         >
           <PropertyList isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} data={{ data: properties }} />
         </InfiniteScroll>
-        <MapModal isLoading={isLoading} data={properties} coordinates={defaultCenter} />
+        <MapModal isLoading={isLoading} data={properties} coordinates={defaultCenter} placeResult={placeResult} />
       </Container>
     </Box>
   );

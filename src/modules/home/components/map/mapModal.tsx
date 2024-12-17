@@ -11,14 +11,16 @@ import { type Accommodation } from '../../types/accommodation.type';
 import { mapModalStyles } from './mapModal.style';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import MapHandler from './mapHandler';
 
 interface MapModalProps {
   isLoading: boolean;
   data: Accommodation[];
   coordinates: { lat: number; lng: number };
+  placeResult: google.maps.places.PlaceResult | null;
 }
 
-export function MapModal({ isLoading, data, coordinates }: MapModalProps) {
+export function MapModal({ isLoading, data, coordinates, placeResult }: MapModalProps) {
   const { t } = useTranslation('home');
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
@@ -36,6 +38,7 @@ export function MapModal({ isLoading, data, coordinates }: MapModalProps) {
         <DialogContent sx={mapModalStyles.DialogContent}>
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
             <CustomMap isLoading={isLoading} data={{ data }} coordinates={coordinates} />
+            <MapHandler place={placeResult} />
           </APIProvider>
         </DialogContent>
       </Dialog>
