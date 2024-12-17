@@ -9,7 +9,7 @@ export const createAccomodationSchema = z.object({
   description: z
     .string()
     .min(1, { message: 'Please choose a valid non-empty description' })
-    .max(255, { message: 'Entered description is too long' }),
+    .max(2000, { message: 'Entered description is too long' }),
 
   location: z
     .string()
