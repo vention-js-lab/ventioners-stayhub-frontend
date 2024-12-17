@@ -16,7 +16,7 @@ export const AuthRoutes: RouteObject[] = [
     element: <LoginRoute />,
   },
   {
-    path: '/check-mail',
+    path: '/check-email',
     element: <CheckMailRoute />,
   },
   {
