@@ -24,6 +24,7 @@
       "check-out": "Отъезд",
       "select-date": "Выберите даты",
       "date": "Дата",
+      "dates": "Даты",
       "guests": {
         "total": "{{count}} гость",
         "total_few": "{{count}} гостя",

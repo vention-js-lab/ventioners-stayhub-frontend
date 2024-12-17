@@ -24,6 +24,7 @@
       "check-out": "Check out",
       "select-date": "Select dates",
       "date": "Date",
+      "dates": "Dates",
       "guests": {
         "total": "{{count}} guest",
         "total_other": "{{count}} guests"
