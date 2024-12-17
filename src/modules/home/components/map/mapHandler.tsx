@@ -1,14 +1,14 @@
 import { useMap } from '@vis.gl/react-google-maps';
-import React, { useEffect } from 'react';
+import { useEffect, useCallback, memo } from 'react';
 
 interface Props {
   place: google.maps.places.PlaceResult | null;
 }
 
-function MapHandler({ place }: Props) {
+const MapHandler: React.FC<Props> = ({ place }) => {
   const map = useMap();
 
-  useEffect(() => {
+  const fitBounds = useCallback(() => {
     if (!map || !place) return;
 
     if (place.geometry?.viewport) {
@@ -16,7 +16,11 @@ function MapHandler({ place }: Props) {
     }
   }, [map, place]);
 
-  return null;
-}
+  useEffect(() => {
+    fitBounds();
+  }, [fitBounds]);
 
-export default React.memo(MapHandler);
+  return null;
+};
+
+export default memo(MapHandler);
