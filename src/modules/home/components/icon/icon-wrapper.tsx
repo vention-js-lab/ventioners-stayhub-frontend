@@ -5,7 +5,7 @@ type IconWrapperProps = {
   size?: number;
 };
 
-export function IconWrapper({ icon: Icon, size = 20 }: IconWrapperProps) {
+export function IconWrapper({ icon: Icon, size = 16 }: IconWrapperProps) {
   if (isMaterialIcon(Icon)) {
     return <Icon sx={{ fontSize: `${size}px` }} />;
   }

@@ -49,11 +49,11 @@ export function HomeRoute() {
           hasMore={hasNextPage}
           loader={null}
           endMessage={
-            !isLoading && (
+            !isLoading && properties.length ? (
               <InfoMessageBox>
                 <Typography>{t(TRANSLATION_KEYS.home.property.no_additional_properties)}</Typography>
               </InfoMessageBox>
-            )
+            ) : null
           }
         >
           <PropertyList isLoading={isLoading} isFetchingNextPage={isFetchingNextPage} data={{ data: properties }} />

@@ -27,7 +27,7 @@ export function CategoryItem({ icon: Icon, name, name_ru, isActive, onClick }: C
       <Box sx={categoryStyles.iconBox}>
         <IconWrapper icon={Icon} />
       </Box>
-      <Typography component="div" align="center" fontSize={15}>
+      <Typography component="div" align="center" fontSize={13}>
         {language === 'en' ? name : name_ru}
       </Typography>
     </Box>
