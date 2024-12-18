@@ -6,9 +6,13 @@ import { type AxiosError } from 'axios';
 import { type Booking, type CreateBookingAxiosResponse, type CreateBooking } from '#/modules/bookings/types';
 import { useCreatePaymentStripeCheckout } from '#/modules/bookings/api/create-payment-stripe-checkout';
 import { type ApiErrorResponse } from '#/types/api-error-response.type';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 export const useCreateBooking = () => {
+  const { t } = useTranslation('accommodation-details');
   const createPaymentStripeCheckout = useCreatePaymentStripeCheckout();
+
   return useMutation<Booking, AxiosError<ApiErrorResponse>, CreateBooking>({
     mutationFn: async (data: CreateBooking) => {
       const response = await api.post<CreateBookingAxiosResponse>(ENDPOINTS.bookings, data);
@@ -23,7 +27,7 @@ export const useCreateBooking = () => {
     },
     onError: (error) => {
       if (error.response?.status === 401) {
-        toast.error('You must be logged in to create a booking.');
+        toast.error(t(TRANSLATION_KEYS.accommodation_details.you_must_be_logged_in));
         return;
       }
 
@@ -33,11 +37,11 @@ export const useCreateBooking = () => {
       }
 
       if (!error.response) {
-        toast.error('Network error. Please check your connection and try again.');
+        toast.error(t(TRANSLATION_KEYS.accommodation_details.network_error));
         return;
       }
 
-      toast.error('An error occurred while creating the booking.');
+      toast.error(t(TRANSLATION_KEYS.accommodation_details.error_occured));
     },
   });
 };
