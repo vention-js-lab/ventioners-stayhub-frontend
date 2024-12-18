@@ -10,6 +10,8 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { api } from '#/configs';
 import { emailVerificationStyles } from './email-verification.styles';
 import { ENDPOINTS, ROUTES } from '../../constants';
+import { useTranslation } from 'react-i18next';
+import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 type EmailVerificationProps = {
   email: string;
@@ -18,6 +20,7 @@ type EmailVerificationProps = {
 
 export function EmailVerification({ email, token }: EmailVerificationProps) {
   const [searchParams] = useSearchParams();
+  const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -55,7 +58,7 @@ export function EmailVerification({ email, token }: EmailVerificationProps) {
           <>
             <CircularProgress />
             <Typography variant="h6" style={{ marginTop: '20px' }}>
-              Verifying your email...
+              {t(TRANSLATION_KEYS.auth.verifing_email)}
             </Typography>
           </>
         );
@@ -64,7 +67,7 @@ export function EmailVerification({ email, token }: EmailVerificationProps) {
           <>
             <CheckCircleOutlineIcon style={{ ...emailVerificationStyles.icon, color: 'green' }} />
             <Typography variant="h5" gutterBottom={true}>
-              Email Verified Successfully
+              {t(TRANSLATION_KEYS.auth.verified)}
             </Typography>
           </>
         );
@@ -76,7 +79,7 @@ export function EmailVerification({ email, token }: EmailVerificationProps) {
               {errorMsg}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              There was an issue verifying your email. The link may be invalid or expired.
+              {t(TRANSLATION_KEYS.auth.failed_to_verify_email)}
             </Typography>
             <Button
               variant="outlined"
@@ -88,7 +91,7 @@ export function EmailVerification({ email, token }: EmailVerificationProps) {
                 })();
               }}
             >
-              Resend Verification Email
+              {t(TRANSLATION_KEYS.auth.resend_verification)}
             </Button>
           </>
         );
