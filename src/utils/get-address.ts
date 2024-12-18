@@ -1,5 +1,5 @@
 export const getPreferredAddress = (results: google.maps.GeocoderResult[]): string => {
-  const preferredLanguages = ['en', 'uz', 'ru'];
+  const preferredLanguages = ['en', 'uz'];
 
   const isPreferredLanguage = (address: string) => {
     return preferredLanguages.some((lang) => address.toLowerCase().includes(lang.toLowerCase()));
