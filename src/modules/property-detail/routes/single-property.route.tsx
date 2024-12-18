@@ -65,7 +65,7 @@ export function SinglePropertyRoute() {
   );
   const images = accommodationData.images.sort((a, b) => a.order - b.order);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
-  const userHasBooking = bookings && bookings.data.length > 0;
+  const userHasBooking = bookings?.data.some((booking) => booking.accommodation.id === accommodationData.id);
 
   return (
     <>
