@@ -64,7 +64,7 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
 
       const geocoder = new google.maps.Geocoder();
       try {
-        const results = (await geocoder.geocode({ location: { lng, lat } })).results;
+        const results = (await geocoder.geocode({ location: { lng, lat }, language: 'en' })).results;
         if (results[0]) {
           const addressInfo = getPreferredAddress(results);
           showToastSuccess(`${t(TRANSLATION_KEYS.home.map.address_selected)}: ${addressInfo}`);
