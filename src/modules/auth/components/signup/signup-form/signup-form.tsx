@@ -46,7 +46,7 @@ export function SignupForm() {
   function onSubmit(data: AuthFormData) {
     api
       .post(ENDPOINTS.signup, data)
-      .then(() => navigate(ENDPOINTS.root))
+      .then(() => navigate(`${ROUTES.checkEmail}?email=${data.email}`))
       .catch((err) => {
         if (err instanceof AxiosError) {
           const errorData = err.response?.data as AxiosErrorResponse;

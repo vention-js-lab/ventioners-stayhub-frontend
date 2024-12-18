@@ -5,6 +5,8 @@ export const ENDPOINTS = {
   logout: '/auth/logout',
   googleAuth: '/auth/google/login',
   refresh: '/auth/refresh',
+  verifyEmail: '/auth/verify-email',
+  resendEmail: '/auth/resend-email',
   updatePassword: '/auth/update-password',
   user: '/users/me',
 } as const;
@@ -12,4 +14,6 @@ export const ENDPOINTS = {
 export const ROUTES = {
   login: '/login',
   signup: '/signup',
+  checkEmail: '/check-email',
+  verifyEmail: '/verify-email',
 } as const;

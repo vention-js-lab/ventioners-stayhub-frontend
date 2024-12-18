@@ -112,6 +112,13 @@ export const TRANSLATION_KEYS = {
     create_account: 'create-account',
     login_to_your_account: 'login-to-your-account',
     or: 'or',
+    verify_email: 'verify-email',
+    verifing_email: 'verifying-email',
+    verified: 'verified',
+    failed_to_verify_email: 'failed-to-verify-email',
+    resend_verification: 'resend-verification',
+    send_verification: 'send-verification',
+    check_your_inbox: 'check-your-inbox',
   },
   bookings: {
     my_bookings: 'my-bookings',
