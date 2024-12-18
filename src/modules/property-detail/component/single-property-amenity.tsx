@@ -59,18 +59,18 @@ function Property({
     ) {
       const diffInDays = checkOutDate.diff(checkInDate, 'day');
       const basePrice = diffInDays * pricePerNight;
-      const serviceFee = ServiceFeePortion * basePrice;
+      const serviceFee = Math.ceil(ServiceFeePortion * basePrice);
       return { basePrice, serviceFee, diffInDays };
     }
     return {
       basePrice: DefaultStayingDays * pricePerNight,
-      serviceFee: DefaultStayingDays * pricePerNight * ServiceFeePortion,
+      serviceFee: Math.ceil(DefaultStayingDays * pricePerNight * ServiceFeePortion),
       diffInDays: DefaultStayingDays,
     };
   }, [checkInDate, checkOutDate, pricePerNight]);
 
   const isDatePicked = calculatePrice.diffInDays >= 0;
-  const totalPrice = calculatePrice.basePrice + calculatePrice.serviceFee;
+  const totalPrice = Math.ceil(calculatePrice.basePrice + calculatePrice.serviceFee);
 
   return (
     <Box sx={PropertyAmenityStyles.mainContainerBox}>
