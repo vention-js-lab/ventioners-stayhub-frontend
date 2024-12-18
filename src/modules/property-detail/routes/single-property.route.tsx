@@ -13,8 +13,9 @@ import { useGetBookings } from '#/modules/bookings/api';
 import { useAccommodationById } from '../api/get-accommodation';
 import { type Accommodation } from '#/modules/home/types/accommodation.type';
 import { HeaderComponent } from '#/modules/home/components/header';
-import { MapModal } from '#/modules/home/components/map/mapModal';
 import { Property, PropertyImagesWrapper, PropertyReview, ReviewForm } from '../component';
+import { CustomMap } from '#/modules/home/components/map/mapComponent';
+import { APIProvider } from '@vis.gl/react-google-maps';
 
 // eslint-disable-next-line complexity
 export function SinglePropertyRoute() {
@@ -103,8 +104,15 @@ export function SinglePropertyRoute() {
             </>
           ) : null}
           <PropertyReview reviews={reviews} overallRating={accommodationData.overallRating} />
-
-          <MapModal isLoading={isLoading} data={[accommodationData]} coordinates={coordinates} />
+          <Divider sx={{ my: 4, mx: 0 }} />
+          <Box sx={singlePropertyStyles.mapStyle}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              {accommodationData.location}
+            </Typography>
+            <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
+              <CustomMap isLoading={isLoading} data={{ data: [accommodationData] }} coordinates={coordinates} />
+            </APIProvider>
+          </Box>
         </Box>
       </Box>
     </>

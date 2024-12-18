@@ -14,4 +14,5 @@ export const singlePropertyStyles = {
   },
   titleActionBox: { display: 'flex', gap: '10px', alignItems: 'center', marginRight: '16px' },
   titleActionItem: { display: 'flex', gap: '3px', alignItems: 'center', textDecoration: 'underline', cursor: 'pointer' },
+  mapStyle: { height: '450px', marginBottom: '40px' },
 };
