@@ -189,6 +189,9 @@ export const TRANSLATION_KEYS = {
     show_less: 'show-less',
     show_all: 'show-all',
     review_success: 'review-success',
+    you_must_be_logged_in: 'you-must-be-logged-in',
+    network_error: 'network-error',
+    error_occured: 'error-occured',
   },
   owner_properties: {
     no_properties: 'no-properties',

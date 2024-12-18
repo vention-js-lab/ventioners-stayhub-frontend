@@ -43,10 +43,9 @@ export function SinglePropertyRoute() {
     }
 
     createBooking.mutate({
-      checkInDate: checkInDate.toDate(),
-      checkOutDate: checkOutDate.toDate(),
+      checkInDate: checkInDate.add(14, 'hour').toDate(),
+      checkOutDate: checkOutDate.add(12, 'hour').toDate(),
       accommodationId: id,
-      totalPrice: accommodationData.pricePerNight,
       numberOfGuests: 1,
     });
   };

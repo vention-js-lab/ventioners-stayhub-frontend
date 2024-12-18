@@ -3,5 +3,4 @@ export type CreateBooking = {
   checkInDate: Date;
   checkOutDate: Date;
   numberOfGuests: number;
-  totalPrice: number;
 };

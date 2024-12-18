@@ -18,5 +18,8 @@
   "show-more": "Show More",
   "show-all": "Show All",
   "show-less": "Show Less",
-  "review-success": "Review submitted successfully!"
+  "review-success": "Review submitted successfully!",
+  "you-must-be-logged-in": "You must be logged in to create a booking.",
+  "network-error": "Network error. Please check your connection and try again.",
+  "error-occured": "An error occurred while creating the booking."
 }
