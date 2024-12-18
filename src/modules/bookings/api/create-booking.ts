@@ -5,10 +5,11 @@ import { api } from '#/configs';
 import { type AxiosError } from 'axios';
 import { type Booking, type CreateBookingAxiosResponse, type CreateBooking } from '#/modules/bookings/types';
 import { useCreatePaymentStripeCheckout } from '#/modules/bookings/api/create-payment-stripe-checkout';
+import { type ApiErrorResponse } from '#/types/api-error-response.type';
 
 export const useCreateBooking = () => {
   const createPaymentStripeCheckout = useCreatePaymentStripeCheckout();
-  return useMutation({
+  return useMutation<Booking, AxiosError<ApiErrorResponse>, CreateBooking>({
     mutationFn: async (data: CreateBooking) => {
       const response = await api.post<CreateBookingAxiosResponse>(ENDPOINTS.bookings, data);
       return response.data.data;
@@ -20,17 +21,23 @@ export const useCreateBooking = () => {
       });
       return booking;
     },
-    onError: (error: AxiosError) => {
-      if (error.response?.status === 400) {
-        toast.error(`Error happened in creating booking`);
-
-        return;
-      } else if (error.response?.status === 401) {
-        toast.error(`You should be logged in to create a booking`);
-
+    onError: (error) => {
+      if (error.response?.status === 401) {
+        toast.error('You must be logged in to create a booking.');
         return;
       }
-      toast.error(`This property has been already booken in this date`);
+
+      if (error.response?.data.message) {
+        toast.error(error.response.data.message);
+        return;
+      }
+
+      if (!error.response) {
+        toast.error('Network error. Please check your connection and try again.');
+        return;
+      }
+
+      toast.error('An error occurred while creating the booking.');
     },
   });
 };
