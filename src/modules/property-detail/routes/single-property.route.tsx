@@ -19,6 +19,8 @@ import { Property, PropertyImagesWrapper, PropertyReview, ReviewForm } from '../
 import { CustomMap } from '#/modules/home/components/map/mapComponent';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import { loadingSpinnerStyles } from '#/styles';
+import { canLeaveReview } from '#/utils/booking-status.util';
+import { useAppSelector } from '#/redux/hooks';
 
 // eslint-disable-next-line complexity
 export function SinglePropertyRoute() {
@@ -28,7 +30,7 @@ export function SinglePropertyRoute() {
   const { data: bookings, isLoading: bookingLoading } = useGetBookings();
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
-
+  const user = useAppSelector((state) => state.auth.user);
   const { data, error, isLoading } = useAccommodationById(id || '');
 
   if (!id) {
@@ -65,6 +67,7 @@ export function SinglePropertyRoute() {
   }
 
   const accommodationData: Accommodation = data.data;
+
   const handleReserve = () => {
     if (!checkInDate || !checkOutDate) {
       toast.error('Please select check-in and check-out dates.');
@@ -86,6 +89,7 @@ export function SinglePropertyRoute() {
   const reviews = accommodationData.reviews.map(
     (review: { id: string; user: Pick<User, 'firstName' | 'lastName'>; comment: string; rating: number }) => ({
       id: review.id,
+      user: user,
       name: `${review.user.firstName} ${review.user.lastName}`,
       comment: review.comment,
       rating: review.rating,
@@ -93,8 +97,10 @@ export function SinglePropertyRoute() {
   );
   const images = accommodationData.images.sort((a, b) => a.order - b.order);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
-  const userHasBooking = bookings?.data.some((booking) => booking.accommodation.id === accommodationData.id);
-
+  let userHasBooking = false;
+  if (bookings) {
+    userHasBooking = canLeaveReview(bookings.data, reviews, accommodationData.id, user?.id);
+  }
   return (
     <>
       <HeaderComponent />

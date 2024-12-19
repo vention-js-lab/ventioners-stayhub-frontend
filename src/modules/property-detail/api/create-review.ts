@@ -6,7 +6,7 @@ import { type AxiosResponse, type AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
-interface ReviewFormData {
+export interface ReviewFormData {
   rating: number;
   comment: string;
   accommodationId: string;
