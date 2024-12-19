@@ -4,7 +4,7 @@ import { useAppDispatch } from '#/redux/hooks';
 import { createUser, removeUser } from '#/redux/auth/auth.slice';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { layoutProtectedStyles as styles } from '#/styles/layout-protected.styles';
+import { loadingSpinnerStyles as styles } from '#/styles';
 import { useEffect } from 'react';
 
 type Props = {

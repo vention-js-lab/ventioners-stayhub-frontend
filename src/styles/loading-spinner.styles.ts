@@ -1,4 +1,4 @@
-export const layoutProtectedStyles = {
+export const loadingSpinnerStyles = {
   container: {
     position: 'fixed',
     top: 0,
