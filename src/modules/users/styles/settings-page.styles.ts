@@ -20,6 +20,9 @@ export const settingsPageStyles = {
     marginLeft: '16px',
     marginTop: '64px',
     marginBottom: '56px',
+    '@media (max-width: 768px)': {
+      gap: '16px',
+    },
   },
   heading: {
     fontSize: '2rem',
@@ -30,7 +33,9 @@ export const settingsPageStyles = {
   headingDetails: {
     marginTop: '8px',
     marginBottom: '16px',
-    fontSize: '18px',
+    '@media (max-width: 768px)': {
+      fontSize: '16px',
+    },
   },
   firstName: {
     marginTop: '18px',

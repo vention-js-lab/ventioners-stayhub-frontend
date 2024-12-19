@@ -8,6 +8,7 @@ import { showToastError } from '#/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCreateReview } from '../api/create-review';
 import { useTranslation } from 'react-i18next';
+import { PropertyReviewStyles } from './single-property-review.styles';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 interface ReviewFormProps {
@@ -33,7 +34,7 @@ export function ReviewForm({ accommodationId }: ReviewFormProps) {
   };
 
   return (
-    <Box sx={{ mt: 4 }}>
+    <Box sx={PropertyReviewStyles.mainContainerBox}>
       <Typography variant="h6" gutterBottom={true}>
         {t(TRANSLATION_KEYS.accommodation_details.leave_a_review)}
       </Typography>
