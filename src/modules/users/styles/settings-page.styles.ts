@@ -5,16 +5,21 @@ export const settingsPageStyles = {
     paddingTop: '12px',
     marginX: 'auto',
     textAlign: 'center',
-    maxWidth: '1080px',
-    width: '1080px',
-    '@media (max-width: 1080px)': {
-      maxWidth: '100%',
-      width: '100%',
+    maxWidth: {
+      xs: '100%',
+      lg: '1080px',
+    },
+    width: {
+      xs: '100%',
+      lg: '1080px',
     },
   },
   headingContainer: {
     display: 'flex',
-    gap: '30px',
+    gap: {
+      xs: '16px',
+      md: '30px',
+    },
     alignItems: 'start',
     textAlign: 'start',
     marginLeft: '16px',
@@ -30,7 +35,10 @@ export const settingsPageStyles = {
   headingDetails: {
     marginTop: '8px',
     marginBottom: '16px',
-    fontSize: '18px',
+    fontSize: {
+      xs: '16px',
+      md: 'inherit',
+    },
   },
   firstName: {
     marginTop: '18px',

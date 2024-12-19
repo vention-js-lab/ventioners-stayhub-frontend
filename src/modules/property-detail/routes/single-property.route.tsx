@@ -96,17 +96,17 @@ export function SinglePropertyRoute() {
             onReserve={handleReserve}
             numberOfGuests={accommodationData.numberOfGuests}
           />
-          <Divider sx={{ my: 4, mx: 0 }} />
+          <Divider sx={singlePropertyStyles.customDivider} />
           {userHasBooking ? (
             <>
               <ReviewForm accommodationId={id} />
-              <Divider sx={{ my: 4, mx: 0 }} />
+              <Divider sx={singlePropertyStyles.customDivider} />
             </>
           ) : null}
           <PropertyReview reviews={reviews} overallRating={accommodationData.overallRating} />
-          <Divider sx={{ my: 4, mx: 0 }} />
+          <Divider sx={singlePropertyStyles.customDivider} />
           <Box sx={singlePropertyStyles.mapStyle}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant="h6" sx={singlePropertyStyles.locationText}>
               {accommodationData.location}
             </Typography>
             <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={['places']}>
