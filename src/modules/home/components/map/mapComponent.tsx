@@ -2,14 +2,15 @@ import { mapContainerStyles } from './mapComponent.style';
 import { useEffect, useState } from 'react';
 import { InfoWindow, Map, Marker } from '@vis.gl/react-google-maps';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { type Accommodation, type Location } from '../../types/accommodation.type';
-import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { getPreferredAddress, showToastError, showToastSuccess } from '#/utils';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 import { useTranslation } from 'react-i18next';
+import { loadingSpinnerStyles } from '#/styles';
 
 interface MapClickEvent {
   detail: {
@@ -42,8 +43,8 @@ export function CustomMap({ isLoading, data, coordinates, onLocationChange }: Pr
 
   if (isLoading) {
     return (
-      <Box>
-        <Typography>Loading...</Typography>
+      <Box sx={loadingSpinnerStyles.container}>
+        <CircularProgress sx={loadingSpinnerStyles.spinner} />
       </Box>
     );
   }

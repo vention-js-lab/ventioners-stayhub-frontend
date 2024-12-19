@@ -49,4 +49,5 @@ export const singlePropertyStyles = {
     },
   },
   customDivider: { my: 3, display: { md: 'none', xs: 'block' } },
+  alert: { width: '90%', maxWidth: 800, marginTop: 2, marginX: 'auto' },
 };
