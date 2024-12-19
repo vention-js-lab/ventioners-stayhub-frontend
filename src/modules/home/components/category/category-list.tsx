@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { CategoryItem } from './category-item';
+import { CategoryItem, CategoryItemSkeleton } from './category-item';
 import { CategoryScrollArrow } from './category-scroll-arrow';
 import { useEffect, useRef, useState } from 'react';
 import { categoryListStyles } from './category-list.styles';
@@ -58,10 +58,6 @@ export function CategoryList({ selectedCategory, setParams }: CategoryListProps)
     return () => container?.removeEventListener('scroll', handleScrollPosition);
   }, [data]);
 
-  if (isLoading) {
-    return <Box>Loading Categories...</Box>;
-  }
-
   const categories = data?.data ?? [];
 
   if (!categories.length) {
@@ -72,16 +68,18 @@ export function CategoryList({ selectedCategory, setParams }: CategoryListProps)
     <Box sx={categoryListStyles.container}>
       {showLeftArrow ? <CategoryScrollArrow direction="left" onClick={() => handleScroll('left')} /> : null}
       <Box ref={scrollContainerRef} sx={categoryListStyles.scrollContainer}>
-        {categories.map((category) => (
-          <CategoryItem
-            key={category.id}
-            icon={categoryToIconMap[category.name]}
-            name={category.name}
-            name_ru={category.name_ru}
-            onClick={() => handleCategoryClick(category.id)}
-            isActive={category.id === selectedCategory}
-          />
-        ))}
+        {isLoading
+          ? Array.from({ length: 12 }).map((_, index) => <CategoryItemSkeleton key={index} />)
+          : categories.map((category) => (
+              <CategoryItem
+                key={category.id}
+                icon={categoryToIconMap[category.name]}
+                name={category.name}
+                name_ru={category.name_ru}
+                onClick={() => handleCategoryClick(category.id)}
+                isActive={category.id === selectedCategory}
+              />
+            ))}
       </Box>
       {showRightArrow ? <CategoryScrollArrow direction="right" onClick={() => handleScroll('right')} /> : null}
     </Box>
