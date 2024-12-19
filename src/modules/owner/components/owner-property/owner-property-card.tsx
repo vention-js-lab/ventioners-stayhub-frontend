@@ -85,14 +85,12 @@ export function OwnerPropertyCard({
 
             <Box sx={ownerPropertyCardStyles.location}>
               <FmdGoodIcon sx={{ color: 'red' }} />
-              <Typography sx={{ paddingTop: '2px', paddingLeft: '8px', fontWeight: 600, color: 'text.secondary' }}>
-                {location}
-              </Typography>
+              <Typography sx={ownerPropertyCardStyles.locationText}>{location}</Typography>
             </Box>
 
             <Box sx={ownerPropertyCardStyles.amenitiesContainer}>
               {amenities.length > 0 &&
-                amenities.slice(0, window.innerWidth < 600 ? 2 : 4).map((amenity) => (
+                amenities.slice(0, window.innerWidth < 700 ? 2 : 4).map((amenity) => (
                   <Typography key={amenity.id} sx={ownerPropertyCardStyles.amenity}>
                     {amenity.name}
                   </Typography>

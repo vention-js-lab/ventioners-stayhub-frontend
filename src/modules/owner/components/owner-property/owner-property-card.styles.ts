@@ -9,7 +9,7 @@ export const ownerPropertyCardStyles = {
     maxWidth: '100%',
     height: {
       xs: '700px',
-      sm: '600px',
+      sm: '650px',
       md: '500px',
       lg: '450px',
     },
@@ -74,6 +74,13 @@ export const ownerPropertyCardStyles = {
     fontSize: '1.4rem',
     fontWeight: 700,
     marginBottom: '8px',
+    overflow: 'hidden',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: {
+      xs: 1,
+      md: 2,
+    },
   },
 
   description: {
@@ -81,12 +88,22 @@ export const ownerPropertyCardStyles = {
     color: '#666',
     margin: '8px 0',
     lineHeight: 1.5,
+    overflow: 'hidden',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: {
+      lg: 7,
+      md: 6,
+      sm: 4,
+      xs: 4,
+    },
   },
 
   rating: {
     display: {
       xs: 'none',
-      sm: 'flex',
+      sm: 'none',
+      md: 'flex',
     },
     alignItems: 'center',
     margin: '16px 0',
@@ -99,7 +116,26 @@ export const ownerPropertyCardStyles = {
     marginBottom: '8px',
     gap: '8px',
     color: '#555',
-    fontSize: '0.9rem',
+    fontSize: {
+      xs: '0.8rem',
+      sm: '0.85rem',
+      md: '0.9rem',
+    },
+  },
+
+  locationText: {
+    paddingTop: '2px',
+    paddingLeft: '8px',
+    fontWeight: 600,
+    color: 'text.secondary',
+    lineHeight: 1.5,
+    overflow: 'hidden',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: {
+      lg: 4,
+      xs: 3,
+    },
   },
 
   amenitiesContainer: {
