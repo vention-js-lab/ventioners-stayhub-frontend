@@ -8,7 +8,7 @@ import { PropertyList } from '#/modules/home/components/property/property-list';
 import { useWishlistedProperties } from '../api/get-wishlisted-properties';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
-import { loadingSpinnerStyles as styles } from '#/styles';
+import { loadingSpinnerStyles } from '#/styles';
 
 export function WishlistRoute() {
   const { t } = useTranslation('wishlist');
@@ -16,8 +16,8 @@ export function WishlistRoute() {
 
   if (isLoading) {
     return (
-      <Box sx={styles.container}>
-        <CircularProgress sx={styles.spinner} />
+      <Box sx={loadingSpinnerStyles.container}>
+        <CircularProgress sx={loadingSpinnerStyles.spinner} />
       </Box>
     );
   }

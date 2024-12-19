@@ -4,6 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { singlePropertyStyles } from './single-property.route.styles';
 import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
 import { useParams } from 'react-router-dom';
 import { type User } from '#/types';
 import { type Dayjs } from 'dayjs';
@@ -17,7 +18,7 @@ import { HeaderComponent } from '#/modules/home/components/header';
 import { Property, PropertyImagesWrapper, PropertyReview, ReviewForm } from '../component';
 import { CustomMap } from '#/modules/home/components/map/mapComponent';
 import { APIProvider } from '@vis.gl/react-google-maps';
-import { loadingSpinnerStyles as styles } from '#/styles';
+import { loadingSpinnerStyles } from '#/styles';
 
 // eslint-disable-next-line complexity
 export function SinglePropertyRoute() {
@@ -36,14 +37,32 @@ export function SinglePropertyRoute() {
 
   if (isLoading || bookingLoading) {
     return (
-      <Box sx={styles.container}>
-        <CircularProgress sx={styles.spinner} />
+      <Box sx={loadingSpinnerStyles.container}>
+        <CircularProgress sx={loadingSpinnerStyles.spinner} />
       </Box>
     );
   }
 
-  if (!data) return <div>No data found</div>;
-  if (error instanceof Error) return <div>Error: {error.message}</div>;
+  if (!data) {
+    return (
+      <>
+        <HeaderComponent />
+        <Alert severity="info" sx={singlePropertyStyles.alert}>
+          Oops! We couldn&apos;t find any data. Please try again later.
+        </Alert>
+      </>
+    );
+  }
+  if (error instanceof Error) {
+    return (
+      <>
+        <HeaderComponent />
+        <Alert severity="error" sx={singlePropertyStyles.alert}>
+          Unexpected error occurred: {error.message}
+        </Alert>
+      </>
+    );
+  }
 
   const accommodationData: Accommodation = data.data;
   const handleReserve = () => {
