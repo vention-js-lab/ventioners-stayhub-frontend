@@ -5,24 +5,26 @@ export const settingsPageStyles = {
     paddingTop: '12px',
     marginX: 'auto',
     textAlign: 'center',
-    maxWidth: '1080px',
-    width: '1080px',
-    '@media (max-width: 1080px)': {
-      maxWidth: '100%',
-      width: '100%',
+    maxWidth: {
+      xs: '100%',
+      lg: '1080px',
+    },
+    width: {
+      xs: '100%',
+      lg: '1080px',
     },
   },
   headingContainer: {
     display: 'flex',
-    gap: '30px',
+    gap: {
+      xs: '16px',
+      md: '30px',
+    },
     alignItems: 'start',
     textAlign: 'start',
     marginLeft: '16px',
     marginTop: '64px',
     marginBottom: '56px',
-    '@media (max-width: 768px)': {
-      gap: '16px',
-    },
   },
   heading: {
     fontSize: '2rem',
@@ -33,8 +35,9 @@ export const settingsPageStyles = {
   headingDetails: {
     marginTop: '8px',
     marginBottom: '16px',
-    '@media (max-width: 768px)': {
-      fontSize: '16px',
+    fontSize: {
+      xs: '16px',
+      md: 'inherit',
     },
   },
   firstName: {

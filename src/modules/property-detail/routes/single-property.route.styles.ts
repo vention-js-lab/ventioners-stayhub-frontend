@@ -18,36 +18,34 @@ export const singlePropertyStyles = {
     textAlign: 'left',
     my: '16px',
     mx: { md: 0, xs: '16px' },
-    '@media (max-width: 768px)': {
-      fontSize: '1.2rem',
-    },
   },
   titleActionBox: {
     display: 'flex',
     gap: '10px',
     alignItems: 'center',
-    marginRight: '16px',
-    '@media (max-width: 768px)': {
-      marginRight: '0',
-      marginTop: '8px',
+    marginRight: {
+      xs: 0,
+      md: '16px',
+    },
+    marginTop: {
+      xs: '8px',
+      md: 0,
     },
   },
   titleActionItem: { display: 'flex', gap: '3px', alignItems: 'center', textDecoration: 'underline', cursor: 'pointer' },
   mapStyle: {
-    height: '450px',
     margin: '20px',
-    '@media (max-width: 768px)': {
-      height: '300px',
-    },
-    '@media (max-width: 480px)': {
-      height: '200px',
+    height: {
+      xs: '200px',
+      sm: '300px',
+      md: '450px',
     },
   },
   locationText: {
     mb: '2',
-    fontSize: '2rem',
-    '@media (max-width: 768px)': {
-      fontSize: '1rem',
+    fontSize: {
+      xs: '1rem',
+      md: '2rem',
     },
   },
   customDivider: { my: 3, display: { md: 'none', xs: 'block' } },

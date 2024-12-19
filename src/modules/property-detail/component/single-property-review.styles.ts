@@ -13,9 +13,7 @@ export const PropertyReviewStyles = {
     mb: 3,
     display: 'flex',
     alignItems: 'center',
-    '@media (max-width: 768px)': {
-      fontSize: '1.2rem',
-    },
+    fontSize: { xs: '1.2rem', md: 'inherit' },
   },
   reviewTitleIcon: { fontSize: '30px', mr: 1 },
   reviewContainerBox: {
