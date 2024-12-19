@@ -9,6 +9,7 @@ import { bookingsStyles } from './bookings.styles';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 import { BookingStatus } from '../types/booking-status.constant';
+import { loadingSpinnerStyles } from '#/styles';
 
 interface BookingsProps {
   selectedCategory: BookingStatus;
@@ -20,8 +21,8 @@ export function Bookings({ selectedCategory }: BookingsProps) {
 
   if (isLoading) {
     return (
-      <Box sx={bookingsStyles.loadingContainer}>
-        <CircularProgress />
+      <Box sx={loadingSpinnerStyles.container}>
+        <CircularProgress sx={loadingSpinnerStyles.spinner} />
       </Box>
     );
   }
