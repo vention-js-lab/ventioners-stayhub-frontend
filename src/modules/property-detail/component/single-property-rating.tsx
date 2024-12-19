@@ -20,7 +20,6 @@ export function ReviewForm({ accommodationId }: ReviewFormProps) {
   const queryClient = useQueryClient();
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState<string>('');
-
   const { mutate: createReview, status } = useCreateReview(queryClient, accommodationId);
   const isLoading = status === 'pending';
   const handleSubmit = () => {

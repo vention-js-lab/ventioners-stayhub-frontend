@@ -34,11 +34,21 @@ export const singlePropertyStyles = {
   },
   titleActionItem: { display: 'flex', gap: '3px', alignItems: 'center', textDecoration: 'underline', cursor: 'pointer' },
   mapStyle: {
-    margin: '20px',
+    marginBottom: '20px',
     height: {
       xs: '200px',
       sm: '300px',
       md: '450px',
+    },
+    marginLeft: {
+      xs: '15px',
+      sm: '20px',
+      md: '0px',
+    },
+    marginRight: {
+      xs: '15px',
+      sm: '20px',
+      md: '0px',
     },
   },
   locationText: {
@@ -48,6 +58,6 @@ export const singlePropertyStyles = {
       md: '2rem',
     },
   },
-  customDivider: { my: 3, display: { md: 'none', xs: 'block' } },
+  customDivider: { my: 3, display: { xs: 'block', md: 'block' } },
   alert: { width: '90%', maxWidth: 800, marginTop: 2, marginX: 'auto' },
 };

@@ -19,6 +19,8 @@ import { Property, PropertyImagesWrapper, PropertyReview, ReviewForm } from '../
 import { CustomMap } from '#/modules/home/components/map/mapComponent';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import { loadingSpinnerStyles } from '#/styles';
+import { useAuth } from '#/modules/auth/hooks';
+import { canLeaveReview } from '#/utils/booking-status.util';
 
 // eslint-disable-next-line complexity
 export function SinglePropertyRoute() {
@@ -28,7 +30,7 @@ export function SinglePropertyRoute() {
   const { data: bookings, isLoading: bookingLoading } = useGetBookings();
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null);
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
-
+  const { data: user } = useAuth();
   const { data, error, isLoading } = useAccommodationById(id || '');
 
   if (!id) {
@@ -93,8 +95,10 @@ export function SinglePropertyRoute() {
   );
   const images = accommodationData.images.sort((a, b) => a.order - b.order);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
-  const userHasBooking = bookings?.data.some((booking) => booking.accommodation.id === accommodationData.id);
-
+  let userHasBooking = false;
+  if (bookings) {
+    userHasBooking = canLeaveReview(bookings.data, reviews, accommodationData.id, user?.id);
+  }
   return (
     <>
       <HeaderComponent />
