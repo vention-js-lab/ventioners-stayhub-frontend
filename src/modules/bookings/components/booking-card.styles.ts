@@ -5,10 +5,6 @@ export const bookingCardStyles = {
     mb: 2,
     borderRadius: 2,
     boxShadow: 1,
-    transition: 'transform 0.2s',
-    '&:hover': {
-      transform: 'scale(1.02)',
-    },
   },
   content: {
     p: 5,
