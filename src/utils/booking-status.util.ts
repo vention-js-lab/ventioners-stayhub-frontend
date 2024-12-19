@@ -6,18 +6,19 @@ export function canLeaveReview(
   bookings: Booking[],
   reviews: {
     id: string;
-    user: Pick<User, 'firstName' | 'lastName' | 'id'>;
+    user: Pick<User, 'firstName' | 'lastName'>;
     comment: string;
     rating: number;
     accommodationId: string;
   }[],
   accommodationId: string,
-  userId: string
+  user: string
 ): boolean {
   const isConfirmedForAccommodation = bookings.some((booking: Booking): boolean => {
     return booking.accommodation.id === accommodationId && booking.status === BookingStatus.Confirmed;
   });
-
-  const hasReviewed = reviews.some((review) => review.accommodationId === accommodationId && review.user.id === userId);
+  const hasReviewed = reviews.some((review) => {
+    return review.user.id === user;
+  });
   return isConfirmedForAccommodation && !hasReviewed;
 }

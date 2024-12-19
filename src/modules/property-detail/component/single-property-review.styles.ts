@@ -10,7 +10,6 @@ export const PropertyReviewStyles = {
     },
   },
   reviewTitle: {
-    mb: 3,
     display: 'flex',
     alignItems: 'center',
     fontSize: { xs: '1.2rem', md: 'inherit' },
@@ -25,6 +24,7 @@ export const PropertyReviewStyles = {
       flex: { xs: '1 1 100%', md: '1 1 calc(50% - 16px)' },
       minWidth: { xs: '100%', md: 'calc(50% - 16px)' },
       maxWidth: { xs: '100%', md: 'calc(50% - 16px)' },
+      marginTop: 2,
     },
   },
   reviewBox: {

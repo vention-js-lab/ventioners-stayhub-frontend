@@ -55,7 +55,7 @@ export const singlePropertyStyles = {
     mb: '2',
     fontSize: {
       xs: '1rem',
-      md: '2rem',
+      md: '1.5rem',
     },
   },
   customDivider: { my: 3, display: { xs: 'block', md: 'block' } },
