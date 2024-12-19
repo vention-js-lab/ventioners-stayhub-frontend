@@ -11,6 +11,9 @@ export const propertyCardStyles = {
     borderRadius: '50%',
     padding: '4px',
     fontSize: '32px',
+    '&:hover': {
+      transform: 'scale(1.1)',
+    },
   },
   image: {
     width: '100%',
