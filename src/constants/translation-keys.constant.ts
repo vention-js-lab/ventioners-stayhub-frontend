@@ -195,6 +195,7 @@ export const TRANSLATION_KEYS = {
     error_occured: 'error-occured',
   },
   owner_properties: {
+    my_properties: 'my-properties',
     no_properties: 'no-properties',
     unable_to_load: 'unable-to-load',
   },
