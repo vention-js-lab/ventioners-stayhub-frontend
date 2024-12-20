@@ -1,13 +1,14 @@
 import Box from '@mui/material/Box';
 import { useOwnerProperties } from '../../api/get-owner-properties';
 import { OwnerPropertyCard } from './owner-property-card';
-import { ownerPropertiesListStyles } from './owner-properties-list.styles';
-import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 import { toast } from 'react-toastify';
 import Container from '@mui/material/Container';
+import { ownerPropertiesListStyles } from './owner-properties-list.styles';
+import { loadingSpinnerStyles } from '#/styles';
 
 export function OwnerPropertiesList() {
   const { t } = useTranslation('owner-properties');
@@ -15,8 +16,8 @@ export function OwnerPropertiesList() {
 
   if (isLoading) {
     return (
-      <Box sx={ownerPropertiesListStyles.spinnerContainer}>
-        <CircularProgress />
+      <Box sx={loadingSpinnerStyles.container}>
+        <CircularProgress sx={loadingSpinnerStyles.spinner} />
       </Box>
     );
   }
