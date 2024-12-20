@@ -5,7 +5,7 @@ export const ownerPropertiesRouteStyles = {
   header: {
     mx: 1,
     mb: 5,
-    fontWeight: 300,
+    fontWeight: 500,
     textAlign: 'center',
   },
 } satisfies MuiStylesObject;

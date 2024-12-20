@@ -8,7 +8,7 @@ export const navStyles = {
   },
   header: {
     mb: 5,
-    fontWeight: 300,
+    fontWeight: 500,
     textAlign: 'center',
   },
   menuStyles: {

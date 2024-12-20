@@ -6,7 +6,7 @@ export const settingsCardStyles = {
     cursor: 'pointer',
     textAlign: 'start',
     maxHeight: '172px',
-    minWidth: '328px',
+    minWidth: '260px',
   },
   card: {
     boxSizing: 'border-box',
