@@ -12,7 +12,7 @@ type GetPropertiesResponse = {
 export type GetPropertiesParams = {
   page?: number;
   categoryId?: string;
-  location?: string;
+  search?: string;
   fromDate?: string;
   toDate?: string;
   numberOfGuests?: string;
@@ -23,7 +23,7 @@ export async function getProperties({
   page = 1,
   limit = 12,
   categoryId,
-  location,
+  search,
   fromDate,
   toDate,
   numberOfGuests,
@@ -37,8 +37,8 @@ export async function getProperties({
     params.categoryId = categoryId;
   }
 
-  if (location) {
-    params.location = location;
+  if (search) {
+    params.search = search;
   }
 
   if (fromDate) {

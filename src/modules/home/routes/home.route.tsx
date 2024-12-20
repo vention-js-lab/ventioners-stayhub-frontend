@@ -22,7 +22,7 @@ export function HomeRoute() {
   const { t } = useTranslation('home');
   const [searchParams, setSearchParams] = useState<GetPropertiesParams>({
     categoryId: '',
-    location: '',
+    search: '',
     fromDate: '',
     toDate: '',
     numberOfGuests: '',
@@ -30,13 +30,13 @@ export function HomeRoute() {
   const { isLoading, data, fetchNextPage, hasNextPage, isFetchingNextPage } = useProperties({
     page: 1,
     categoryId: searchParams.categoryId,
-    location: searchParams.location,
+    search: searchParams.search,
     fromDate: searchParams.fromDate,
     toDate: searchParams.toDate,
     numberOfGuests: searchParams.numberOfGuests,
   });
   const { location } = useCurrentLocation();
-  const placeResult = useGeocodeLocation(searchParams.location || '');
+  const placeResult = useGeocodeLocation(searchParams.search || '');
   const properties = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data]);
   const defaultCenter = location || { lat: latitude, lng: longitude };
 

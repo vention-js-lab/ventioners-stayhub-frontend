@@ -49,7 +49,7 @@ function DateButton({ label, date, onOpen, t, i18n }: DateButtonProps) {
 
 export function SearchBar({ setParams }: SearchBarProps) {
   const { t, i18n } = useTranslation('home');
-  const [locationSearchValue, setLocationSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
@@ -85,7 +85,7 @@ export function SearchBar({ setParams }: SearchBarProps) {
   function handleSearchButtonClick() {
     setParams?.((prevParams) => ({
       ...prevParams,
-      location: locationSearchValue,
+      search: searchValue,
       fromDate: startDate?.toISOString(),
       toDate: endDate?.toISOString(),
       numberOfGuests: String(guestCounts.adults + guestCounts.children > 0 ? guestCounts.adults + guestCounts.children : ''),
@@ -100,7 +100,7 @@ export function SearchBar({ setParams }: SearchBarProps) {
         divider={<StyledDivider orientation="vertical" flexItem={true} variant="middle" />}
         sx={searchbarStyles.stack.styles}
       >
-        <DestinationSearch locationSearchValue={locationSearchValue} setLocationSearchValue={setLocationSearchValue} />
+        <DestinationSearch locationSearchValue={searchValue} setLocationSearchValue={setSearchValue} />
 
         <Box sx={searchbarStyles.datesSection.container}>
           <Stack
