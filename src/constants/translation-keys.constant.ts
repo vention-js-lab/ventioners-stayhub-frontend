@@ -34,6 +34,7 @@ export const TRANSLATION_KEYS = {
         guests: {
           total: 'header.search.guests.total',
           total_other: 'header.search.guests.total_other',
+          placeholder: 'header.search.guests.placeholder',
         },
         infants: {
           title: 'header.search.infants.title',

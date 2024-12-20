@@ -27,7 +27,8 @@
       "dates": "Dates",
       "guests": {
         "total": "{{count}} guest",
-        "total_other": "{{count}} guests"
+        "total_other": "{{count}} guests",
+        "placeholder": "Add guests"
       },
       "infants": {
         "title": "Infants",
