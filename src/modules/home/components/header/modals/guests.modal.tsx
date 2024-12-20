@@ -11,7 +11,6 @@ import { guestTypes } from '../constants';
 import { guestModalStyles } from '../styles';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
-import React from 'react';
 
 export interface GuestCounts {
   adults: number;
@@ -91,7 +90,17 @@ export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }:
                 spacing={guestModalStyles.addRemoveButtonContainer.spacing}
                 alignItems={guestModalStyles.addRemoveButtonContainer.alignItems}
               >
-                <CounterButton disabled={guestCounts[type] <= min} onClick={() => handleCountChange(type, false)}>
+                <CounterButton
+                  disabled={
+                    guestCounts[type] <= min ||
+                    (type === 'adults' &&
+                      guestCounts.adults === 1 &&
+                      Object.entries(guestCounts).some(([key, val]) => {
+                        return key !== 'adults' && val > 0;
+                      }))
+                  }
+                  onClick={() => handleCountChange(type, false)}
+                >
                   <RemoveIcon sx={guestModalStyles.icon} />
                 </CounterButton>
 
