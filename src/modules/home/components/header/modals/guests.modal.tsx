@@ -11,6 +11,7 @@ import { guestTypes } from '../constants';
 import { guestModalStyles } from '../styles';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import React from 'react';
 
 export interface GuestCounts {
   adults: number;
@@ -23,7 +24,7 @@ interface GuestsModalProps {
   open: boolean;
   onClose: () => void;
   guestCounts: GuestCounts;
-  onGuestCountsChange: (counts: GuestCounts) => void;
+  onGuestCountsChange: React.Dispatch<React.SetStateAction<GuestCounts>>;
 }
 
 export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }: GuestsModalProps) {
@@ -31,14 +32,21 @@ export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }:
   const handleCountChange = (type: keyof GuestCounts, increment: boolean) => {
     const guestType = guestTypes.find((g) => g.type === type);
     if (!guestType) return;
+    if (['pets', 'infants'].includes(type) && increment && guestCounts.adults === 0) {
+      onGuestCountsChange((prev) => ({
+        ...prev,
+        adults: 1,
+      }));
+    }
+
     const currentCount = guestCounts[type];
     const newCount = increment ? currentCount + 1 : currentCount - 1;
 
     if (newCount >= guestType.min && newCount <= guestType.max) {
-      onGuestCountsChange({
-        ...guestCounts,
+      onGuestCountsChange((prev) => ({
+        ...prev,
         [type]: newCount,
-      });
+      }));
     }
   };
 

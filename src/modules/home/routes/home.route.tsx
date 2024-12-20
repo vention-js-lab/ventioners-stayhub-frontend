@@ -39,6 +39,7 @@ export function HomeRoute() {
   const placeResult = useGeocodeLocation(searchParams.location || '');
   const properties = useMemo(() => data?.pages.flatMap((page) => page.data) ?? [], [data]);
   const defaultCenter = location || { lat: latitude, lng: longitude };
+
   return (
     <Box sx={homeRouteStyles.container}>
       <HeaderComponent showSearchBar={true} setParams={setSearchParams} />

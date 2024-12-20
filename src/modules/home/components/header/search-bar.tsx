@@ -54,7 +54,7 @@ export function SearchBar({ setParams }: SearchBarProps) {
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
   const [isGuestsModalOpen, setIsGuestsModalOpen] = useState(false);
-  const [guestCounts, setGuestCounts] = useState({ adults: 1, children: 0, infants: 0, pets: 0 });
+  const [guestCounts, setGuestCounts] = useState({ adults: 0, children: 0, infants: 0, pets: 0 });
 
   const formatGuestCount = () => {
     const totalGuests = guestCounts.adults + guestCounts.children;
@@ -68,7 +68,12 @@ export function SearchBar({ setParams }: SearchBarProps) {
       parts.push(t(TRANSLATION_KEYS.home.header.search.pets.total, { count: guestCounts.pets }));
     }
 
-    return parts.join(', ');
+    let result = t(TRANSLATION_KEYS.home.header.search.guests.placeholder);
+    if (Object.values(guestCounts).reduce((cnt, curr) => cnt + curr, 0) > 0) {
+      result = parts.join(', ');
+    }
+
+    return result;
   };
 
   const handleDateSelect = (start: Dayjs | null, end: Dayjs | null) => {
@@ -83,7 +88,7 @@ export function SearchBar({ setParams }: SearchBarProps) {
       location: locationSearchValue,
       fromDate: startDate?.toISOString(),
       toDate: endDate?.toISOString(),
-      numberOfGuests: String(guestCounts.adults + guestCounts.children),
+      numberOfGuests: String(guestCounts.adults + guestCounts.children > 0 ? guestCounts.adults + guestCounts.children : ''),
     }));
   }
 
