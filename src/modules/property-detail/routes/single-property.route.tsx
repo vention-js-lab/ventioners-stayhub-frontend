@@ -89,7 +89,7 @@ export function SinglePropertyRoute() {
   const reviews = accommodationData.reviews.map(
     (review: { id: string; user: Pick<User, 'firstName' | 'lastName'>; comment: string; rating: number }) => ({
       id: review.id,
-      user: user,
+      user: review.user,
       name: `${review.user.firstName} ${review.user.lastName}`,
       comment: review.comment,
       rating: review.rating,

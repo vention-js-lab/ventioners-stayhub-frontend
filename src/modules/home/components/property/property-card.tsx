@@ -8,6 +8,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { type Accommodation } from '../../types/accommodation.type';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { propertyCardStyles } from './property-card.styles';
+import StarIcon from '@mui/icons-material/Star';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
@@ -23,13 +24,15 @@ import { selectAuth } from '#/redux/auth/auth.slice';
 import { postWishlist } from '#/modules/wishlist/api/post-wishlist';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { useAccommodationById } from '#/modules/property-detail/api/get-accommodation';
+import Box from '@mui/material/Box';
 
 export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const sortedImages = images.sort((a, b) => a.order - b.order);
   const { t } = useTranslation('home');
   const navigate = useNavigate();
   const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
-
+  const { data } = useAccommodationById(id || '');
   const mutation = useMutation({
     mutationFn: () => postWishlist(id),
     onSuccess: () => {
@@ -57,6 +60,11 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
     }
   };
 
+  const reviews = data?.data.reviews || [];
+  const totalRating = reviews.reduce((sum, review) => {
+    return sum + Number(review.rating);
+  }, 0);
+  const averageRating = reviews.length > 0 ? (totalRating / reviews.length).toFixed(2) : null;
   return (
     <Link to={`/property/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
@@ -89,11 +97,25 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
           ))}
         </Swiper>
 
-        <CardContent sx={{ padding: '16px 0px' }}>
-          <Typography variant="h6">{name}</Typography>
-          <Typography sx={{ opacity: '.7' }}>{location}</Typography>
+        <CardContent sx={{ padding: '0px 0px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginTop: '8px' }}>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: '18px', whiteSpace: 'normal', wordWrap: 'break-word', maxWidth: 'calc(100% - 70px)' }}
+            >
+              {name}
+            </Typography>
+            {averageRating ? (
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <StarIcon sx={{ fontSize: '16px', color: 'black', marginRight: '4px' }} />
+                <Typography sx={{ fontWeight: '500' }}>{averageRating}</Typography>
+              </Box>
+            ) : null}
+          </Box>
+
+          <Typography sx={{ opacity: '.7', fontSize: '14px' }}>{location}</Typography>
           <Typography>
-            <strong>${pricePerNight}</strong> {t(TRANSLATION_KEYS.home.property.night)}
+            <span style={{ fontWeight: '600' }}>${pricePerNight}</span> {t(TRANSLATION_KEYS.home.property.night)}
           </Typography>
         </CardContent>
       </Card>
