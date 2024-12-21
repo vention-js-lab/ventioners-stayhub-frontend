@@ -66,7 +66,6 @@ export const accommodationDetailsFormStyles = {
     flex: '0 0 auto',
     width: '32px',
     height: '32px',
-    fontSize: '30px',
     '&:hover': {
       borderColor: 'rgb(34, 34, 34)',
     },
@@ -76,6 +75,10 @@ export const accommodationDetailsFormStyles = {
     '&:disabled img': {
       opacity: '25%',
       userSelect: 'none',
+    },
+    '& > img': {
+      width: '15px',
+      height: '15px',
     },
   },
 } satisfies MuiStylesObject;

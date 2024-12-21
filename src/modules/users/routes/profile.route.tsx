@@ -20,7 +20,7 @@ export function ProfileRoute() {
     <Fragment>
       <HeaderComponent />
       <Box sx={styles.container}>
-        <Box sx={styles.headingContainer}>
+        <Box sx={styles.profileContainer}>
           <Box>
             {auth.user?.firstName ? (
               <UserProfilePicture user={auth.user} size="large" />
@@ -28,13 +28,13 @@ export function ProfileRoute() {
               <AccountCircle sx={styles.noProfileIcon} />
             )}
           </Box>
-          <Box>
+          <Box sx={styles.headingContainer}>
             <Box sx={styles.heading}>{t(TRANSLATION_KEYS.account_settings.your_profile)}</Box>
             <Box sx={styles.headingDetails}>
               <Box sx={styles.firstName}>
                 {auth.user?.firstName} {auth.user?.lastName}
               </Box>
-              <Box>{auth.user?.email}</Box>
+              <Box sx={styles.email}>{auth.user?.email}</Box>
             </Box>
           </Box>
         </Box>

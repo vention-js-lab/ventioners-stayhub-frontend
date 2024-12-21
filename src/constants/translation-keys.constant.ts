@@ -34,6 +34,7 @@ export const TRANSLATION_KEYS = {
         guests: {
           total: 'header.search.guests.total',
           total_other: 'header.search.guests.total_other',
+          placeholder: 'header.search.guests.placeholder',
         },
         infants: {
           title: 'header.search.infants.title',
@@ -194,6 +195,7 @@ export const TRANSLATION_KEYS = {
     error_occured: 'error-occured',
   },
   owner_properties: {
+    my_properties: 'my-properties',
     no_properties: 'no-properties',
     unable_to_load: 'unable-to-load',
   },

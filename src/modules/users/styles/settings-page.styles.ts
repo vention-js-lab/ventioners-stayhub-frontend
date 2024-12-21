@@ -14,17 +14,21 @@ export const settingsPageStyles = {
       lg: '1080px',
     },
   },
-  headingContainer: {
+  profileContainer: {
     display: 'flex',
     gap: {
-      xs: '16px',
-      md: '30px',
+      xs: '8px',
+      md: '26px',
     },
     alignItems: 'start',
     textAlign: 'start',
-    marginLeft: '16px',
+    mx: 'auto',
     marginTop: '64px',
     marginBottom: '56px',
+    maxWidth: '90%',
+  },
+  headingContainer: {
+    minWidth: 0,
   },
   heading: {
     fontSize: '2rem',
@@ -35,15 +39,14 @@ export const settingsPageStyles = {
   headingDetails: {
     marginTop: '8px',
     marginBottom: '16px',
-    fontSize: {
-      xs: '16px',
-      md: 'inherit',
-    },
   },
   firstName: {
     marginTop: '18px',
     marginBottom: '6px',
     fontWeight: 600,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   grid: {
     display: 'flex',
@@ -55,5 +58,10 @@ export const settingsPageStyles = {
     height: 32,
     color: '#717171',
     marginRight: '5px',
+  },
+  email: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 } satisfies MuiStylesObject;

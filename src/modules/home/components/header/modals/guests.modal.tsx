@@ -23,7 +23,7 @@ interface GuestsModalProps {
   open: boolean;
   onClose: () => void;
   guestCounts: GuestCounts;
-  onGuestCountsChange: (counts: GuestCounts) => void;
+  onGuestCountsChange: React.Dispatch<React.SetStateAction<GuestCounts>>;
 }
 
 export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }: GuestsModalProps) {
@@ -31,14 +31,21 @@ export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }:
   const handleCountChange = (type: keyof GuestCounts, increment: boolean) => {
     const guestType = guestTypes.find((g) => g.type === type);
     if (!guestType) return;
+    if (['pets', 'infants'].includes(type) && increment && guestCounts.adults === 0) {
+      onGuestCountsChange((prev) => ({
+        ...prev,
+        adults: 1,
+      }));
+    }
+
     const currentCount = guestCounts[type];
     const newCount = increment ? currentCount + 1 : currentCount - 1;
 
     if (newCount >= guestType.min && newCount <= guestType.max) {
-      onGuestCountsChange({
-        ...guestCounts,
+      onGuestCountsChange((prev) => ({
+        ...prev,
         [type]: newCount,
-      });
+      }));
     }
   };
 
@@ -83,7 +90,17 @@ export function GuestsModal({ open, onClose, guestCounts, onGuestCountsChange }:
                 spacing={guestModalStyles.addRemoveButtonContainer.spacing}
                 alignItems={guestModalStyles.addRemoveButtonContainer.alignItems}
               >
-                <CounterButton disabled={guestCounts[type] <= min} onClick={() => handleCountChange(type, false)}>
+                <CounterButton
+                  disabled={
+                    guestCounts[type] <= min ||
+                    (type === 'adults' &&
+                      guestCounts.adults === 1 &&
+                      Object.entries(guestCounts).some(([key, val]) => {
+                        return key !== 'adults' && val > 0;
+                      }))
+                  }
+                  onClick={() => handleCountChange(type, false)}
+                >
                   <RemoveIcon sx={guestModalStyles.icon} />
                 </CounterButton>
 

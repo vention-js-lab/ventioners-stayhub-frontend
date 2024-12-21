@@ -28,7 +28,8 @@
       "guests": {
         "total": "{{count}} гость",
         "total_few": "{{count}} гостя",
-        "total_many": "{{count}} гостей"
+        "total_many": "{{count}} гостей",
+        "placeholder": "Кто едет?"
       },
       "infants": {
         "title": "Младенцы",
