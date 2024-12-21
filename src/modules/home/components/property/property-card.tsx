@@ -24,8 +24,8 @@ import { selectAuth } from '#/redux/auth/auth.slice';
 import { postWishlist } from '#/modules/wishlist/api/post-wishlist';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
-import { useAccommodationById } from '#/modules/property-detail/api/get-accommodation';
 import Box from '@mui/material/Box';
+import { useAccommodationById } from '#/modules/property-detail/api/get-accommodation';
 
 export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
   const sortedImages = images.sort((a, b) => a.order - b.order);
@@ -33,6 +33,7 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
   const navigate = useNavigate();
   const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
   const { data } = useAccommodationById(id || '');
+  const overallRating = data?.data.overallRating;
   const mutation = useMutation({
     mutationFn: () => postWishlist(id),
     onSuccess: () => {
@@ -60,11 +61,6 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
     }
   };
 
-  const reviews = data?.data.reviews || [];
-  const totalRating = reviews.reduce((sum, review) => {
-    return sum + Number(review.rating);
-  }, 0);
-  const averageRating = reviews.length > 0 ? (totalRating / reviews.length).toFixed(2) : null;
   return (
     <Link to={`/property/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ boxShadow: 'none', position: 'relative' }}>
@@ -105,10 +101,10 @@ export function PropertyCard({ id, name, location, pricePerNight, images, isAdde
             >
               {name}
             </Typography>
-            {averageRating ? (
+            {overallRating ? (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <StarIcon sx={{ fontSize: '16px', color: 'black', marginRight: '4px' }} />
-                <Typography sx={{ fontWeight: '500' }}>{averageRating}</Typography>
+                <Typography sx={{ fontWeight: '500' }}>{overallRating}</Typography>
               </Box>
             ) : null}
           </Box>

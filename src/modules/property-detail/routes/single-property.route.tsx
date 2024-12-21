@@ -32,7 +32,6 @@ export function SinglePropertyRoute() {
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
   const user = useAppSelector((state) => state.auth.user);
   const { data, error, isLoading } = useAccommodationById(id || '');
-
   if (!id) {
     return <div>Error: Property ID is not provided.</div>;
   }
@@ -99,7 +98,7 @@ export function SinglePropertyRoute() {
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
   let userHasBooking = false;
   if (bookings) {
-    userHasBooking = canLeaveReview(bookings.data, reviews, accommodationData.id, user?.id);
+    userHasBooking = canLeaveReview(bookings.data, reviews, accommodationData, user?.id);
   }
   return (
     <>
