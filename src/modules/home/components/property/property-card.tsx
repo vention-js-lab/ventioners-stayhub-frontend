@@ -25,15 +25,12 @@ import { postWishlist } from '#/modules/wishlist/api/post-wishlist';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 import Box from '@mui/material/Box';
-import { useAccommodationById } from '#/modules/property-detail/api/get-accommodation';
 
-export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist }: Accommodation) {
+export function PropertyCard({ id, name, location, pricePerNight, images, isAddedToWishlist, overallRating }: Accommodation) {
   const sortedImages = images.sort((a, b) => a.order - b.order);
   const { t } = useTranslation('home');
   const navigate = useNavigate();
   const [isInWishlist, setInWishlist] = useState(isAddedToWishlist);
-  const { data } = useAccommodationById(id || '');
-  const overallRating = data?.data.overallRating;
   const mutation = useMutation({
     mutationFn: () => postWishlist(id),
     onSuccess: () => {
