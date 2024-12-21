@@ -15,7 +15,7 @@ export function canLeaveReview(
   user: string
 ): boolean {
   const isConfirmedForAccommodation = bookings.some((booking: Booking): boolean => {
-    return booking.accommodation.id === accommodationId && booking.status === BookingStatus.Confirmed;
+    return booking.accommodation.id === accommodationId && booking.status === BookingStatus.CheckedOut;
   });
   const hasReviewed = reviews.some((review) => {
     return review.user.id === user;
