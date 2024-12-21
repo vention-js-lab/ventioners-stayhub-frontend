@@ -67,7 +67,7 @@ export function SinglePropertyRoute() {
 
   const accommodationData: Accommodation = data.data;
 
-  const handleReserve = () => {
+  const handleReserve = (totalGuests: number) => {
     if (!checkInDate || !checkOutDate) {
       toast.error('Please select check-in and check-out dates.');
       return;
@@ -77,7 +77,7 @@ export function SinglePropertyRoute() {
       checkInDate: checkInDate.add(14, 'hour').toDate(),
       checkOutDate: checkOutDate.add(12, 'hour').toDate(),
       accommodationId: id,
-      numberOfGuests: 1,
+      numberOfGuests: totalGuests,
     });
   };
 
