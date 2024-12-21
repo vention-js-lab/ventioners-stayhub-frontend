@@ -74,7 +74,8 @@ function Property({
 
   const updateGuestCount = (type: keyof typeof guestCounts, increment: boolean) => {
     setGuestCounts((prev) => {
-      const newCount = Math.max(0, prev[type] + (increment ? 1 : -1));
+      const newCount =
+        type === 'adults' ? Math.max(1, prev[type] + (increment ? 1 : -1)) : Math.max(0, prev[type] + (increment ? 1 : -1));
       const totalPeople = prev.adults + prev.children + (type !== 'pets' ? (increment ? 1 : -1) : 0);
 
       if (type !== 'infants' && totalPeople > numberOfGuests) {
@@ -230,7 +231,9 @@ function Property({
                       <IconButton
                         onClick={() => updateGuestCount(type as keyof typeof guestCounts, false)}
                         size="small"
-                        disabled={guestCounts[type as keyof typeof guestCounts] === 0}
+                        disabled={
+                          type === 'adults' ? guestCounts.adults === 1 : guestCounts[type as keyof typeof guestCounts] === 0
+                        }
                       >
                         <RemoveCircleOutlineIcon />
                       </IconButton>
