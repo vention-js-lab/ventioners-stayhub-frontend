@@ -23,6 +23,7 @@ import { useState } from 'react';
 import { CancelBookingModal } from './cancel-booking-modal';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { formatBookingStatus } from '#/utils';
 
 type BookingsWithAccommodation = Booking & {
   accommodation: Accommodation;
@@ -115,7 +116,7 @@ export function BookingCard({ booking }: BookingCardProps) {
           <Box>
             <Divider sx={{ my: 1 }} />
             <Box sx={bookingCardStyles.statusContainer}>
-              <Chip label={booking.status} color={getStatusColor(booking.status)} variant="outlined" />
+              <Chip label={formatBookingStatus(booking.status)} color={getStatusColor(booking.status)} variant="outlined" />
               <Typography variant="caption" color="text.secondary">
                 {t(TRANSLATION_KEYS.bookings.card.booked_on)} {formatDate(booking.createdAt)}
               </Typography>
