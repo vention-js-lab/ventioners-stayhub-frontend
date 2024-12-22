@@ -11,9 +11,9 @@ export function canLeaveReview(bookings: Booking[], reviews: Review[], accommoda
     return booking.accommodation.id === accommodationId && booking.status === BookingStatus.CheckedOut;
   });
 
-  const userHasReviwedBefore = reviews.some((review) => {
+  const userHasReviewedBefore = reviews.some((review) => {
     return review.user.id === userId;
   });
 
-  return hasUserCheckedOut && !userHasReviwedBefore;
+  return hasUserCheckedOut && !userHasReviewedBefore;
 }
