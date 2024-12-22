@@ -24,10 +24,6 @@ export function userProfilePictureStyles(size: 'small' | 'large' = 'small', prof
       ...(size === 'large' && {
         width: '200px',
         height: '200px',
-        '@media (max-width: 450px)': {
-          width: '120px',
-          height: '120px',
-        },
       }),
       ...(profilePictureUrl && {
         backgroundImage: `url(${profilePictureUrl})`,

@@ -20,12 +20,20 @@ export const settingsPageStyles = {
       xs: '8px',
       md: '26px',
     },
+    flexWrap: 'wrap',
     alignItems: 'start',
     textAlign: 'start',
     mx: 'auto',
-    marginTop: '64px',
-    marginBottom: '56px',
+    marginY: '24px',
     maxWidth: '90%',
+  },
+  profilePictureContainer: {
+    width: {
+      xs: '100%',
+      md: 'unset',
+    },
+    marginBottom: '16px',
+    textAlign: 'center',
   },
   headingContainer: {
     minWidth: 0,
@@ -51,7 +59,10 @@ export const settingsPageStyles = {
   grid: {
     display: 'flex',
     flexWrap: 'wrap',
-    paddingX: '12px',
+    paddingX: {
+      xs: '4px',
+      md: '20px',
+    },
   },
   noProfileIcon: {
     width: 32,
