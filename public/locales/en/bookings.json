@@ -12,6 +12,14 @@
     "cancelled": "Cancelled",
     "archived": "Archived"
   },
+  "status-display": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "checked-in": "Checked in",
+    "checked-out": "Checked out",
+    "cancelled": "Cancelled",
+    "archived": "Archived"
+  },
   "card": {
     "cancel": "Cancel Booking",
     "booked-on": "Booked on",

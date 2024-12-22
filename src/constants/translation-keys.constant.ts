@@ -135,6 +135,14 @@ export const TRANSLATION_KEYS = {
       cancelled: 'filter-status.cancelled',
       archived: 'filter-status.archived',
     },
+    status_display: {
+      pending: 'status-display.pending',
+      confirmed: 'status-display.confirmed',
+      checked_in: 'status-display.checked-in',
+      checked_out: 'status-display.checked-out',
+      cancelled: 'status-display.cancelled',
+      archived: 'status-display.archived',
+    },
     card: {
       cancel: 'card.cancel',
       booked_on: 'card.booked-on',

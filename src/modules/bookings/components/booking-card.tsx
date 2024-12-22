@@ -119,8 +119,8 @@ export function BookingCard({ booking }: BookingCardProps) {
               <Chip
                 label={
                   t(
-                    TRANSLATION_KEYS.bookings.filter_status[
-                      booking.status.toLowerCase() as keyof typeof TRANSLATION_KEYS.bookings.filter_status
+                    TRANSLATION_KEYS.bookings.status_display[
+                      booking.status.toLowerCase() as keyof typeof TRANSLATION_KEYS.bookings.status_display
                     ]
                   ) || formatBookingStatus(booking.status)
                 }
