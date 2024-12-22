@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -21,6 +20,7 @@ import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 import { bookingCardStyles } from './booking-card.styles';
 import { type Booking } from '../types';
 import { type Accommodation } from '#/modules/home/types/accommodation.type';
+import React, { useState } from 'react';
 
 type BookingsWithAccommodation = Booking & {
   accommodation: Accommodation;
@@ -30,13 +30,13 @@ type BookingCardProps = {
   booking: BookingsWithAccommodation;
 };
 
-export const BookingCard: React.FC<BookingCardProps> = ({ booking }) => {
+export function BookingCard({ booking }: BookingCardProps) {
   const { t } = useTranslation('bookings');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
 
-  const isBookingStatusConfirmedOrPending: boolean =
+  const isBookingStatusConfirmedOrPending =
     booking.status === BookingStatus.Confirmed || booking.status === BookingStatus.Pending;
   const isMenuOpen = Boolean(anchorEl);
 
@@ -45,15 +45,15 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking }) => {
       ? booking.accommodation.images.find((img) => img.order === 0) || booking.accommodation.images[0]
       : null;
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuClose = (): void => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
-  const formatDate = (date: Date): string => {
+  const formatDate = (date: Date) => {
     return dayjs(date).format('MMMM D, YYYY');
   };
 
@@ -64,7 +64,7 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking }) => {
     return 'default';
   };
 
-  const handleAccommodationClick = (): void => {
+  const handleAccommodationClick = () => {
     navigate(`/property/${booking.accommodation.id}`);
   };
 
@@ -167,6 +167,6 @@ export const BookingCard: React.FC<BookingCardProps> = ({ booking }) => {
       ) : null}
     </Card>
   );
-};
+}
 
 export default BookingCard;
