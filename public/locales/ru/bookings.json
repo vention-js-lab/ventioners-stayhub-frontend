@@ -12,6 +12,14 @@
     "cancelled": "Отмененные",
     "archived": "В архиве"
   },
+  "status-display": {
+    "pending": "В ожидании",
+    "confirmed": "Подтверждено",
+    "checked-in": "Гость заехал",
+    "checked-out": "Гость выехал",
+    "cancelled": "Отменено",
+    "archived": "В архиве"
+  },
   "card": {
     "cancel": "Отменить бронирование",
     "booked-on": "Забронировано",
