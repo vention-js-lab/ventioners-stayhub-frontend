@@ -1,9 +1,9 @@
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import Divider from '@mui/material/Divider';
 import CalendarIcon from '@mui/icons-material/CalendarMonth';
 import PersonIcon from '@mui/icons-material/Person';
 import LocationIcon from '@mui/icons-material/LocationOn';
@@ -12,17 +12,15 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-import { type Booking } from '../types/booking.type';
-import { type Accommodation } from '../../home/types/accommodation.type';
-import { bookingCardStyles } from './booking-card.styles';
 import { useNavigate } from 'react-router-dom';
 import { BookingStatus } from '../types/booking-status.constant';
 import dayjs from 'dayjs';
-import { useState } from 'react';
 import { CancelBookingModal } from './cancel-booking-modal';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { bookingCardStyles } from './booking-card.styles';
+import { type Booking } from '../types';
+import { type Accommodation } from '#/modules/home/types/accommodation.type';
 
 type BookingsWithAccommodation = Booking & {
   accommodation: Accommodation;
@@ -32,41 +30,62 @@ type BookingCardProps = {
   booking: BookingsWithAccommodation;
 };
 
-export function BookingCard({ booking }: BookingCardProps) {
+export const BookingCard: React.FC<BookingCardProps> = ({ booking }) => {
   const { t } = useTranslation('bookings');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
 
-  const isBookingStatusConfirmedOrPending =
+  const isBookingStatusConfirmedOrPending: boolean =
     booking.status === BookingStatus.Confirmed || booking.status === BookingStatus.Pending;
   const isMenuOpen = Boolean(anchorEl);
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const mainImage =
+    booking.accommodation.images.length > 0
+      ? booking.accommodation.images.find((img) => img.order === 0) || booking.accommodation.images[0]
+      : null;
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuClose = () => {
+  const handleMenuClose = (): void => {
     setAnchorEl(null);
   };
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date: Date): string => {
     return dayjs(date).format('MMMM D, YYYY');
   };
 
-  const getStatusColor = (status: BookingStatus) => {
+  const getStatusColor = (status: BookingStatus): 'warning' | 'success' | 'info' | 'default' => {
     if (status === BookingStatus.Pending) return 'warning';
     if (status === BookingStatus.Confirmed) return 'success';
     if (status === BookingStatus.CheckedIn || status === BookingStatus.CheckedOut) return 'info';
     return 'default';
   };
 
-  const handleAccommodationClick = () => {
+  const handleAccommodationClick = (): void => {
     navigate(`/property/${booking.accommodation.id}`);
   };
 
   return (
-    <Card variant="outlined" sx={bookingCardStyles.container}>
+    <Card sx={bookingCardStyles.container}>
+      <Box sx={bookingCardStyles.imageContainer}>
+        {mainImage ? (
+          <Box
+            component="img"
+            src={mainImage.url}
+            alt={booking.accommodation.name}
+            sx={bookingCardStyles.image}
+            onClick={handleAccommodationClick}
+          />
+        ) : (
+          <Box sx={bookingCardStyles.noImage}>
+            <Typography variant="body2">No image available</Typography>
+          </Box>
+        )}
+      </Box>
+
       <CardContent sx={bookingCardStyles.content}>
         <Box sx={bookingCardStyles.contextBox}>
           <Box sx={bookingCardStyles.titleBar}>
@@ -112,42 +131,42 @@ export function BookingCard({ booking }: BookingCardProps) {
             </Box>
           </Box>
 
-          <Box>
-            <Divider sx={{ my: 1 }} />
-            <Box sx={bookingCardStyles.statusContainer}>
-              <Chip label={booking.status} color={getStatusColor(booking.status)} variant="outlined" />
-              <Typography variant="caption" color="text.secondary">
-                {t(TRANSLATION_KEYS.bookings.card.booked_on)} {formatDate(booking.createdAt)}
-              </Typography>
-            </Box>
+          <Box sx={bookingCardStyles.statusContainer}>
+            <Chip label={booking.status} color={getStatusColor(booking.status)} variant="outlined" />
+            <Typography variant="caption" color="text.secondary">
+              {t(TRANSLATION_KEYS.bookings.card.booked_on)} {formatDate(booking.createdAt)}
+            </Typography>
           </Box>
         </Box>
-        {isBookingStatusConfirmedOrPending ? (
-          <>
-            <Menu
-              anchorEl={anchorEl}
-              open={isMenuOpen}
-              onClose={handleMenuClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
-              <MenuItem onClick={() => setIsModalOpen(true)}>{t(TRANSLATION_KEYS.bookings.cancel.button)}</MenuItem>
-            </Menu>
-            <CancelBookingModal
-              bookingId={booking.id}
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
-              hasRefund={booking.status === BookingStatus.Confirmed}
-            />
-          </>
-        ) : null}
       </CardContent>
+
+      {isBookingStatusConfirmedOrPending ? (
+        <>
+          <Menu
+            anchorEl={anchorEl}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >
+            <MenuItem onClick={() => setIsModalOpen(true)}>{t(TRANSLATION_KEYS.bookings.cancel.button)}</MenuItem>
+          </Menu>
+          <CancelBookingModal
+            bookingId={booking.id}
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            hasRefund={booking.status === BookingStatus.Confirmed}
+          />
+        </>
+      ) : null}
     </Card>
   );
-}
+};
+
+export default BookingCard;
