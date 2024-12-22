@@ -2,7 +2,6 @@ import Typography from '@mui/material/Typography';
 import { navStyles } from './booking-navbar.style';
 import { BookingStatus } from '../types/booking-status.constant';
 import Box from '@mui/material/Box';
-import { formatStatusText } from '#/utils';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
@@ -20,7 +19,7 @@ interface BookingsNavbarProps {
 export function BookingsNavbar({ selectedCategory, onCategoryChange }: BookingsNavbarProps) {
   const { t } = useTranslation('bookings');
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -46,12 +45,20 @@ export function BookingsNavbar({ selectedCategory, onCategoryChange }: BookingsN
       {isMobile ? (
         <Box sx={navStyles.container}>
           <Button variant="contained" onClick={handleMenuOpen} sx={navStyles.menuStyles}>
-            {formatStatusText(selectedCategory)}
+            {t(
+              TRANSLATION_KEYS.bookings.filter_status[
+                selectedCategory.toLowerCase() as keyof typeof TRANSLATION_KEYS.bookings.filter_status
+              ]
+            )}
           </Button>
           <Menu anchorEl={anchorEl} open={open} onClose={handleMenuClose}>
             {Object.values(BookingStatus).map((status) => (
               <MenuItem key={status} selected={selectedCategory === status} onClick={() => handleCategoryChange(status)}>
-                {formatStatusText(status)}
+                {t(
+                  TRANSLATION_KEYS.bookings.filter_status[
+                    status.toLowerCase() as keyof typeof TRANSLATION_KEYS.bookings.filter_status
+                  ]
+                )}
               </MenuItem>
             ))}
           </Menu>
@@ -62,7 +69,11 @@ export function BookingsNavbar({ selectedCategory, onCategoryChange }: BookingsN
             const isSelected = selectedCategory === status;
             return (
               <Typography key={status} sx={navStyles.navItem(isSelected)} onClick={() => onCategoryChange(status)}>
-                {formatStatusText(status)}
+                {t(
+                  TRANSLATION_KEYS.bookings.filter_status[
+                    status.toLowerCase() as keyof typeof TRANSLATION_KEYS.bookings.filter_status
+                  ]
+                )}
               </Typography>
             );
           })}

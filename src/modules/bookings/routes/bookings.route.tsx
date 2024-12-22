@@ -8,6 +8,7 @@ import { BookingsNavbar } from '../components/booking-navbar';
 
 export function BookingsRoute() {
   const [selectedCategory, setSelectedCategory] = useState<BookingStatus>(BookingStatus.All);
+
   return (
     <Box sx={bookingsRouteStyles.container}>
       <HeaderComponent />

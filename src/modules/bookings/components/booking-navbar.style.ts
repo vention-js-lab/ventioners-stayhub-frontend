@@ -23,10 +23,10 @@ export const navStyles = {
     width: '100%',
     textAlign: 'center',
     fontSize: '16px',
-    fontWeight: '500',
     padding: '10px 5px',
     cursor: 'pointer',
     color: isSelected ? '#E91E63' : '#000',
-    transition: 'transform 0.4s ease, color 0.4s ease',
+    fontWeight: isSelected ? 700 : 500,
+    transition: 'transform 0.3s ease',
   }),
 };
