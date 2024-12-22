@@ -56,7 +56,10 @@ export function BookingCard({ booking }: BookingCardProps) {
   };
 
   const formatDate = (date: Date) => {
-    return dayjs(date).format(localStorage.getItem('i18nextLng') === 'ru' ? 'D MMMM, YYYY' : 'MMMM D, YYYY');
+    const locale = localStorage.getItem('i18nextLng');
+    return dayjs(date)
+      .locale(locale || 'en')
+      .format(locale === 'ru' ? 'D MMMM, YYYY' : 'MMMM D, YYYY');
   };
 
   const getStatusColor = (status: BookingStatus): 'warning' | 'success' | 'info' | 'default' => {
