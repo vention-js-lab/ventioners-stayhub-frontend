@@ -116,7 +116,17 @@ export function BookingCard({ booking }: BookingCardProps) {
           <Box>
             <Divider sx={{ my: 1 }} />
             <Box sx={bookingCardStyles.statusContainer}>
-              <Chip label={formatBookingStatus(booking.status)} color={getStatusColor(booking.status)} variant="outlined" />
+              <Chip
+                label={
+                  t(
+                    TRANSLATION_KEYS.bookings.filter_status[
+                      booking.status.toLowerCase() as keyof typeof TRANSLATION_KEYS.bookings.filter_status
+                    ]
+                  ) || formatBookingStatus(booking.status)
+                }
+                color={getStatusColor(booking.status)}
+                variant="outlined"
+              />
               <Typography variant="caption" color="text.secondary">
                 {t(TRANSLATION_KEYS.bookings.card.booked_on)} {formatDate(booking.createdAt)}
               </Typography>
