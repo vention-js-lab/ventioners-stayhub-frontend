@@ -6,7 +6,6 @@ import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import { useParams } from 'react-router-dom';
-import { type User } from '#/types';
 import { type Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { useCreateBooking } from '#/modules/bookings/api/create-booking';
@@ -32,6 +31,7 @@ export function SinglePropertyRoute() {
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null);
   const user = useAppSelector((state) => state.auth.user);
   const { data, error, isLoading } = useAccommodationById(id || '');
+
   if (!id) {
     return <div>Error: Property ID is not provided.</div>;
   }
@@ -54,6 +54,7 @@ export function SinglePropertyRoute() {
       </>
     );
   }
+
   if (error instanceof Error) {
     return (
       <>
@@ -85,21 +86,21 @@ export function SinglePropertyRoute() {
     lat: accommodationData.locationCoordinates.coordinates[1],
     lng: accommodationData.locationCoordinates.coordinates[0],
   };
-  const reviews = accommodationData.reviews.map(
-    (review: { id: string; user: Pick<User, 'firstName' | 'lastName'>; comment: string; rating: number }) => ({
-      id: review.id,
-      user: review.user,
-      name: `${review.user.firstName} ${review.user.lastName}`,
-      comment: review.comment,
-      rating: review.rating,
-    })
-  );
+
+  const reviews = accommodationData.reviews.map((review) => ({
+    ...review,
+    name: `${review.user.firstName} ${review.user.lastName}`,
+  }));
+
   const images = accommodationData.images.sort((a, b) => a.order - b.order);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
+
   let userHasBooking = false;
+
   if (bookings) {
-    userHasBooking = canLeaveReview(bookings.data, reviews, accommodationData, user?.id);
+    userHasBooking = canLeaveReview(bookings.data, reviews, accommodationData.id, user?.id);
   }
+
   return (
     <>
       <HeaderComponent />
