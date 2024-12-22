@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 import i18n from '#/libs/i18n.lib';
+import dayjs from 'dayjs';
 
 type LanguageContextType = {
   language: string;
@@ -13,6 +14,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    dayjs.locale(lng);
     localStorage.setItem('i18nextLng', lng);
     setLanguage(lng);
   };

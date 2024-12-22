@@ -19,6 +19,7 @@ import { lazyRoute } from './utils/router.util';
 import Box from '@mui/material/Box';
 import { contentWrapperStyles } from './styles';
 import { LanguageProvider } from './contexts/language.context';
+import 'dayjs/locale/ru';
 
 const { Footer } = lazyRoute(() => import('./shared/components/footer'), 'Footer');
 

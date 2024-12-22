@@ -9,9 +9,13 @@ export const bookingCardStyles = {
     flexDirection: { xs: 'column', md: 'row' },
   },
   content: {
-    p: 5,
     flex: 1,
     width: '100%',
+    p: {
+      xs: 3,
+      md: 4,
+      lg: 5,
+    },
   },
   contextBox: {
     display: 'flex',
@@ -69,6 +73,7 @@ export const bookingCardStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: '8px',
     mt: 'auto',
   },
   imageContainer: {

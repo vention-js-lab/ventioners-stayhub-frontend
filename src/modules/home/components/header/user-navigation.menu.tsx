@@ -44,7 +44,6 @@ export function UserNavigationMenu<T extends MenuProps>({ anchorEl, handleMenuCl
 
   const handleLanguageSelect = (lng: string) => {
     changeLanguage(lng);
-    window.location.reload();
   };
 
   async function handleLogout() {
