@@ -5,14 +5,19 @@ export const bookingCardStyles = {
     mb: 2,
     borderRadius: 2,
     boxShadow: 1,
+    display: 'flex',
+    flexDirection: { xs: 'column', md: 'row' },
   },
   content: {
     p: 5,
+    flex: 1,
+    width: '100%',
   },
   contextBox: {
     display: 'flex',
     flexDirection: 'column',
     gap: 2,
+    height: '100%',
   },
   accommodationTitle: {
     fontWeight: 'bold',
@@ -28,6 +33,7 @@ export const bookingCardStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    mb: 2,
   },
   moreOptionsButton: {
     p: 1,
@@ -35,9 +41,11 @@ export const bookingCardStyles = {
   },
   detailsContainer: {
     display: 'flex',
-    flexDirection: { xs: 'column', sm: 'row' },
-    gap: 2,
+    flexDirection: { xs: 'column', md: 'row' },
+    gap: 3,
     justifyContent: 'space-between',
+    flex: 1,
+    mb: 2,
   },
   detailBox: {
     display: 'flex',
@@ -61,5 +69,36 @@ export const bookingCardStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    mt: 'auto',
+  },
+  imageContainer: {
+    width: { xs: '100%', md: '300px' },
+    minWidth: { md: '300px' },
+    position: 'relative',
+    overflow: 'hidden',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    cursor: 'pointer',
+  },
+  noImage: {
+    width: '100%',
+    height: '100%',
+    minHeight: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    bgcolor: 'grey.200',
+    color: 'grey.500',
+  },
+  mainContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
   },
 } satisfies MuiStylesObject;
