@@ -14,6 +14,11 @@ import { ServiceFeePortion } from '../constants/price.constant';
 import { DefaultStayingDays } from '../constants/staying-days.constant';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 interface PropertyProps {
   owner: string;
@@ -25,7 +30,7 @@ interface PropertyProps {
   checkOutDate: Dayjs | null;
   setCheckInDate: (date: Dayjs | null) => void;
   setCheckOutDate: (date: Dayjs | null) => void;
-  onReserve: () => void;
+  onReserve: (totalGuests: number) => void;
 }
 
 function Property({
@@ -42,11 +47,47 @@ function Property({
 }: PropertyProps) {
   const { t } = useTranslation('accommodation-details');
   const [showAll, setShowAll] = useState(false);
-
+  const [guestAnchorEl, setGuestAnchorEl] = useState<null | HTMLElement>(null);
+  const [guestCounts, setGuestCounts] = useState({
+    adults: 1,
+    children: 0,
+    infants: 0,
+    pets: 0,
+  });
   const handleShowAll = () => {
     setShowAll(!showAll);
   };
 
+  const guests = ['adults', 'children', 'infants', 'pets'];
+  const totalGuests = guestCounts.adults + guestCounts.children;
+
+  const [menuWidth, setMenuWidth] = useState<number | undefined>(undefined);
+
+  const openGuestMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setGuestAnchorEl(event.currentTarget);
+    setMenuWidth(event.currentTarget.offsetWidth);
+  };
+
+  const closeGuestMenu = () => {
+    setGuestAnchorEl(null);
+  };
+
+  const updateGuestCount = (type: keyof typeof guestCounts, increment: boolean) => {
+    setGuestCounts((prev) => {
+      const newCount =
+        type === 'adults' ? Math.max(1, prev[type] + (increment ? 1 : -1)) : Math.max(0, prev[type] + (increment ? 1 : -1));
+      const totalPeople = prev.adults + prev.children + (type !== 'pets' ? (increment ? 1 : -1) : 0);
+
+      if (type !== 'infants' && totalPeople > numberOfGuests) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        [type]: newCount,
+      };
+    });
+  };
   const displayedAmenities = showAll ? amenities : amenities.slice(0, 10);
 
   const calculatePrice = useMemo(() => {
@@ -144,7 +185,82 @@ function Property({
             </Box>
           </Box>
         </LocalizationProvider>
-        <Button sx={PropertyAmenityStyles.reserveButton} variant="contained" onClick={onReserve}>
+        <Box>
+          <Button variant="outlined" onClick={openGuestMenu} sx={PropertyAmenityStyles.guestMenu.button(guestAnchorEl)}>
+            <Typography sx={{ textTransform: 'none' }}>
+              {totalGuests} {totalGuests === 1 ? 'guest' : 'guests'}
+            </Typography>
+          </Button>
+          <Menu
+            anchorEl={guestAnchorEl}
+            open={Boolean(guestAnchorEl)}
+            onClose={closeGuestMenu}
+            PaperProps={{
+              style: PropertyAmenityStyles.guestMenu.menuPaper(menuWidth),
+            }}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+          >
+            {guests.map((type, index) => (
+              <Box key={type} sx={{ marginBottom: index === 3 ? 0 : 2 }}>
+                <MenuItem disableRipple={true}>
+                  <Box sx={PropertyAmenityStyles.guestMenu.menuItemBox}>
+                    <Box>
+                      <Typography>{type.charAt(0).toUpperCase() + type.slice(1)}</Typography>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        display={type === 'adults' || type === 'children' ? 'block' : 'none'}
+                      >
+                        {type === 'adults'
+                          ? 'Age 13+'
+                          : type === 'children'
+                            ? 'Ages 2–12'
+                            : type === 'infants'
+                              ? 'Under 2'
+                              : 'Bringing a service animal?'}
+                      </Typography>
+                    </Box>
+                    <Box sx={PropertyAmenityStyles.guestMenu.countBox}>
+                      <IconButton
+                        onClick={() => updateGuestCount(type as keyof typeof guestCounts, false)}
+                        size="small"
+                        disabled={
+                          type === 'adults' ? guestCounts.adults === 1 : guestCounts[type as keyof typeof guestCounts] === 0
+                        }
+                      >
+                        <RemoveCircleOutlineIcon />
+                      </IconButton>
+                      <Typography sx={PropertyAmenityStyles.guestMenu.countTypography}>
+                        {guestCounts[type as keyof typeof guestCounts]}
+                      </Typography>
+                      <IconButton onClick={() => updateGuestCount(type as keyof typeof guestCounts, true)} size="small">
+                        <AddCircleOutlineIcon />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                </MenuItem>
+                {index === 3 && (
+                  <Typography variant="caption" color="text.secondary" sx={PropertyAmenityStyles.guestMenu.captionTypography}>
+                    This place has a maximum of {numberOfGuests} guests, not including infants.
+                  </Typography>
+                )}
+              </Box>
+            ))}
+            <Box sx={{ textAlign: 'center', mt: 2 }}>
+              <Button onClick={closeGuestMenu} sx={PropertyAmenityStyles.guestMenu.closeMenuButton}>
+                Close
+              </Button>
+            </Box>
+          </Menu>
+        </Box>
+        <Button sx={PropertyAmenityStyles.reserveButton} variant="contained" onClick={() => onReserve(totalGuests)}>
           {t(TRANSLATION_KEYS.accommodation_details.reserve)}
         </Button>
         <Box sx={PropertyAmenityStyles.priceBox}>

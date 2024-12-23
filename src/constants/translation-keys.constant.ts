@@ -126,6 +126,23 @@ export const TRANSLATION_KEYS = {
     no_bookings: 'no-bookings',
     you_have_no_bookings: 'you-have-no-bookings',
     unable_to_load: 'unable-to-load',
+    filter_status: {
+      all: 'filter-status.all',
+      pending: 'filter-status.pending',
+      confirmed: 'filter-status.confirmed',
+      checked_in: 'filter-status.checked-in',
+      checked_out: 'filter-status.checked-out',
+      cancelled: 'filter-status.cancelled',
+      archived: 'filter-status.archived',
+    },
+    status_display: {
+      pending: 'status-display.pending',
+      confirmed: 'status-display.confirmed',
+      checked_in: 'status-display.checked-in',
+      checked_out: 'status-display.checked-out',
+      cancelled: 'status-display.cancelled',
+      archived: 'status-display.archived',
+    },
     card: {
       cancel: 'card.cancel',
       booked_on: 'card.booked-on',

@@ -30,7 +30,6 @@ export function PropertyList({ isLoading, isFetchingNextPage, data }: PropertyLi
 
   const wishlistedIds = wishlistedData?.data.map((item: Accommodation) => item.id) ?? [];
   const propertiesData = data?.data ?? [];
-
   if (propertiesData.length === 0) {
     return (
       <InfoMessageBox>

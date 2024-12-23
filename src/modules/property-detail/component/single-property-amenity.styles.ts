@@ -50,4 +50,52 @@ export const PropertyAmenityStyles = {
   priceBoxDivider: { my: 2 },
   priceBoxTypography3: { display: 'flex', justifyContent: 'space-between', mt: 2 },
   priceBoxBoldTypography: { fontWeight: 'bold' },
+  guestMenu: {
+    button: (guestAnchorEl) => ({
+      mt: 2,
+      textAlign: 'left',
+      width: '100%',
+      height: '55px',
+      color: guestAnchorEl ? 'black' : '#b0b0b0',
+      borderColor: guestAnchorEl ? 'black' : '#b0b0b0',
+      display: 'flex',
+      justifyContent: 'space-between',
+      '&:hover': {
+        borderColor: 'black',
+      },
+    }),
+    menuPaper: (menuWidth) => ({
+      width: menuWidth,
+      modifiers: [
+        {
+          name: 'preventOverflow',
+          options: {
+            boundary: 'viewport',
+          },
+        },
+      ],
+      disablePortal: true,
+    }),
+    menuItemBox: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      width: '100%',
+    },
+    countBox: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    countTypography: {
+      mx: 1,
+      minWidth: '24px',
+      textAlign: 'center',
+    },
+    closeMenuButton: {
+      color: 'black',
+    },
+    captionTypography: {
+      display: 'flex',
+      textAlign: 'center',
+    },
+  },
 };

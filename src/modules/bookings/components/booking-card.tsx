@@ -17,10 +17,12 @@ import dayjs from 'dayjs';
 import { CancelBookingModal } from './cancel-booking-modal';
 import { useTranslation } from 'react-i18next';
 import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
+import { formatBookingStatus } from '#/utils';
 import { bookingCardStyles } from './booking-card.styles';
 import { type Booking } from '../types';
 import { type Accommodation } from '#/modules/home/types/accommodation.type';
 import React, { useState } from 'react';
+import Divider from '@mui/material/Divider';
 
 type BookingsWithAccommodation = Booking & {
   accommodation: Accommodation;
@@ -131,40 +133,52 @@ export function BookingCard({ booking }: BookingCardProps) {
             </Box>
           </Box>
 
-          <Box sx={bookingCardStyles.statusContainer}>
-            <Chip label={booking.status} color={getStatusColor(booking.status)} variant="outlined" />
-            <Typography variant="caption" color="text.secondary">
-              {t(TRANSLATION_KEYS.bookings.card.booked_on)} {formatDate(booking.createdAt)}
-            </Typography>
+          <Box>
+            <Divider sx={{ my: 1 }} />
+            <Box sx={bookingCardStyles.statusContainer}>
+              <Chip
+                label={
+                  t(
+                    TRANSLATION_KEYS.bookings.status_display[
+                      booking.status.toLowerCase() as keyof typeof TRANSLATION_KEYS.bookings.status_display
+                    ]
+                  ) || formatBookingStatus(booking.status)
+                }
+                color={getStatusColor(booking.status)}
+                variant="outlined"
+              />
+              <Typography variant="caption" color="text.secondary">
+                {t(TRANSLATION_KEYS.bookings.card.booked_on)} {formatDate(booking.createdAt)}
+              </Typography>
+            </Box>
           </Box>
         </Box>
+        {isBookingStatusConfirmedOrPending ? (
+          <>
+            <Menu
+              anchorEl={anchorEl}
+              open={isMenuOpen}
+              onClose={handleMenuClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <MenuItem onClick={() => setIsModalOpen(true)}>{t(TRANSLATION_KEYS.bookings.cancel.button)}</MenuItem>
+            </Menu>
+            <CancelBookingModal
+              bookingId={booking.id}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              hasRefund={booking.status === BookingStatus.Confirmed}
+            />
+          </>
+        ) : null}
       </CardContent>
-
-      {isBookingStatusConfirmedOrPending ? (
-        <>
-          <Menu
-            anchorEl={anchorEl}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-            <MenuItem onClick={() => setIsModalOpen(true)}>{t(TRANSLATION_KEYS.bookings.cancel.button)}</MenuItem>
-          </Menu>
-          <CancelBookingModal
-            bookingId={booking.id}
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-            hasRefund={booking.status === BookingStatus.Confirmed}
-          />
-        </>
-      ) : null}
     </Card>
   );
 }

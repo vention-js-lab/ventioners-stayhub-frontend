@@ -1,6 +1,6 @@
 import { type Image } from '#/modules/home/types/image.type.ts';
-import { type User } from '#/types';
 import { type Amenity } from '#/types/amenity.types';
+import { type Review } from '#/types/review.type';
 
 export interface Location {
   lng: number;
@@ -20,12 +20,7 @@ export type Accommodation = {
     coordinates: [number, number];
   };
   isAddedToWishlist: boolean;
-  reviews: {
-    id: string;
-    user: Pick<User, 'firstName' | 'lastName'>;
-    comment: string;
-    rating: number;
-  }[];
+  reviews: Review[];
   owner: {
     firstName: string;
     lastName: string;

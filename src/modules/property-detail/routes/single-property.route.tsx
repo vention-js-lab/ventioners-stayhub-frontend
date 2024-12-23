@@ -6,7 +6,6 @@ import Divider from '@mui/material/Divider';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import { useParams } from 'react-router-dom';
-import { type User } from '#/types';
 import { type Dayjs } from 'dayjs';
 import { useState } from 'react';
 import { useCreateBooking } from '#/modules/bookings/api/create-booking';
@@ -55,6 +54,7 @@ export function SinglePropertyRoute() {
       </>
     );
   }
+
   if (error instanceof Error) {
     return (
       <>
@@ -68,7 +68,7 @@ export function SinglePropertyRoute() {
 
   const accommodationData: Accommodation = data.data;
 
-  const handleReserve = () => {
+  const handleReserve = (totalGuests: number) => {
     if (!checkInDate || !checkOutDate) {
       toast.error('Please select check-in and check-out dates.');
       return;
@@ -78,7 +78,7 @@ export function SinglePropertyRoute() {
       checkInDate: checkInDate.add(14, 'hour').toDate(),
       checkOutDate: checkOutDate.add(12, 'hour').toDate(),
       accommodationId: id,
-      numberOfGuests: 1,
+      numberOfGuests: totalGuests,
     });
   };
 
@@ -86,21 +86,21 @@ export function SinglePropertyRoute() {
     lat: accommodationData.locationCoordinates.coordinates[1],
     lng: accommodationData.locationCoordinates.coordinates[0],
   };
-  const reviews = accommodationData.reviews.map(
-    (review: { id: string; user: Pick<User, 'firstName' | 'lastName'>; comment: string; rating: number }) => ({
-      id: review.id,
-      user: user,
-      name: `${review.user.firstName} ${review.user.lastName}`,
-      comment: review.comment,
-      rating: review.rating,
-    })
-  );
+
+  const reviews = accommodationData.reviews.map((review) => ({
+    ...review,
+    name: `${review.user.firstName} ${review.user.lastName}`,
+  }));
+
   const images = accommodationData.images.sort((a, b) => a.order - b.order);
   const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
+
   let userHasBooking = false;
+
   if (bookings) {
     userHasBooking = canLeaveReview(bookings.data, reviews, accommodationData.id, user?.id);
   }
+
   return (
     <>
       <HeaderComponent />
