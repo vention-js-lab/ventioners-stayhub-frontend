@@ -122,7 +122,7 @@ function Property({
           <UserProfilePicture user={owner} size="medium" />
           <Box>
             <Typography variant="h6" sx={PropertyAmenityStyles.ownerData}>
-              {owner.firstName + owner.lastName}
+              {`${owner.firstName} ${owner.lastName}`}
             </Typography>
             <Typography sx={PropertyAmenityStyles.ownerData}>
               {t(TRANSLATION_KEYS.accommodation_details.guests, { count: numberOfGuests })}
