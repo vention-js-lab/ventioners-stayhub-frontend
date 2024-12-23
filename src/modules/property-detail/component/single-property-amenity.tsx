@@ -1,5 +1,4 @@
 import { useState, useMemo, Fragment } from 'react';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -19,9 +18,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { UserProfilePicture } from '#/modules/home/components/header/user-profile-picture/user-profile-picture';
+import { type User } from '#/types';
 
 interface PropertyProps {
-  owner: string;
+  owner: User;
   amenities: Amenity[];
   description: string;
   pricePerNight: number;
@@ -118,10 +119,14 @@ function Property({
       <Box sx={PropertyAmenityStyles.leftContainerBox}>
         <Divider sx={PropertyAmenityStyles.divider} />
         <Box sx={PropertyAmenityStyles.avatarBox}>
-          <Avatar sx={PropertyAmenityStyles.avatar}>{owner.charAt(0).toUpperCase()}</Avatar>
+          <UserProfilePicture user={owner} size="medium" />
           <Box>
-            <Typography variant="h6">{owner}</Typography>
-            <Typography>{t(TRANSLATION_KEYS.accommodation_details.guests, { count: numberOfGuests })}</Typography>
+            <Typography variant="h6" sx={PropertyAmenityStyles.ownerData}>
+              {owner.firstName + owner.lastName}
+            </Typography>
+            <Typography sx={PropertyAmenityStyles.ownerData}>
+              {t(TRANSLATION_KEYS.accommodation_details.guests, { count: numberOfGuests })}
+            </Typography>
           </Box>
         </Box>
 
@@ -186,7 +191,7 @@ function Property({
           </Box>
         </LocalizationProvider>
         <Box>
-          <Button variant="outlined" onClick={openGuestMenu} sx={PropertyAmenityStyles.guestMenu.button(guestAnchorEl)}>
+          <Button variant="outlined" onClick={openGuestMenu} sx={PropertyAmenityStyles.guestMenu.button}>
             <Typography sx={{ textTransform: 'none' }}>
               {totalGuests} {totalGuests === 1 ? 'guest' : 'guests'}
             </Typography>
@@ -264,7 +269,7 @@ function Property({
           {t(TRANSLATION_KEYS.accommodation_details.reserve)}
         </Button>
         <Box sx={PropertyAmenityStyles.priceBox}>
-          <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxTypography1}>
+          <Box sx={PropertyAmenityStyles.priceBoxTypography1}>
             <Typography variant="body1">
               ${pricePerNight} x{' '}
               {isDatePicked
@@ -272,20 +277,20 @@ function Property({
                 : t(TRANSLATION_KEYS.accommodation_details.nights, { count: DefaultStayingDays })}
             </Typography>
             <Typography variant="body1">${calculatePrice.basePrice}</Typography>
-          </Typography>
-          <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxTypography2}>
+          </Box>
+          <Box sx={PropertyAmenityStyles.priceBoxTypography2}>
             <Typography variant="body1">{t(TRANSLATION_KEYS.accommodation_details.stayhub_service_fee)}</Typography>{' '}
             <Typography variant="body1">${calculatePrice.serviceFee}</Typography>
-          </Typography>
+          </Box>
           <Divider sx={PropertyAmenityStyles.priceBoxDivider} />
-          <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxTypography3}>
+          <Box sx={PropertyAmenityStyles.priceBoxTypography3}>
             <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxBoldTypography}>
               {t(TRANSLATION_KEYS.accommodation_details.total)}
             </Typography>
             <Typography variant="body1" sx={PropertyAmenityStyles.priceBoxBoldTypography}>
               ${totalPrice}
             </Typography>
-          </Typography>
+          </Box>
         </Box>
       </Box>
     </Box>

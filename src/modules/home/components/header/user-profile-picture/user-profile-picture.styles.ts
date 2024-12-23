@@ -26,8 +26,8 @@ export function userProfilePictureStyles(size: 'small' | 'large' | 'medium' = 's
         height: '200px',
       }),
       ...(size === 'medium' && {
-        width: '80px',
-        height: '80px',
+        width: '75px',
+        height: '75px',
       }),
       ...(profilePictureUrl && {
         backgroundImage: `url(${profilePictureUrl})`,

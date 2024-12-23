@@ -4,7 +4,7 @@ export const PropertyAmenityStyles = {
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     alignItems: { xs: 'center', md: 'flex-start' },
-    mt: 6,
+    mt: 2,
     flexDirection: { xs: 'column', md: 'row' },
   },
   leftContainerBox: { maxWidth: 800, p: 2, pl: { md: 0, xs: 2 }, flex: '1 1 60%' },
@@ -51,19 +51,19 @@ export const PropertyAmenityStyles = {
   priceBoxTypography3: { display: 'flex', justifyContent: 'space-between', mt: 2 },
   priceBoxBoldTypography: { fontWeight: 'bold' },
   guestMenu: {
-    button: (guestAnchorEl) => ({
+    button: {
       mt: 2,
       textAlign: 'left',
       width: '100%',
       height: '55px',
-      color: guestAnchorEl ? 'black' : '#b0b0b0',
-      borderColor: guestAnchorEl ? 'black' : '#b0b0b0',
+      color: 'black',
+      borderColor: '#b0b0b0',
       display: 'flex',
       justifyContent: 'space-between',
       '&:hover': {
         borderColor: 'black',
       },
-    }),
+    },
     menuPaper: (menuWidth) => ({
       width: menuWidth,
       modifiers: [
@@ -97,5 +97,14 @@ export const PropertyAmenityStyles = {
       display: 'flex',
       textAlign: 'center',
     },
+  },
+  noProfileIcon: {
+    width: '75px',
+    height: '75px',
+    color: '#717171',
+    marginRight: '5px',
+  },
+  ownerData: {
+    marginLeft: '10px',
   },
 };
