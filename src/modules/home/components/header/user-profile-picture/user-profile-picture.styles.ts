@@ -1,6 +1,6 @@
 import { type MuiStylesObject } from '#/types/mui-styles-object.type';
 
-export function userProfilePictureStyles(size: 'small' | 'large' = 'small', profilePictureUrl: string | null = null) {
+export function userProfilePictureStyles(size: 'small' | 'large' | 'medium' = 'small', profilePictureUrl: string | null = null) {
   return {
     container: {
       display: 'flex',
@@ -24,10 +24,10 @@ export function userProfilePictureStyles(size: 'small' | 'large' = 'small', prof
       ...(size === 'large' && {
         width: '200px',
         height: '200px',
-        '@media (max-width: 450px)': {
-          width: '120px',
-          height: '120px',
-        },
+      }),
+      ...(size === 'medium' && {
+        width: '75px',
+        height: '75px',
       }),
       ...(profilePictureUrl && {
         backgroundImage: `url(${profilePictureUrl})`,

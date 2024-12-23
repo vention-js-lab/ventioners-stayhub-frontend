@@ -38,7 +38,12 @@ export function ReviewForm({ accommodationId }: ReviewFormProps) {
         {t(TRANSLATION_KEYS.accommodation_details.leave_a_review)}
       </Typography>
 
-      <Rating value={rating} onChange={(event, newValue) => setRating(newValue)} precision={1} sx={{ mb: 2, fontSize: '3rem' }} />
+      <Rating
+        value={rating}
+        onChange={(_event, newValue) => setRating(newValue)}
+        precision={1}
+        sx={{ mb: 2, fontSize: '3rem' }}
+      />
 
       {rating !== null && (
         <>

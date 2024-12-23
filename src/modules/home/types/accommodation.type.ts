@@ -1,4 +1,5 @@
 import { type Image } from '#/modules/home/types/image.type.ts';
+import { type User } from '#/types';
 import { type Amenity } from '#/types/amenity.types';
 import { type Review } from '#/types/review.type';
 
@@ -21,10 +22,7 @@ export type Accommodation = {
   };
   isAddedToWishlist: boolean;
   reviews: Review[];
-  owner: {
-    firstName: string;
-    lastName: string;
-  };
+  owner: User;
   overallRating: number;
   numberOfGuests: number;
   createdAt: Date;

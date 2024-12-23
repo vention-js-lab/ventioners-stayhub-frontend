@@ -21,7 +21,7 @@ export function ProfileRoute() {
       <HeaderComponent />
       <Box sx={styles.container}>
         <Box sx={styles.profileContainer}>
-          <Box>
+          <Box sx={styles.profilePictureContainer}>
             {auth.user?.firstName ? (
               <UserProfilePicture user={auth.user} size="large" />
             ) : (

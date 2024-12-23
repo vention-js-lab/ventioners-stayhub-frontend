@@ -93,7 +93,6 @@ export function SinglePropertyRoute() {
   }));
 
   const images = accommodationData.images.sort((a, b) => a.order - b.order);
-  const ownerName = `${accommodationData.owner.firstName} ${accommodationData.owner.lastName}`;
 
   let userHasBooking = false;
 
@@ -119,7 +118,7 @@ export function SinglePropertyRoute() {
 
           <PropertyImagesWrapper images={images} />
           <Property
-            owner={ownerName}
+            owner={accommodationData.owner}
             amenities={accommodationData.amenities}
             description={accommodationData.description}
             pricePerNight={accommodationData.pricePerNight}

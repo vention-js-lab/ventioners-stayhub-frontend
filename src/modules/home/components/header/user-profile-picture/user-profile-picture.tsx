@@ -16,7 +16,7 @@ import { TRANSLATION_KEYS } from '#/constants/translation-keys.constant';
 
 type Props = {
   user: User;
-  size: 'small' | 'large';
+  size: 'small' | 'large' | 'medium';
 };
 
 export function UserProfilePicture({ user, size }: Props) {
